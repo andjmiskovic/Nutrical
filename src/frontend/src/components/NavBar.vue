@@ -7,10 +7,6 @@
         <ul>
             <li>
                 <i class='bx bx-search'></i>
-                <!--<v-text-field
-            label="Outlined"
-            outlined
-          >heiii</v-text-field>-->
                 <input type="text" placeholder="Search...">
             </li>
             <li>
@@ -70,7 +66,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .sidebar {
     height: 100%;
     width: 78px;
