@@ -72,6 +72,7 @@ export default {
 .border {
   border-top: 8px solid var(--pink);
   height: 250px;
+  margin: 10px;
 }
 
 .knob svg {

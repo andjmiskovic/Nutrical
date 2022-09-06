@@ -6,12 +6,17 @@
     alt=""
   />
   <h2 class="welcome">Welcome back, Andjela</h2>
-  <div style="margin-left: 100px">
+  <div style="margin-left: 100px; margin-top: 10px;">
     <h1>{{ msg }}</h1>
     <div class="grid">
       <div class="col-2"><EnergyRatio></EnergyRatio></div>
       <div class="col-5"><TargetsKnob></TargetsKnob></div>
       <div class="col-5"><CaloriesBurned></CaloriesBurned></div>
+    </div>
+    <div class="grid">
+      <div class="col-2"><MyCalendar></MyCalendar></div>
+      <div class="col-4"><WeeklyCalories></WeeklyCalories></div>     
+      <div class="col-6"><ScoreVitamins></ScoreVitamins></div> 
     </div>
     </div>
    <!--<div class="energy-ration">
@@ -256,9 +261,12 @@ import NavBar from "./NavBar.vue";
 import EnergyRatio from "./EnergyRatio.vue";
 import TargetsKnob from "./TargetsKnob.vue";
 import CaloriesBurned from "./CaloriesBurned.vue";
+import MyCalendar from "./MyCalendar.vue";
+import WeeklyCalories from "./WeeklyCalories.vue";
+import ScoreVitamins from "./ScoreVitamins.vue";
 export default {
   name: "Dashboard",
-  components: { NavBar, EnergyRatio, TargetsKnob, CaloriesBurned },
+  components: { NavBar, EnergyRatio, TargetsKnob, CaloriesBurned, MyCalendar, WeeklyCalories, ScoreVitamins },
   data() {
     return {
       msg: "",
