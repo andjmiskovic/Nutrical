@@ -6,254 +6,67 @@
     alt=""
   />
   <h2 class="welcome">Welcome back, Andjela</h2>
-  <div style="margin-left: 100px; margin-top: 10px;">
-    <h1>{{ msg }}</h1>
-    <div class="grid">
-      <div class="col-2"><EnergyRatio></EnergyRatio></div>
-      <div class="col-5"><TargetsKnob></TargetsKnob></div>
-      <div class="col-5"><CaloriesBurned></CaloriesBurned></div>
-    </div>
-    <div class="grid">
-      <div class="col-2"><MyCalendar></MyCalendar></div>
-      <div class="col-4"><WeeklyCalories></WeeklyCalories></div>     
-      <div class="col-6"><ScoreVitamins></ScoreVitamins></div> 
-    </div>
-    </div>
-   <!--<div class="energy-ration">
-    <EnergyRatio></EnergyRatio>
-    <TargetsKnob></TargetsKnob>
-    </div> 
-    <div class="grid">
-        <div class="col-12 md:col-6 p-fluid">
-          <div class="card">
-            <h5>InputText</h5>
-            <div class="grid formgrid">
-              <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                <InputText type="text" placeholder="Default"></InputText>
-              </div>
-              <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                <InputText
-                  type="text"
-                  placeholder="Disabled"
-                  :disabled="true"
-                ></InputText>
-              </div>
-              <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                <InputText
-                  type="text"
-                  placeholder="Invalid"
-                  class="p-invalid"
-                />
-              </div>
-            </div>
-
-            <Card>
-            <h5>Icons</h5>
-            <div class="grid formgrid">
-              <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                <span class="p-input-icon-left">
-                  <i class="pi pi-user" />
-                  <InputText type="text" placeholder="Username" />
-                </span>
-              </div>
-              <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                <span class="p-input-icon-right">
-                  <InputText type="text" placeholder="Search" />
-                  <i class="pi pi-search" />
-                </span>
-              </div>
-              <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-                <span class="p-input-icon-left p-input-icon-right">
-                  <i class="pi pi-user" />
-                  <InputText type="text" placeholder="Search" />
-                  <i class="pi pi-search" />
-                </span>
-              </div>
-            </div>
-</Card>
-            <h5>Float Label</h5>
-            <span class="p-float-label">
-              <InputText id="username" type="text" v-model="floatValue" />
-              <label for="username">Username</label>
-            </span>
-
-            <h5>Textarea</h5>
-            <TextArea
-              placeholder="Your Message"
-              :autoResize="true"
-              rows="3"
-              cols="30"
-            ></TextArea>
-
-            <h5>AutoComplete</h5>
-            <AutoComplete
-              placeholder="Search"
-              id="dd"
-              :dropdown="true"
-              :multiple="true"
-              v-model="selectedAutoValue"
-              :suggestions="autoFilteredValue"
-              @complete="searchCountry($event)"
-              field="name"
-            />
-
-            <h5>Calendar</h5>
-            <MyCalendar
-              :showIcon="true"
-              :showButtonBar="true"
-              v-model="calendarValue"
-            ></MyCalendar>
-
-            <h5>Spinner</h5>
-            <InputNumber
-              v-model="inputNumberValue"
-              showButtons
-              mode="decimal"
-            ></InputNumber>
-
-            <h5>Chips</h5>
-            <Chips v-model="chipsValue" />
-          </div>
-
-          <MyCard>
-            <h5>Slider</h5>
-            <InputText v-model.number="sliderValue" />
-            <Slider v-model="sliderValue" />
-
-            <h5>Rating</h5>
-            <Rating v-model="ratingValue" />
-
-            <h5>Input Switch</h5>
-            <InputSwitch v-model="switchValue" />
-          </MyCard>
-        </div>
-
-        <div class="col-12 md:col-6">
-          <div class="card">
-            <h5>RadioButton</h5>
-            <div class="grid">
-              <div class="col-12 md:col-4">
-                <div class="field-radiobutton">
-                  <RadioButton
-                    id="option1"
-                    name="option"
-                    value="Option 1"
-                    v-model="radioValue"
-                  />
-                  <label for="option1">Option 1</label>
-                </div>
-              </div>
-              <div class="col-12 md:col-4">
-                <div class="field-radiobutton">
-                  <RadioButton
-                    id="option2"
-                    name="option"
-                    value="Option 2"
-                    v-model="radioValue"
-                  />
-                  <label for="option2">Option 2</label>
-                </div>
-              </div>
-              <div class="col-12 md:col-4">
-                <div class="field-radiobutton">
-                  <RadioButton
-                    id="option3"
-                    name="option"
-                    value="Option 3"
-                    v-model="radioValue"
-                  />
-                  <label for="option3">Option 3</label>
-                </div>
-              </div>
-            </div>
-
-            <h5>Checkbox</h5>
-            <div class="grid">
-              <div class="col-12 md:col-4">
-                <div class="field-checkbox">
-                  <Checkbox
-                    id="checkOption1"
-                    name="option"
-                    value="Option 1"
-                    v-model="checkboxValue"
-                  />
-                  <label for="checkOption1">Option 1</label>
-                </div>
-              </div>
-              <div class="col-12 md:col-4">
-                <div class="field-checkbox">
-                  <Checkbox
-                    id="checkOption2"
-                    name="option"
-                    value="Option 2"
-                    v-model="checkboxValue"
-                  />
-                  <label for="checkOption2">Option 2</label>
-                </div>
-              </div>
-              <div class="col-12 md:col-4">
-                <div class="field-checkbox">
-                  <Checkbox
-                    id="checkOption3"
-                    name="option"
-                    value="Option 3"
-                    v-model="checkboxValue"
-                  />
-                  <label for="checkOption3">Option 3</label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card p-fluid">
-            <h5>Listbox</h5>
-            <Listbox
-              v-model="listboxValue"
-              :options="listboxValues"
-              optionLabel="name"
-              :filter="true"
-            />
-
-            <h5>Dropdown</h5>
-            <Dropdown
-              v-model="dropdownValue"
-              :options="dropdownValues"
-              optionLabel="name"
-              placeholder="Select"
-            />
-
-            <h5>MultiSelect</h5>
-            <MultiSelect
-              v-model="multiselectValue"
-              :options="multiselectValues"
-              optionLabel="name"
-              placeholder="Select Countries"
-              :filter="true"
-            ></MultiSelect>
-          </div>
-
-          <div class="card p-fluid">
-            <h5>ToggleButton</h5>
-            <ToggleButton v-model="toggleValue" onLabel="Yes" offLabel="No" />
-
-            <h5>SelectButton</h5>
-            <SelectButton
-              v-model="selectButtonValue1"
-              :options="selectButtonValues1"
-              optionLabel="name"
-            />
-
-            <h5>SelectButton - Multiple</h5>
-            <SelectButton
-              v-model="selectButtonValue2"
-              :options="selectButtonValues2"
-              optionLabel="name"
-              :multiple="true"
-            />
-          </div>
-        </div>
+  <div style="margin-left: 100px; margin-top: 10px">
+    <div class="grid" style="width: 100%">
+      <div class="col-3">
+        <MyCalendar></MyCalendar>
+        <EnergyRatio></EnergyRatio>
+        <!-- <WeeklyCalories></WeeklyCalories> -->
       </div>
-    </div>-->
+      <div class="col-9">
+        <div class="grid">
+          <div class="col-fixed" style="width: 100px">
+            <Button
+              style="float: left; margin-left: 20px;"
+              v-tooltip.top="'Day before'"
+              icon="pi pi-angle-left"
+              class="p-button-rounded p-button-primary"
+            />
+          </div>
+          <div class="col">
+          <h3 style="text-align: center">9th of September, 2022</h3>
+          </div>
+          <div class="col-fixed" style="width: 100px">
+            <Button
+              style="float: right; margin-right: 20px;"
+              v-tooltip.top="'Day after'"
+              icon="pi pi-angle-right"
+              class="p-button-rounded p-button-primary"
+            />
+          </div>
+        </div>
+        <div class="grid" style="margin: 10px">
+          <div class="col">
+            <Button class="add-button p-button-text"
+              label="ADD FOOD"/>
+          </div>
+          <div class="col">
+            <Button class="add-button p-button-text"
+              label="ADD EXERCISE"/>
+          </div>
+          <div class="col">
+            <Button class="add-button p-button-text"
+              label="ADD NOTES"/>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-6"><TargetsKnob></TargetsKnob></div>
+          <div class="col-6"><CaloriesBurned></CaloriesBurned></div>
+        </div>
+        <ScoreVitamins></ScoreVitamins>
+      </div>
+    </div>
+  </div>
+  <AddFood ref="addFoodDialog"></AddFood>
+  <Dialog v-model:visible="nutrientsDialogVisible" style="width: 60%">
+    <template #header>
+      <h3><i class="bx bxs-info-circle"></i> {{ nutrient.nutrient }}</h3>
+    </template>
+    <h4>Function</h4>
+    <p>{{ nutrient.function }}</p>
+    <h4>Sources</h4>
+    <p>{{ nutrient.sources }}</p>
+  </Dialog>
 </template>
 
 <script>
@@ -262,22 +75,36 @@ import EnergyRatio from "./EnergyRatio.vue";
 import TargetsKnob from "./TargetsKnob.vue";
 import CaloriesBurned from "./CaloriesBurned.vue";
 import MyCalendar from "./MyCalendar.vue";
-import WeeklyCalories from "./WeeklyCalories.vue";
 import ScoreVitamins from "./ScoreVitamins.vue";
+import AddFood from "./AddFood.vue";
 export default {
   name: "Dashboard",
-  components: { NavBar, EnergyRatio, TargetsKnob, CaloriesBurned, MyCalendar, WeeklyCalories, ScoreVitamins },
+  components: {
+    NavBar,
+    EnergyRatio,
+    TargetsKnob,
+    CaloriesBurned,
+    MyCalendar,
+    ScoreVitamins,
+    AddFood,
+  },
   data() {
     return {
-      msg: "",
+      nutrient: {
+        function: "",
+        source: "",
+      },
+      nutrientsDialogVisible: false,
     };
   },
-  mounted() {
-    fetch("/api/calculator/hello")
-      .then((response) => response.text())
-      .then((data) => {
-        this.msg = data;
-      });
+  methods: {
+    openDialog(data) {
+      this.nutrient = data;
+      this.nutrientsDialogVisible = true;
+    },
+    addFood() {
+      this.$refs.addFoodDialog.visible = true;
+    },
   },
 };
 </script>
@@ -300,5 +127,12 @@ export default {
 
 .energy-ration {
   display: flex;
+}
+
+.add-button {
+  width: 100%;
+  font-weight: 600;
+  text-align: center;
+  color: var(--gray) !important;
 }
 </style>

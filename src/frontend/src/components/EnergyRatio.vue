@@ -7,13 +7,13 @@
           <Chart
             type="doughnut"
             :data="chartData"
-            width="150"
+            width=100
             :options="lightOptions"
           />
         </div>
         <div class="col">
           <div class="progress-element">
-            <p class="progress-label" style="vertical-align: middle;">
+            <p class="progress-label">
               Fat - {{fatPercent}}%<br>
               Carbs - {{carbsPercent}}%<br>
               Protein - {{proteinPercent}}%

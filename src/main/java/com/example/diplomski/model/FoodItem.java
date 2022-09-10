@@ -1,16 +1,20 @@
 package com.example.diplomski.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashMap;
 
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class FoodItem {
     private String id;
     private String name;
     private Double calories;
-    private String servingSize;
-    private HashMap<Nutrient, Double> nutrients;
+    private Double protein;
+    private Double fat;
+    private Double carbs;
+    private HashMap<String, Double> nutrients;
 }

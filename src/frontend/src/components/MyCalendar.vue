@@ -24,6 +24,10 @@ export default {
   height: min-content;
 }
 
+.p-card .p-card-content {
+  padding: 0px !important;
+}
+
 .p-datepicker {
     font-size: 6px !important;
     border: none !important;
@@ -32,5 +36,16 @@ export default {
 
 .p-datepicker table td {
   padding: 0px !important;
+  font-size: 12px !important;
+}
+
+.p-datepicker table td > span {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+
+.p-datepicker table th {
+  padding: 0px !important;
+  font-size: 12px !important;
 }
 </style>

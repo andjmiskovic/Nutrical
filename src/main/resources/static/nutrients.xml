@@ -1,0 +1,332 @@
+<nutrients>
+    <nutrient>
+        <name>B1 (Thiamine)</name>
+        <symbol>thiamin</symbol>
+        <function>Thiamin (vitamin B1) helps the body's cells change carbohydrates into energy. The main role of carbohydrates is to provide energy for the body, especially the brain and nervous system. Thiamin also plays a role in muscle contraction and conduction of nerve signals.</function>
+        <sources>Thiamin is found naturally in meats, fish, and whole grains. It is also added to breads, cereals, and baby formulas.</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>1.2</man>
+            <woman>1.1</woman>
+            <pregnant>1.4</pregnant>
+            <breastfeeding>1.4</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>B2 (Riboflavin)</name>
+        <symbol>riboflavin</symbol>
+        <function>Riboflavin (vitamin B2) works with the other B vitamins. It is important for body growth. It helps in red blood cell production. It also aids in the release of energy from proteins.</function>
+        <sources>Riboflavin is found mostly in meat and fortified foods but also in some nuts and green vegetables.</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>1.3</man>
+            <woman>1.1</woman>
+            <pregnant>1.4</pregnant>
+            <breastfeeding>1.6</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>B3 (Niacin)</name>
+        <symbol>niacin</symbol>
+        <function>Also known as vitamin B3 or nicotinic acid, niacin is one of eight B vitamins. Like all B vitamins, niacin plays a role in converting carbohydrates into glucose, metabolizing fats and proteins, and keeping the nervous system working properly.</function>
+        <sources>Many vegetables, fruits, whole grains, and dairy products provide some niacin. Enriched grains are also a source of niacin. Fish, beef, chicken, and turkey are good sources of niacin. Many legumes, nuts, seeds, and soy products provide some niacin.</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>16</man>
+            <woman>14</woman>
+            <pregnant>18</pregnant>
+            <breastfeeding>17</breastfeeding>
+            <max>35</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>B5 (Pantothenic Acid)</name>
+        <symbol>pantothenic_acid</symbol>
+        <function>In addition to playing a role in the breakdown of fats and carbohydrates for energy, vitamin B5 is critical to the manufacture of red blood cells, as well as sex and stress-related hormones produced in the adrenal glands, small glands that sit atop the kidneys.</function>
+        <sources>Whole grains are a good source of vitamin B5 but milling can remove up to 75 percent of the B5 content. Dairy products: Egg yolk, milk, yogurt, and milk products. Legumes: Lentils, split peas, and soybeans. Vegetables: Mushrooms, avocado, broccoli, sweet potatoes, corn, cauliflower, kale, and tomatoes.</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>5</man>
+            <woman>5</woman>
+            <pregnant>5</pregnant>
+            <breastfeeding>7</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>B6 (Pyridoxine)</name>
+        <symbol>vitamin_b6</symbol>
+        <function>Our bodies use vitamin B6 to convert nutrients into energy, to create our red blood cells, to form our genetic material (DNA and RNA) and to break down an excess of homocysteine, an amino acid that can put us at higher risk of cardiovascular disease, when present in high amounts.</function>
+        <sources>The richest sources of vitamin B6 include fish, beef liver and other organ meats, potatoes and other starchy vegetables, and fruit (other than citrus).</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>1.3</man>
+            <woman>1.3</woman>
+            <pregnant>1.3</pregnant>
+            <breastfeeding>2</breastfeeding>
+            <max>100</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>B12 (Cobalamin)</name>
+        <symbol>vitamin_b12</symbol>
+        <function>Vitamin B12 is needed to form red blood cells and DNA. It is also a key player in the function and development of brain and nerve cells. Vitamin B12 binds to the protein in the foods we eat. In the stomach, hydrochloric acid and enzymes unbind vitamin B12 into its free form.</function>
+        <sources>Sources of Vitamin B12. Vitamin B12 is naturally present in foods of animal origin, including fish, meat, poultry, eggs, and dairy products. In addition, fortified breakfast cereals and fortified nutritional yeasts are readily available sources of vitamin B12 that have high bioavailability.</sources>
+        <unit>mcg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>2.4</man>
+            <woman>2.4</woman>
+            <pregnant>2.4</pregnant>
+            <breastfeeding>2.8</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Vitamin A</name>
+        <symbol>vitamin_a</symbol>
+        <function>Vitamin A (retinol, retinoic acid) is a nutrient important to vision, growth, cell division, reproduction and immunity. Vitamin A also has antioxidant properties.</function>
+        <sources>Concentrations of preformed vitamin A are highest in liver, fish, eggs, and dairy products. Most dietary provitamin A in the U.S. diet comes from leafy green vegetables, orange and yellow vegetables, tomato products, fruits, and some vegetable oils.</sources>
+        <unit>mcg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>900</man>
+            <woman>700</woman>
+            <pregnant>770</pregnant>
+            <breastfeeding>1300</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Vitamin C</name>
+        <symbol>vitamin_c</symbol>
+        <function>Vitamin C is an antioxidant that helps protect your cells against the effects of free radicals — molecules produced when your body breaks down food or is exposed to tobacco smoke and radiation from the sun, X-rays or other sources. Free radicals might play a role in heart disease, cancer and other diseases.</function>
+        <sources>Fruits and vegetables are the best sources of this vitamin: citrus (oranges, kiwi, lemon, grapefruit), bell peppers, strawberries, tomatoes...</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>90</man>
+            <woman>90</woman>
+            <pregnant>90</pregnant>
+            <breastfeeding>120</breastfeeding>
+            <max>2000</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Vitamin D</name>
+        <symbol>vitamin_d</symbol>
+        <function>Vitamin D is both a nutrient we eat and a hormone our bodies make. It is a fat-soluble vitamin that has long been known to help the body absorb and retain calcium and phosphorus; both are critical for building bone.</function>
+        <sources>The following foods are a source of vitamin D: fatty fish, such as salmon, mackerel, and tuna, egg yolks, cheese, beef liver, mushrooms, fortified cereals and juices.</sources>
+        <unit>IU</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>600</man>
+            <woman>600</woman>
+            <pregnant>600</pregnant>
+            <breastfeeding>600</breastfeeding>
+            <max>4000</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Vitamin E</name>
+        <symbol>vitamin_e</symbol>
+        <function>Vitamin E is a fat-soluble vitamin with several forms, but alpha-tocopherol is the only one used by the human body. Its main role is to act as an antioxidant, scavenging loose electrons—so-called “free radicals”—that can damage cells.</function>
+        <sources>Vegetable oils like wheat germ, sunflower, and safflower oils are among the best sources of vitamin E. Corn and soybean oils also provide some vitamin E. Nuts (such as peanuts, hazelnuts, and, especially, almonds) and seeds (like sunflower seeds) are also among the best sources of vitamin E.</sources>
+        <unit>mg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>15</man>
+            <woman>15</woman>
+            <pregnant>19</pregnant>
+            <breastfeeding>19</breastfeeding>
+            <max>1000</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Vitamin K</name>
+        <symbol>vitamin_k</symbol>
+        <function>Vitamin K helps to make various proteins that are needed for blood clotting and the building of bones. Prothrombin is a vitamin K-dependent protein directly involved with blood clotting. Osteocalcin is another protein that requires vitamin K to produce healthy bone tissue.</function>
+        <sources>Vitamin K is found in the following foods: Green leafy vegetables, such as kale, spinach, turnip greens, collards, Swiss chard, mustard greens, parsley, romaine, and green leaf lettuce. Vegetables such as Brussels sprouts, broccoli, cauliflower, and cabbage.</sources>
+        <unit>mcg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>120</man>
+            <woman>90</woman>
+            <pregnant>90</pregnant>
+            <breastfeeding>90</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Folate</name>
+        <symbol>folate</symbol>
+        <function>Folate helps to form DNA and RNA and is involved in protein metabolism. It plays a key role in breaking down homocysteine, an amino acid that can exert harmful effects in the body if it is present in high amounts.</function>
+        <sources>Folate is found mainly in dark green leafy vegetables, beans, peas and nuts. Fruits rich in folate include oranges, lemons, bananas, melons and strawberries. The synthetic form of folate is folic acid. It's in an essential component of prenatal vitamins and is in many fortified foods such as cereals and pastas.</sources>
+        <unit>mcg</unit>
+        <kind>VITAMINS</kind>
+        <recommended>
+            <man>400</man>
+            <woman>400</woman>
+            <pregnant>600</pregnant>
+            <breastfeeding>500</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Calcium</name>
+        <symbol>calcium</symbol>
+        <function>Calcium is a mineral most often associated with healthy bones and teeth, although it also plays an important role in blood clotting, helping muscles to contract, and regulating normal heart rhythms and nerve functions.</function>
+        <sources>Dairy products, such as cheese, milk and yogurt. Dark green leafy vegetables, such as broccoli and kale. Fish with edible soft bones, such as sardines and canned salmon. Calcium-fortified foods and beverages, such as soy products, cereal and fruit juices, and milk substitutes.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>700</man>
+            <woman>700</woman>
+            <pregnant>1000</pregnant>
+            <breastfeeding>1300</breastfeeding>
+            <max>2500</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Copper</name>
+        <symbol>copper</symbol>
+        <function>Copper works with iron to help the body form red blood cells. It also helps keep the blood vessels, nerves, immune system, and bones healthy. Copper also aids in iron absorption.</function>
+        <sources>Copper — which is vital to your health — is found in a wide range of foods, from meat to vegetables. Particularly good sources include oysters, nuts, seeds, shitake mushrooms, lobster, liver, leafy greens and dark chocolate. To avoid a deficiency, be sure to include a variety of these sources in your diet.</sources>
+        <unit>mcg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>900</man>
+            <woman>900</woman>
+            <pregnant>1000</pregnant>
+            <breastfeeding>1300</breastfeeding>
+            <max>10000</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Iron</name>
+        <symbol>iron</symbol>
+        <function>Your body uses iron to make hemoglobin, a protein in red blood cells that carries oxygen from the lungs to all parts of the body, and myoglobin, a protein that provides oxygen to muscles. Your body also needs iron to make some hormones.</function>
+        <sources>Top animal-based sources of iron include: red meats (beef, lamb, veal, pork, kangaroo). The redder the meat, the higher it is in iron, offal (liver, kidney, pate), poultry, fish or shellfish (salmon, sardines, tuna), eggs. Good food sources of nonheme iron include fortified cereals, beans, lentils, tofu, spinach, dried fruits (apricots, prunes, raisins), prune juice, enriched breads, broccoli and nuts.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>8.7</man>
+            <woman>14.8</woman>
+            <pregnant>27</pregnant>
+            <breastfeeding>15</breastfeeding>
+            <max>45</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Magnesium</name>
+        <symbol>magnesium</symbol>
+        <function>Magnesium is a nutrient that the body needs to stay healthy. Magnesium is important for many processes in the body, including regulating muscle and nerve function, blood sugar levels, and blood pressure and making protein, bone, and DNA.</function>
+        <sources>Magnesium is widely distributed in plant and animal foods and in beverages. Green leafy vegetables, such as spinach, legumes, nuts, seeds, and whole grains, are good sources. In general, foods containing dietary fiber provide magnesium. Magnesium is also added to some breakfast cereals and other fortified foods.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>400</man>
+            <woman>310</woman>
+            <pregnant>350</pregnant>
+            <breastfeeding>310</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Manganese</name>
+        <symbol>manganese</symbol>
+        <function>Manganese helps the body form connective tissue, bones, blood clotting factors, and sex hormones. It also plays a role in fat and carbohydrate metabolism, calcium absorption, and blood sugar regulation. Manganese is also necessary for normal brain and nerve function.</function>
+        <sources>Manganese is present in a wide variety of foods, including whole grains, clams, oysters, mussels, nuts, soybeans and other legumes, rice, leafy vegetables, coffee, tea, and many spices, such as black pepper.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>2.3</man>
+            <woman>1.8</woman>
+            <pregnant>2.0</pregnant>
+            <breastfeeding>2.6</breastfeeding>
+            <max>11</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Phosphorus</name>
+        <symbol>phosphorous</symbol>
+        <function>Phosphorus is needed for the growth, maintenance, and repair of all tissues and cells, and for the production of the genetic building blocks, DNA and RNA. Phosphorus is also needed to help balance and use other vitamins and minerals, including vitamin D, iodine, magnesium, and zinc.</function>
+        <sources>A variety of foods naturally contain phosphorus, and the richest sources are dairy, red meat, poultry, seafood, legumes, and nuts. Phosphorus from these foods is called organic phosphorus. It is absorbed more efficiently from animal foods than plant foods.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>700</man>
+            <woman>700</woman>
+            <pregnant>800</pregnant>
+            <breastfeeding>800</breastfeeding>
+            <max>4000</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Potassium</name>
+        <symbol>potassium</symbol>
+        <function>Potassium is found naturally in many foods and as a supplement. Its main role in the body is to help maintain normal levels of fluid inside our cells. Sodium, its counterpart, maintains normal fluid levels outside of cells. Potassium also helps muscles to contract and supports normal blood pressure.</function>
+        <sources>Bananas, oranges, cantaloupe, honeydew, apricots, grapefruit (some dried fruits, such as prunes, raisins, and dates, are also high in potassium) Cooked spinach. Cooked broccoli.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>1600</man>
+            <woman>1600</woman>
+            <pregnant>2000</pregnant>
+            <breastfeeding>2000</breastfeeding>
+            <max/>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Selenium</name>
+        <symbol>selenium</symbol>
+        <function>Selenium is an essential component of various enzymes and proteins, called selenoproteins, that help to make DNA and protect against cell damage and infections; these proteins are also involved in reproduction and the metabolism of thyroid hormones.</function>
+        <sources>Protein foods from animals are generally good sources of selenium. Seafood, organ meats, and Brazil nuts are the foods highest in selenium although Americans obtain most of their selenium from everyday staples, like breads, cereals, poultry, red meat, and eggs.</sources>
+        <unit>mcg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>55</man>
+            <woman>55</woman>
+            <pregnant>60</pregnant>
+            <breastfeeding>70</breastfeeding>
+            <max>400</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Sodium</name>
+        <symbol>sodium</symbol>
+        <function>The body uses sodium to control blood pressure and blood volume. Your body also needs sodium for your muscles and nerves to work properly.</function>
+        <sources>High-Sodium Foods: smoked, cured, salted or canned meat, fish or poultry including bacon, cold cuts, ham, frankfurters, sausage, sardines, caviar and anchovies, frozen breaded meats and dinners, such as burritos and pizza, canned entrees, such as ravioli, spam and chili, salted nuts, beans canned with salt added.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>1500</man>
+            <woman>1500</woman>
+            <pregnant>1500</pregnant>
+            <breastfeeding>1500</breastfeeding>
+            <max>2300</max>
+        </recommended>
+    </nutrient>
+    <nutrient>
+        <name>Zinc</name>
+        <symbol>zinc</symbol>
+        <function>Zinc is a trace mineral, meaning that the body only needs small amounts, and yet it is necessary for almost 100 enzymes to carry out vital chemical reactions. It is a major player in the creation of DNA, growth of cells, building proteins, healing damaged tissue, and supporting a healthy immune system.</function>
+        <sources>Includes a variety of protein foods, including seafood, lean meats and poultry, eggs, legumes (beans and peas), nuts, seeds, and soy products. Some meats contain high amounts of zinc. Fish and seafood are good sources of zinc.</sources>
+        <unit>mg</unit>
+        <kind>MINERALS</kind>
+        <recommended>
+            <man>11</man>
+            <woman>8</woman>
+            <pregnant>11</pregnant>
+            <breastfeeding>12</breastfeeding>
+            <max>40</max>
+        </recommended>
+    </nutrient>
+</nutrients>
