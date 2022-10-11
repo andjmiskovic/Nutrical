@@ -1,34 +1,36 @@
 <template>
   <Dialog
-    header="Add to Daily Diary"
+    header="Add food to Daily Diary"
     v-model:visible="visible"
     style="width: 70%"
     :maximizable="true"
-    :contentStyle="{ height: '300px' }"
     :reject="closeDialog"
     :closeOnEscape="true"
   >
-    <DataTable :value="customers1" :scrollable="true" scrollHeight="flex">
-      <Column field="name" header="Name" style="min-width: 200px"></Column>
-      <Column
-        field="country.name"
-        header="Country"
-        style="min-width: 200px"
-      ></Column>
-      <Column
-        field="representative.name"
-        header="Representative"
-        style="min-width: 200px"
-      ></Column>
-      <Column field="status" header="Status" style="min-width: 200px"></Column>
+    <DataTable
+      class="p-datatable-sm"
+      selectionMode="single"
+      v-model:selection="selectedFood"
+      :value="food"
+      :scrollable="true"
+    >
+      <Column style="min-width: 50%" field="name" header="Name"></Column>
+      <Column field="calories" header="Calories"></Column>
+      <Column field="protein" header="Protein"></Column>
+      <Column field="carbs" header="Carbs"></Column>
+      <Column field="fat" header="Fat"></Column>
     </DataTable>
 
     <template #footer>
-      <div class="grid">
-        <div class="col"></div>
-        <div class="col-fixed" style="width: 350px">
-        <div style="display: flex; float: right">
-            <div class="p-inputgroup" style="max-width: 200px; margin-right: 5px;">
+      <div class="grid" style="margin-top: 10px">
+        <div class="col">
+          <span class="p-input-icon-left" style="float: left">
+            <i class="pi pi-search" />
+            <InputText v-model="search" @keyup="searchFood" placeholder="Search food..." />
+          </span>
+        </div>
+        <div class="col">
+            <div class="p-inputgroup" style="max-width: 200px; float: right; margin-right: 5px">
               <span class="p-inputgroup-addon">Serving</span>
               <InputNumber
                 mode="decimal"
@@ -38,8 +40,9 @@
                 v-model="serving"
               />
             </div>
-            <Button label="Add" icon="pi pi-check" @click="closeDialog" />
         </div>
+        <div class="col-fixed" style="width: 100px">
+          <Button label="Add" icon="pi pi-check" @click="closeDialog" />
         </div>
       </div>
     </template>
@@ -47,17 +50,35 @@
 </template>
 
 <script>
+import { FilterMatchMode } from "primevue/api";
+
 export default {
   name: "AddFood",
   props: [],
   data() {
     return {
-      customers1: [],
       visible: false,
       serving: 100,
+      search: "",
+      food: [],
+      selectedFood: null,
+      filters: {
+        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      },
     };
   },
+  mounted() {
+    this.searchFood()
+  },
   methods: {
+    searchFood() {
+      fetch("/api/calculator/getFood?search=" + this.search + "&limit=100")
+      .then((response) => response.text())
+      .then((data) => {
+        this.food = JSON.parse(data);
+        console.log(this.food);
+      });
+    },
     closeDialog() {
       this.visible = false;
     },

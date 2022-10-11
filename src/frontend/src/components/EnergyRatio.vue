@@ -69,9 +69,9 @@ export default {
 
 <style scoped>
 .border {
-  border-top: 8px solid var(--gray);
+  /* border-top: 8px solid var(--gray); */
   height: 250px;
-  margin: 10px;
+   margin: 10px;;
 }
 
 .energy-ratio {

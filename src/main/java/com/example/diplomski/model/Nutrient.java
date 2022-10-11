@@ -1,5 +1,6 @@
 package com.example.diplomski.model;
 
+import com.example.diplomski.enums.NutrientKind;
 import lombok.*;
 
 @Getter

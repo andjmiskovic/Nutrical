@@ -1,7 +1,7 @@
 package com.example.diplomski.repository;
 
 import com.example.diplomski.model.Nutrient;
-import com.example.diplomski.model.NutrientKind;
+import com.example.diplomski.enums.NutrientKind;
 import com.example.diplomski.model.Recommended;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

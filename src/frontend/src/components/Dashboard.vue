@@ -6,29 +6,30 @@
     alt=""
   />
   <h2 class="welcome">Welcome back, Andjela</h2>
-  <div style="margin-left: 100px; margin-top: 10px">
-    <div class="grid" style="width: 100%">
+  <div style="margin: 100px; margin-top: 30px">
+    <div class="grid" style="width: 90%; margin: auto">
       <div class="col-3">
         <MyCalendar></MyCalendar>
         <EnergyRatio></EnergyRatio>
-        <!-- <WeeklyCalories></WeeklyCalories> -->
       </div>
       <div class="col-9">
-        <div class="grid">
+        <div class="grid" style="margin-top: 20px">
           <div class="col-fixed" style="width: 100px">
             <Button
-              style="float: left; margin-left: 20px;"
+              @click="dayBefore()"
+              style="float: left; margin-left: 20px"
               v-tooltip.top="'Day before'"
               icon="pi pi-angle-left"
               class="p-button-rounded p-button-primary"
             />
           </div>
           <div class="col">
-          <h3 style="text-align: center">9th of September, 2022</h3>
+            <h3 style="text-align: center">{{ formatedDate }}</h3>
           </div>
           <div class="col-fixed" style="width: 100px">
             <Button
-              style="float: right; margin-right: 20px;"
+              @click="dayAfter()"
+              style="float: right; margin-right: 20px"
               v-tooltip.top="'Day after'"
               icon="pi pi-angle-right"
               class="p-button-rounded p-button-primary"
@@ -37,23 +38,30 @@
         </div>
         <div class="grid" style="margin: 10px">
           <div class="col">
-            <Button class="add-button p-button-text"
-              label="ADD FOOD"/>
+            <Button
+              class="add-button p-button-text"
+              label="ADD FOOD"
+              @click="addFood"
+            />
           </div>
           <div class="col">
-            <Button class="add-button p-button-text"
-              label="ADD EXERCISE"/>
+            <Button class="add-button p-button-text" label="ADD EXERCISE" />
           </div>
           <div class="col">
-            <Button class="add-button p-button-text"
-              label="ADD NOTES"/>
+            <Button class="add-button p-button-text" label="ADD NOTES" />
           </div>
+        </div>
+        <div class="grid">
+          <div class="col"><DailyFood></DailyFood></div>
         </div>
         <div class="grid">
           <div class="col-6"><TargetsKnob></TargetsKnob></div>
           <div class="col-6"><CaloriesBurned></CaloriesBurned></div>
         </div>
-        <ScoreVitamins></ScoreVitamins>
+        <div class="grid">
+          <div class="col"><ScoreVitamins kind="VITAMINS"></ScoreVitamins></div>
+          <div class="col"><ScoreVitamins kind="MINERALS"></ScoreVitamins></div>
+        </div>
       </div>
     </div>
   </div>
@@ -77,6 +85,7 @@ import CaloriesBurned from "./CaloriesBurned.vue";
 import MyCalendar from "./MyCalendar.vue";
 import ScoreVitamins from "./ScoreVitamins.vue";
 import AddFood from "./AddFood.vue";
+import DailyFood from "./DailyFood.vue";
 export default {
   name: "Dashboard",
   components: {
@@ -87,17 +96,37 @@ export default {
     MyCalendar,
     ScoreVitamins,
     AddFood,
-  },
+    DailyFood
+},
   data() {
     return {
       nutrient: {
         function: "",
         source: "",
       },
+      date: new Date(),
+      formatedDate: "",
+      options: {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      },
       nutrientsDialogVisible: false,
     };
   },
+  mounted() {
+    this.formatedDate = this.date.toLocaleDateString("en-US", this.options);
+  },
   methods: {
+    dayBefore() {
+      this.date.setDate(this.date.getDate() - 1);
+      this.formatedDate = this.date.toLocaleDateString("en-US", this.options);
+    },
+    dayAfter() {
+      this.date.setDate(this.date.getDate() + 1);
+      this.formatedDate = this.date.toLocaleDateString("en-US", this.options);
+    },
     openDialog(data) {
       this.nutrient = data;
       this.nutrientsDialogVisible = true;

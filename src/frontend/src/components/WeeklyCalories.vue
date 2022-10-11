@@ -58,9 +58,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .border {
-  border-top: 8px solid var(--blue);
+  /* border-top: 8px solid var(--blue); */
   height: 250px;
   margin: 10px;
   height: min-content;

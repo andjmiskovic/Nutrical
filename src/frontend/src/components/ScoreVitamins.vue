@@ -1,20 +1,26 @@
 <template>
   <Card class="border">
-    <template #title> Vitamins </template>
+    <template #title> {{ kind }} </template>
     <template #content>
       <div>
         <DataTable :value="data" class="hide-header">
-          <Column field="nutrient" style="min-width: 15rem">
+          <Column field="nutrient">
             <template #body="{ data }">
-              <p style="cursor: pointer" v-tooltip.top="'About nutrient'" @click="showDetails(data)">{{ data.nutrient }}</p>
+              <p
+                style="cursor: pointer"
+                v-tooltip.top="'About nutrient'"
+                @click="showDetails(data)"
+              >
+                {{ data.nutrient }}
+              </p>
             </template>
           </Column>
-          <Column field="quantity" style="min-width: 5rem">
+          <Column field="quantity">
             <template #body="{ data }">
               {{ data.quantity }} {{ data.unit }}
             </template>
           </Column>
-          <Column field="progress" style="min-width: 10rem">
+          <Column field="progress" style="min-width: 5rem">
             <template #body="{ data }">
               <ProgressBar :value="data.progress" />
             </template>
@@ -27,9 +33,9 @@
 
 <script>
 export default {
+  props: ["kind"],
   data() {
     return {
-      nutrients: [],
       data: [],
     };
   },
@@ -37,24 +43,28 @@ export default {
     fetch("/api/calculator/getNutrients")
       .then((response) => response.text())
       .then((data) => {
-        this.nutrients = JSON.parse(data);
-        for (var i = 0; i < this.nutrients.length; i++) {
-          this.data.push({
-            nutrient: this.nutrients[i].name,
-            function: this.nutrients[i].function,
-            sources: this.nutrients[i].sources,
+        var n = JSON.parse(data).filter((obj) => {
+          return obj.kind === this.kind;
+        });
+        var nutrientData = [];
+        for (var i = 0; i < n.length; i++) {
+          nutrientData.push({
+            nutrient: n[i].name,
+            function: n[i].function,
+            sources: n[i].sources,
             quantity: 0,
-            unit: this.nutrients[i].unit,
+            unit: n[i].unit,
             progress: 0,
           });
         }
+        this.data = nutrientData;
       });
   },
   methods: {
     showDetails(data) {
-        this.$parent.openDialog(data);
-    }
-  }
+      this.$parent.openDialog(data);
+    },
+  },
 };
 </script>
 
@@ -69,7 +79,7 @@ export default {
 }
 
 ::v-deep(.p-datatable .p-datatable-tbody tr td) {
-  padding: 8px !important;
-  font-size: 15px !important;
+  padding: 5px !important;
+  font-size: 12px !important;
 }
 </style>

@@ -14,5 +14,6 @@ import java.util.HashMap;
 public class EatenFood {
     private FoodItem food;
     private Double amount;
+    // ne treba ponovo racunati?
     private HashMap<Nutrient, Double> nutrients;
 }

@@ -75,6 +75,7 @@ export default {
   left: 0;
   position: fixed;
   padding: 6px 14px;
+  z-index: 99;
 }
 .sidebar.active {
   width: 240px;

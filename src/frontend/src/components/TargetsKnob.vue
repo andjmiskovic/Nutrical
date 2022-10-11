@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 .border {
-  border-top: 8px solid var(--pink);
+  /* border-top: 8px solid var(--pink); */
   height: 250px;
   margin: 10px;
 }

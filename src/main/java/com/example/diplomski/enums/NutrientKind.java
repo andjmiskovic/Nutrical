@@ -1,4 +1,4 @@
-package com.example.diplomski.model;
+package com.example.diplomski.enums;
 
 public enum NutrientKind {
     VITAMINS,

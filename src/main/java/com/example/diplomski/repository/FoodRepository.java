@@ -1,30 +1,33 @@
 package com.example.diplomski.repository;
 
 import com.example.diplomski.model.FoodItem;
-import com.example.diplomski.model.Nutrient;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class FoodRepository {
-    public static ArrayList<FoodItem> getFoodItems() {
+    public static HashMap<String, FoodItem> getFoodItems() {
         long startTime = System.nanoTime();
-        ArrayList<FoodItem> food = new ArrayList<>();
+        HashMap<String, FoodItem> food = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/static/nutrition.csv"))) {
             String[] header = br.readLine().split(",");
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-
                 FoodItem foodItem = new FoodItem();
+                String[] values = line.split(",");
                 foodItem.setId(values[0]);
-                foodItem.setName(values[1].replaceAll("^\"|\"$", ""));
+
+                if(line.contains("\""))
+                {
+                    foodItem.setName(line.split("\"")[1]);
+                    values = line.replaceAll("\".*?\"", "").split(",");
+                }
+                else {
+                    foodItem.setName(values[1].replaceAll("^\"|\"$", ""));
+                }
 
                 HashMap<String, Double> nutrients = new HashMap<>();
 
@@ -44,7 +47,7 @@ public class FoodRepository {
                 foodItem.setFat(nutrients.get("total_fat"));
                 foodItem.setProtein(nutrients.get("protein"));
 
-                food.add(foodItem);
+                food.put(foodItem.getName(), foodItem);
             }
             long endTime = System.nanoTime();
 

@@ -38,7 +38,7 @@ export default {
 </script>
 <style scoped>
 .border {
-  border-top: 8px solid var(--green);
+  /* border-top: 8px solid var(--green); */
   height: 250px;
   margin: 10px;
 }
