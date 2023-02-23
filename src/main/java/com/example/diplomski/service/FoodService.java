@@ -2,13 +2,13 @@ package com.example.diplomski.service;
 
 import com.example.diplomski.enums.ActivityStatus;
 import com.example.diplomski.model.FoodItem;
-import com.example.diplomski.model.Nutrient;
-import com.example.diplomski.model.User;
 import com.example.diplomski.repository.FoodRepository;
-import com.example.diplomski.repository.NutrientsRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,12 +42,9 @@ public class FoodService {
         return this.food.get(name);
     }
 
-    public double calculateBMI(String userName) {
-        // TODO find user
-        User user = new User();
-        return user.getWeight() / (user.getHeight() * user.getHeight() / 10000);
+    public double calculateBMI(double weight, double height) {
+        return weight / (height * height / 10000);
     }
-
 
     public ArrayList<ActivityStatus> getActivityStatuses() {
         return (ArrayList<ActivityStatus>) Arrays.stream(ActivityStatus.values()).toList();
