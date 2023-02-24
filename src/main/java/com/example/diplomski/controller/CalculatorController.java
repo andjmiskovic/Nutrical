@@ -1,6 +1,7 @@
 package com.example.diplomski.controller;
 
 import com.example.diplomski.enums.ActivityStatus;
+import com.example.diplomski.exceptions.FoodItemNotFoundException;
 import com.example.diplomski.model.FoodItem;
 import com.example.diplomski.model.Nutrient;
 import com.example.diplomski.service.FoodService;
@@ -31,7 +32,7 @@ public class CalculatorController {
     }
 
     @GetMapping("/get-food-by-name")
-    public FoodItem getFoodByName(String name) {
+    public FoodItem getFoodByName(String name) throws FoodItemNotFoundException {
         return foodService.getFoodByName(name);
     }
 

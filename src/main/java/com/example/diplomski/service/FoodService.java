@@ -1,6 +1,7 @@
 package com.example.diplomski.service;
 
 import com.example.diplomski.enums.ActivityStatus;
+import com.example.diplomski.exceptions.FoodItemNotFoundException;
 import com.example.diplomski.model.FoodItem;
 import com.example.diplomski.repository.FoodRepository;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,10 @@ public class FoodService {
         this.food = FoodRepository.getFoodItems();
     }
 
-    public FoodItem getFoodByName(String name) {
-        return this.food.get(name);
+    public FoodItem getFoodByName(String name) throws FoodItemNotFoundException {
+        if (this.food.containsKey(name))
+            return this.food.get(name);
+        throw new FoodItemNotFoundException("Food item not found.");
     }
 
     public double calculateBMI(double weight, double height) {

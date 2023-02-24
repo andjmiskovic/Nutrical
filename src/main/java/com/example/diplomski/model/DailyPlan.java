@@ -4,17 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DailyDairy {
-    // mozda izbaciti
-    private Date date;
-    private Double calories;
-    private ArrayList<EatenFood> food;
+public class DailyPlan {
+    @Id
+    private Long id;
+    private ArrayList<Tag> tags;
+    private String notes;
 }

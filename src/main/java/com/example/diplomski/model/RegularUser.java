@@ -5,10 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegularUser {
     private ClientData clientData;
+    private HashMap<Date, DailyPlan> dailyDairy;
 }

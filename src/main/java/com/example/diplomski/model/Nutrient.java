@@ -2,6 +2,7 @@ package com.example.diplomski.model;
 
 import com.example.diplomski.enums.NutrientKind;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
@@ -9,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class Nutrient {
+    @Id
     private String name;
     private String symbol;
     private String function;
