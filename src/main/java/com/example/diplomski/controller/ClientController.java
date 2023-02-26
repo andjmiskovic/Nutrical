@@ -19,7 +19,7 @@ public class ClientController {
     private PlanService planService;
 
     @PostMapping("/add-food")
-    public void addClient(@RequestBody ClientAddFoodRequest addFoodRequest) {
+    public void addFood(@RequestBody ClientAddFoodRequest addFoodRequest) {
         planService.addFood(addFoodRequest);
     }
 }

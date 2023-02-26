@@ -17,4 +17,5 @@ public class DailyPlan {
     private Long id;
     private ArrayList<Tag> tags;
     private String notes;
+    private String userEmail;
 }

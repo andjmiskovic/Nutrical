@@ -1,13 +1,13 @@
 package com.example.diplomski.service;
 
 import com.example.diplomski.dto.ClientAddFoodRequest;
-import com.example.diplomski.exceptions.FoodItemNotFoundException;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.PlanRepository;
 import com.example.diplomski.repository.TagRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.management.InstanceNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class PlanService {
         DailyPlan dailyPlan = plan.getDailyPlans().get(addFoodRequest.getDay());
     }
 
-    private void addFoodToDailyPlan(DailyPlan dailyPlan, ClientAddFoodRequest addFoodRequest) throws FoodItemNotFoundException {
+    private void addFoodToDailyPlan(DailyPlan dailyPlan, ClientAddFoodRequest addFoodRequest) throws InstanceNotFoundException {
         FoodItem foodItem = foodService.getFoodByName(addFoodRequest.getFood());
         List<Tag> tags = dailyPlan.getTags();
         for (Tag tag : dailyPlan.getTags()) {

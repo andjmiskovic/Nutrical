@@ -24,16 +24,28 @@ public class NutritionistService {
         nutritionistRepository.save(nutritionist);
     }
 
-    public List<BasicUserData> getClients(String email) throws UserNotFoundException {
+    public List<BasicUserData> getClients(String email, String search) throws UserNotFoundException {
         Nutritionist nutritionist = getByEmail(email);
         List<BasicUserData> clients = new ArrayList<>();
         for (Client client : nutritionist.getClients()) {
-            clients.add(BasicUserData.builder()
-                    .name(client.getName())
-                    .surname(client.getSurname())
-                    .email(client.getEmail())
-                    .build());
+            if (client.getEmail().toLowerCase().contains(search.toLowerCase())) {
+                clients.add(BasicUserData.builder()
+                        .name(client.getName())
+                        .surname(client.getSurname())
+                        .email(client.getEmail())
+                        .build());
+            }
         }
         return clients;
+    }
+
+    public Client getClient(String email, String clientEmail) throws UserNotFoundException {
+        Nutritionist nutritionist = getByEmail(email);
+        for (Client client : nutritionist.getClients()) {
+            if (client.getEmail().equals(clientEmail)) {
+                return client;
+            }
+        }
+        throw new UserNotFoundException("Client not found.");
     }
 }

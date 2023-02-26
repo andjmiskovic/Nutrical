@@ -3,6 +3,7 @@ package com.example.diplomski.controller;
 import com.example.diplomski.dto.BasicUserData;
 import com.example.diplomski.dto.ClientRequest;
 import com.example.diplomski.exceptions.UserNotFoundException;
+import com.example.diplomski.model.Client;
 import com.example.diplomski.service.ClientService;
 import com.example.diplomski.service.NutritionistService;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,13 @@ public class NutritionistController {
         clientService.addClient(clientRequestDTO);
     }
 
-    @GetMapping("/get-clients")
-    public List<BasicUserData> getClients(@RequestBody String email) throws UserNotFoundException {
-        return nutritionistService.getClients(email);
+    @GetMapping("/get-client/{nutritionistEmail}/{search}")
+    public List<BasicUserData> getClients(@PathVariable("nutritionistEmail") String nutritionistEmail, @PathVariable("search") String search) throws UserNotFoundException {
+        return nutritionistService.getClients(nutritionistEmail, search);
+    }
+
+    @GetMapping("/get-client/{nutritionistEmail}/{clientEmail}")
+    public Client getClient(@PathVariable("nutritionistEmail") String nutritionistEmail, @PathVariable("clientEmail") String clientEmail) throws UserNotFoundException {
+        return nutritionistService.getClient(nutritionistEmail, clientEmail);
     }
 }

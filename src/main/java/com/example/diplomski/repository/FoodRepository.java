@@ -20,12 +20,10 @@ public class FoodRepository {
                 String[] values = line.split(",");
                 foodItem.setId(values[0]);
 
-                if(line.contains("\""))
-                {
+                if (line.contains("\"")) {
                     foodItem.setName(line.split("\"")[1]);
                     values = line.replaceAll("\".*?\"", "").split(",");
-                }
-                else {
+                } else {
                     foodItem.setName(values[1].replaceAll("^\"|\"$", ""));
                 }
 

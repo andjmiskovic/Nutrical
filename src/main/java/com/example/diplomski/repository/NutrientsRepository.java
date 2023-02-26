@@ -17,19 +17,16 @@ public class NutrientsRepository {
 
     public static ArrayList<Nutrient> getNutrients() {
         ArrayList<Nutrient> nutrients = new ArrayList<>();
-        try
-        {
+        try {
             File file = new File("src/main/resources/static/nutrients.xml");
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);
             doc.getDocumentElement().normalize();
             NodeList nodeList = doc.getElementsByTagName("nutrient");
-            for (int itr = 0; itr < nodeList.getLength(); itr++)
-            {
+            for (int itr = 0; itr < nodeList.getLength(); itr++) {
                 Node node = nodeList.item(itr);
-                if (node.getNodeType() == Node.ELEMENT_NODE)
-                {
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
                     Nutrient nutrient = new Nutrient();
 
@@ -58,9 +55,7 @@ public class NutrientsRepository {
                     nutrients.add(nutrient);
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return nutrients;

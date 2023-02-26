@@ -1,17 +1,19 @@
 package com.example.diplomski.controller;
 
 import com.example.diplomski.enums.ActivityStatus;
-import com.example.diplomski.exceptions.FoodItemNotFoundException;
 import com.example.diplomski.model.FoodItem;
 import com.example.diplomski.model.Nutrient;
 import com.example.diplomski.service.FoodService;
 import com.example.diplomski.service.NutrientsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.InstanceNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @RestController
 @AllArgsConstructor
@@ -21,8 +23,13 @@ public class CalculatorController {
     private final NutrientsService nutrientsService;
     private final FoodService foodService;
 
+    @GetMapping("/get-nutrients/{planId}")
+    public HashMap<Nutrient, Double> getNutrients(@PathVariable Long planId) {
+        return nutrientsService.getNutrients(planId);
+    }
+
     @GetMapping("/get-nutrients")
-    public ArrayList<Nutrient> getNutrients() {
+    public ArrayList<Nutrient> getNutrientsList() {
         return nutrientsService.getNutrients();
     }
 
@@ -32,7 +39,7 @@ public class CalculatorController {
     }
 
     @GetMapping("/get-food-by-name")
-    public FoodItem getFoodByName(String name) throws FoodItemNotFoundException {
+    public FoodItem getFoodByName(String name) throws InstanceNotFoundException {
         return foodService.getFoodByName(name);
     }
 
