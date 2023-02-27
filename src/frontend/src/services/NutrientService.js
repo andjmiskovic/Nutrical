@@ -4,7 +4,7 @@ export default class NutrientService {
     food;
 
     static loadFood() {
-        fetch("/api/calculator/getFood")
+        fetch("/api/calculator/get-food")
             .then((response) => response.text())
             .then((data) => {
                 this.food = JSON.parse(data);
@@ -12,20 +12,20 @@ export default class NutrientService {
     }
 
     static loadNutrients() {
-        fetch("/api/calculator/getNutrients")
+        fetch("/api/calculator/get-nutrients")
             .then((response) => response.text())
             .then((data) => {
                 this.nutrients = JSON.parse(data);
-                // for (var i = 0; i < this.nutrients.length; i++) {
-                //     this.data.push({
-                //         nutrient: this.nutrients[i].name,
-                //         function: this.nutrients[i].function,
-                //         sources: this.nutrients[i].sources,
-                //         quantity: 0,
-                //         unit: this.nutrients[i].unit,
-                //         progress: 0,
-                //     });
-                // }
+                for (var i = 0; i < this.nutrients.length; i++) {
+                    this.data.push({
+                        nutrient: this.nutrients[i].name,
+                        function: this.nutrients[i].function,
+                        sources: this.nutrients[i].sources,
+                        quantity: 0,
+                        unit: this.nutrients[i].unit,
+                        progress: 0,
+                    });
+                }
             });
     }
 
@@ -38,7 +38,7 @@ export default class NutrientService {
     }
 
     static getNutrientsByKind(kind) {
-        fetch("/api/calculator/getNutrients")
+        fetch("/api/calculator/get-nutrients")
             .then((response) => response.text())
             .then((data) => {
                 this.nutrients = JSON.parse(data);
@@ -49,7 +49,7 @@ export default class NutrientService {
     }
 
     static getNutrientData(kind) {
-        fetch("/api/calculator/getNutrients")
+        fetch("/api/calculator/get-nutrients")
             .then((response) => response.text())
             .then((data) => {
                 var n = JSON.parse(data).filter((obj) => {

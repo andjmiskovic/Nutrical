@@ -40,14 +40,14 @@ export default {
     };
   },
   mounted() {
-    fetch("/api/calculator/getNutrients")
+    fetch("/api/calculator/get-nutrients")
       .then((response) => response.text())
       .then((data) => {
-        var n = JSON.parse(data).filter((obj) => {
+        const n = JSON.parse(data).filter((obj) => {
           return obj.kind === this.kind;
         });
-        var nutrientData = [];
-        for (var i = 0; i < n.length; i++) {
+        const nutrientData = [];
+        for (let i = 0; i < n.length; i++) {
           nutrientData.push({
             nutrient: n[i].name,
             function: n[i].function,
@@ -69,11 +69,6 @@ export default {
 </script>
 
 <style scoped>
-::v-deep(.p-progressbar) .p-progressbar-value {
-  background-color: var(--green);
-  font-size: 12px;
-}
-
 ::v-deep(.p-datatable .p-datatable-thead tr th) {
   padding: 0 !important;
 }

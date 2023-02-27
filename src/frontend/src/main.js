@@ -104,8 +104,9 @@ import VirtualScroller from 'primevue/virtualscroller';
 import 'primevue/resources/themes/saga-purple/theme.css' //theme blue je bilo
 import 'primevue/resources/primevue.min.css' //core css
 import 'primeicons/primeicons.css' //icons
+import router from './router'
 
-const app = createApp(App);
+const app = createApp(App).use(router);
 // app.use(PrimeVue);
 
 app.use(PrimeVue, { ripple: true });

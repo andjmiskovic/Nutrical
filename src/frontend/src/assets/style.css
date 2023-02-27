@@ -48,7 +48,7 @@ body {
 .col {
     flex-grow: 1;
     flex-basis: 0;
-    padding: $gutter;
+    padding: 5px;
 }
 
 .grid {

@@ -2,7 +2,7 @@
   <div class="sidebar" :class="{ active: isActive }">
     <div class="logo_content">
       <i class="bx bx-menu" @click="toggle" id="menu-btn"></i>
-      <img class="logo" src="../assets/logo.png" />
+      <img class="logo" src="../assets/logo.png"  alt="logo"/>
     </div>
     <ul>
       <li>

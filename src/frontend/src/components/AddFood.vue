@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     searchFood() {
-      fetch("/api/calculator/getFood?search=" + this.search + "&limit=100")
+      fetch("/api/calculator/get-food?search=" + this.search + "&limit=100")
       .then((response) => response.text())
       .then((data) => {
         this.food = JSON.parse(data);

@@ -1,25 +1,30 @@
+<script setup>
+import {RouterView} from 'vue-router'
+</script>
+
 <template>
-  <v-app>
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <link href="./assets/style.css" rel="stylesheet">
-    <v-main>
-      <Dashboard/>
-    </v-main>
-  </v-app>
+  <router-view/>
 </template>
 
-<script>
-import Dashboard from './components/Dashboard.vue'
-
-export default {
-  name: 'App',
-
-  components: {
-    Dashboard,
-  },
-
-  data: () => ({
-    //
-  }),
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
-</script>
+
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>

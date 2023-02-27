@@ -1,9 +1,9 @@
 <template>
   <NavBar></NavBar>
   <img
-    class="dashboard-background"
-    src="../assets/images/dashboard-background.jpg"
-    alt=""
+      class="dashboard-background"
+      src="../assets/images/dashboard-background.jpg"
+      alt=""
   />
   <h2 class="welcome">Welcome back, Andjela</h2>
   <div style="margin: 100px; margin-top: 30px">
@@ -16,11 +16,11 @@
         <div class="grid" style="margin-top: 20px">
           <div class="col-fixed" style="width: 100px">
             <Button
-              @click="dayBefore()"
-              style="float: left; margin-left: 20px"
-              v-tooltip.top="'Day before'"
-              icon="pi pi-angle-left"
-              class="p-button-rounded p-button-primary"
+                @click="dayBefore()"
+                style="float: left; margin-left: 20px"
+                v-tooltip.top="'Day before'"
+                icon="pi pi-angle-left"
+                class="p-button-rounded p-button-primary"
             />
           </div>
           <div class="col">
@@ -28,39 +28,49 @@
           </div>
           <div class="col-fixed" style="width: 100px">
             <Button
-              @click="dayAfter()"
-              style="float: right; margin-right: 20px"
-              v-tooltip.top="'Day after'"
-              icon="pi pi-angle-right"
-              class="p-button-rounded p-button-primary"
+                @click="dayAfter()"
+                style="float: right; margin-right: 20px"
+                v-tooltip.top="'Day after'"
+                icon="pi pi-angle-right"
+                class="p-button-rounded p-button-primary"
             />
           </div>
         </div>
         <div class="grid" style="margin: 10px">
           <div class="col">
             <Button
-              class="add-button p-button-text"
-              label="ADD FOOD"
-              @click="addFood"
+                class="add-button p-button-text"
+                label="ADD FOOD"
+                @click="addFood"
             />
           </div>
           <div class="col">
-            <Button class="add-button p-button-text" label="ADD EXERCISE" />
+            <Button class="add-button p-button-text" label="ADD EXERCISE"/>
           </div>
           <div class="col">
-            <Button class="add-button p-button-text" label="ADD NOTES" />
+            <Button class="add-button p-button-text" label="ADD NOTES"/>
           </div>
         </div>
         <div class="grid">
-          <div class="col"><DailyFood></DailyFood></div>
+          <div class="col">
+            <DailyFood></DailyFood>
+          </div>
         </div>
         <div class="grid">
-          <div class="col-6"><TargetsKnob></TargetsKnob></div>
-          <div class="col-6"><CaloriesBurned></CaloriesBurned></div>
+          <div class="col-6">
+            <TargetsKnob></TargetsKnob>
+          </div>
+          <div class="col-6">
+            <CaloriesBurned></CaloriesBurned>
+          </div>
         </div>
         <div class="grid">
-          <div class="col"><ScoreVitamins kind="VITAMINS"></ScoreVitamins></div>
-          <div class="col"><ScoreVitamins kind="MINERALS"></ScoreVitamins></div>
+          <div class="col">
+            <ScoreVitamins kind="VITAMINS"></ScoreVitamins>
+          </div>
+          <div class="col">
+            <ScoreVitamins kind="MINERALS"></ScoreVitamins>
+          </div>
         </div>
       </div>
     </div>
@@ -78,14 +88,15 @@
 </template>
 
 <script>
-import NavBar from "./NavBar.vue";
-import EnergyRatio from "./EnergyRatio.vue";
-import TargetsKnob from "./TargetsKnob.vue";
-import CaloriesBurned from "./CaloriesBurned.vue";
-import MyCalendar from "./MyCalendar.vue";
-import ScoreVitamins from "./ScoreVitamins.vue";
-import AddFood from "./AddFood.vue";
-import DailyFood from "./DailyFood.vue";
+import NavBar from "../components/NavBar.vue";
+import EnergyRatio from "../components/EnergyRatio.vue";
+import TargetsKnob from "../components/TargetsKnob.vue";
+import CaloriesBurned from "../components/CaloriesBurned.vue";
+import MyCalendar from "../components/MyCalendar.vue";
+import ScoreVitamins from "../components/ScoreVitamins.vue";
+import AddFood from "../components/AddFood.vue";
+import DailyFood from "../components/DailyFood.vue";
+
 export default {
   name: "Dashboard",
   components: {
@@ -97,7 +108,7 @@ export default {
     ScoreVitamins,
     AddFood,
     DailyFood
-},
+  },
   data() {
     return {
       nutrient: {
