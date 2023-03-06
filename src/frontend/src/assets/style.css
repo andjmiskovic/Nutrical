@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import "bootstrap.min.css";
 
 :root {
     --dark: #272d2d;
@@ -10,15 +11,17 @@
     --border-radius: 12px;
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
 
-html { overflow-y: scroll; overflow-x:hidden; }
-
+html {
+    /*overflow-y: scroll;*/
+    overflow-x: hidden;
+}
 
 body {
     position: relative;
@@ -34,14 +37,14 @@ body {
     color: var(--text-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: .5em;
     margin-bottom: 50px;
+    padding: .5em;
 }
 
 .card {
     background: var(--surface-card);
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 5px !important;
     margin-bottom: 2rem;
 }
 
@@ -57,4 +60,28 @@ body {
     margin-right: -0.5rem;
     margin-left: -0.5rem;
     margin-top: -0.5rem;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
 }
