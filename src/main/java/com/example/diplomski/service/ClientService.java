@@ -9,14 +9,14 @@ import com.example.diplomski.model.Nutritionist;
 import com.example.diplomski.repository.ClientRepository;
 import com.example.diplomski.repository.DairyRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientService {
-
     private ClientRepository clientRepository;
     private NutritionistService nutritionistService;
     private DairyRepository dailyPlanRepository;

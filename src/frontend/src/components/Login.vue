@@ -16,24 +16,42 @@
             <InputText type="text" v-model="password" placeholder="Password"/>
       </span>
       <br>
-      <Button style="width: 100%; text-align: center">Login</Button>
+      <Button style="width: 100%; text-align: center" @click="login">Login</Button>
     </div>
   </div>
   <div>
     <p style="width: 100%; float: right; margin-right: 10px">
       Don't have an account?
-      <span><b>Create one</b></span>
+<!--      <router-link :to="{name: 'Registration'}"><b>Create one</b></router-link>-->
     </p>
   </div>
 </template>
 
 <script>
+import AuthService from "@/services/AuthService.js";
+
 export default {
   name: "Login",
   data() {
     return {
       email: "",
       password: ""
+    }
+  },
+  methods: {
+    login() {
+      console.log("EMAIL: ", this.email)
+      console.log("PASSWORD: ", this.password)
+      AuthService.login(this.email, this.password)
+          .then((loginResponse) => {
+            console.log(loginResponse)
+            localStorage.setItem('token', "Bearer " + loginResponse["accessToken"]);
+            localStorage.setItem('userRole', loginResponse["role"]);
+            this.$router.push({name: 'Dashboard'});
+          })
+          .catch(error => {
+            console.log(error);
+          });
     }
   }
 }

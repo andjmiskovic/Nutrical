@@ -1,21 +1,81 @@
 package com.example.diplomski.model;
 
 import com.example.diplomski.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Getter
-@Setter
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
+
+@Entity
+@Data
+@Table(name = "USERS")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public abstract class User implements UserDetails {
+
     @Id
+    @Column(unique = true, nullable = false)
+    private Long id;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(unique = true, nullable = false)
     private String email;
-    private String name;
-    private String surname;
-    private Long password;
+
+    @Column(nullable = false)
+    private boolean emailVerified = false;
+
+    private String password;
+
+    @Column(unique = true)
+    private String verificationCode;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @CreationTimestamp
+    private Instant created;
+
+    @UpdateTimestamp
+    private Instant modified;
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return emailVerified;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(this.role.toAuthority());
+    }
 }

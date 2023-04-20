@@ -5,6 +5,7 @@ import com.example.diplomski.model.*;
 import com.example.diplomski.repository.PlanRepository;
 import com.example.diplomski.repository.TagRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PlanService {
     private PlanRepository planRepository;
     private FoodService foodService;

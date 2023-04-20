@@ -1,7 +1,14 @@
 package com.example.diplomski.exceptions;
 
-public class UserNotFoundException extends Exception {
-    public UserNotFoundException(String errorMessage) {
-        super(errorMessage);
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException() {
+    }
+
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+
+    public UserNotFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

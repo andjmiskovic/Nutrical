@@ -7,12 +7,12 @@ import com.example.diplomski.model.Tag;
 import com.example.diplomski.repository.DairyRepository;
 import com.example.diplomski.repository.NutrientsRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@AllArgsConstructor
 @Service
 public class NutrientsService {
 

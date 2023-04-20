@@ -12,6 +12,7 @@ import com.example.diplomski.model.Tag;
 import com.example.diplomski.repository.DairyRepository;
 import com.example.diplomski.repository.TagRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DairyService {
     private DairyRepository dairyRepository;
     private RegularUserService regularUserService;

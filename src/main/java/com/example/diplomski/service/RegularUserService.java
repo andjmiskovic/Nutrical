@@ -4,10 +4,11 @@ import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.RegularUser;
 import com.example.diplomski.repository.RegularUserRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RegularUserService {
     private RegularUserRepository regularUserRepository;
 
