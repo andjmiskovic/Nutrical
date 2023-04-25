@@ -1,8 +1,10 @@
 package com.example.diplomski.model;
 
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
+@Entity
+@Data
 @Getter
 @Setter
 @Builder
@@ -13,5 +15,6 @@ public class Client {
     private String email;
     private String name;
     private String surname;
+    @OneToOne(cascade = CascadeType.ALL)
     private ClientData clientData;
 }

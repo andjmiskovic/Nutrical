@@ -1,20 +1,27 @@
 package com.example.diplomski.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
-import java.util.HashMap;
+import java.util.Set;
 
+@Entity
+@Data
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class FoodItem {
+    @Id
     private String id;
     private String name;
     private Double calories;
     private Double protein;
     private Double fat;
     private Double carbs;
-    private HashMap<String, Double> nutrients;
+    @OneToMany
+    private Set<NutrientQuantity> nutrients;
 }

@@ -1,13 +1,14 @@
 package com.example.diplomski.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import lombok.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 public class DailyPlan {
     @Id
     private Long id;
-    private ArrayList<Tag> tags;
+    @ManyToMany
+    private List<Tag> tags;
     private String notes;
     private String userEmail;
 }

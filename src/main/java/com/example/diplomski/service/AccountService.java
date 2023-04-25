@@ -15,7 +15,7 @@ import com.example.diplomski.util.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,14 +27,19 @@ import java.security.SecureRandom;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class AccountService {
 
+    @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private TokenProvider tokenProvider;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private AppProperties appProperties;
+    @Autowired
     private MailingService mailingService;
 
     private final SecureRandom random = new SecureRandom();

@@ -14,6 +14,8 @@ import java.util.Collections;
 
 @Entity
 @Data
+@Getter
+@Setter
 @Table(name = "USERS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor

@@ -1,16 +1,20 @@
 package com.example.diplomski.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Nutritionist extends User {
-    private List<Client> clients;
+    @ManyToMany
+    private Set<Client> clients;
 }

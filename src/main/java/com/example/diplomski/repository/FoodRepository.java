@@ -1,11 +1,12 @@
 package com.example.diplomski.repository;
 
 import com.example.diplomski.model.FoodItem;
+import com.example.diplomski.model.NutrientQuantity;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.*;
 
 public class FoodRepository {
     public static HashMap<String, FoodItem> getFoodItems() {
@@ -28,6 +29,7 @@ public class FoodRepository {
                 }
 
                 HashMap<String, Double> nutrients = new HashMap<>();
+                Set<NutrientQuantity> nutrientQuantityList = new HashSet<>();
 
                 for (int h = 3; h < header.length; h++) {
                     double v;
@@ -37,9 +39,13 @@ public class FoodRepository {
                         v = 0.0;
                     }
                     nutrients.put(header[h], v);
+                    NutrientQuantity nutrientQuantity = new NutrientQuantity();
+                    nutrientQuantity.setNutrient(header[h]);
+                    nutrientQuantity.setQuantity(v);
+                    nutrientQuantityList.add(nutrientQuantity);
                 }
 
-                foodItem.setNutrients(nutrients);
+                foodItem.setNutrients(nutrientQuantityList);
                 foodItem.setCalories(nutrients.get("calories"));
                 foodItem.setCarbs(nutrients.get("carbohydrate"));
                 foodItem.setFat(nutrients.get("total_fat"));

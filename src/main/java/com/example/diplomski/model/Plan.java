@@ -1,14 +1,14 @@
 package com.example.diplomski.model;
 
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,8 +16,10 @@ import java.util.List;
 public class Plan {
     @Id
     private Long id;
+    @OneToOne
     private Client client;
-    @OneToMany
+    @ManyToOne
     private Nutritionist nutritionist;
+    @OneToMany
     private List<DailyPlan> dailyPlans;
 }

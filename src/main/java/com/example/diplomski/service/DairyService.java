@@ -5,27 +5,26 @@ import com.example.diplomski.dto.RemoveFoodRequest;
 import com.example.diplomski.dto.RemoveTagRequest;
 import com.example.diplomski.dto.TagRequest;
 import com.example.diplomski.exceptions.UserNotFoundException;
-import com.example.diplomski.model.DailyPlan;
-import com.example.diplomski.model.FoodItem;
-import com.example.diplomski.model.RegularUser;
-import com.example.diplomski.model.Tag;
+import com.example.diplomski.model.*;
 import com.example.diplomski.repository.DairyRepository;
 import com.example.diplomski.repository.TagRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class DairyService {
+    @Autowired
     private DairyRepository dairyRepository;
+    @Autowired
     private RegularUserService regularUserService;
+    @Autowired
     private FoodService foodService;
+    @Autowired
     private TagRepository tagRepository;
 
     public DailyPlan getDailyPlan(String email) throws InstanceNotFoundException {
@@ -38,8 +37,8 @@ public class DairyService {
 
     public void addFood(AddFoodRequest addFoodRequest) throws UserNotFoundException, InstanceNotFoundException {
         RegularUser regularUser = regularUserService.getByEmail(addFoodRequest.getEmail());
-        if (!regularUser.getDailyDairy().containsKey(addFoodRequest.getDate())) {
-            regularUser.getDailyDairy().put(addFoodRequest.getDate(), new DailyPlan());
+        if (regularUser.getDailyPlanByDate(addFoodRequest.getDate()) == null) {
+            regularUser.getDailyDairy().add(new DailyDairy(addFoodRequest.getDate(), new DailyPlan()));
         }
         addFoodToDailyPlan(regularUser, addFoodRequest);
         regularUserService.save(regularUser);
@@ -47,19 +46,19 @@ public class DairyService {
 
     private void addFoodToDailyPlan(RegularUser regularUser, AddFoodRequest addFoodRequest) throws InstanceNotFoundException {
         FoodItem foodItem = foodService.getFoodByName(addFoodRequest.getFood());
-        DailyPlan dailyPlan = regularUser.getDailyDairy().get(addFoodRequest.getDate());
+        DailyPlan dailyPlan = regularUser.getDailyPlanByDate(addFoodRequest.getDate());
         List<Tag> tags = dailyPlan.getTags();
         for (Tag tag : tags) {
             if (Objects.equals(tag.getId(), addFoodRequest.getTagId())) {
-                tag.getEatenFood().put(foodItem, addFoodRequest.getAmount());
+                tag.getEatenFood().add(new EatenFood(foodItem, addFoodRequest.getAmount()));
                 tagRepository.save(tag);
                 return;
             }
         }
         Tag newTag = Tag.builder()
                 .tag("Tag " + (tags.size() + 1))
-                .eatenFood(new HashMap<>() {{
-                    put(foodItem, addFoodRequest.getAmount());
+                .eatenFood(new ArrayList<>() {{
+                    add(new EatenFood(foodItem, addFoodRequest.getAmount()));
                 }})
                 .build();
         tags.add(newTag);
@@ -69,14 +68,24 @@ public class DairyService {
 
     public void removeFood(RemoveFoodRequest removeFoodRequest) throws UserNotFoundException, InstanceNotFoundException {
         RegularUser regularUser = regularUserService.getByEmail(removeFoodRequest.getEmail());
-        DailyPlan dailyPlan = regularUser.getDailyDairy().get(removeFoodRequest.getDate());
+        DailyPlan dailyPlan = regularUser.getDailyPlanByDate(removeFoodRequest.getDate());
         List<Tag> tags = dailyPlan.getTags();
         for (Tag tag : tags) {
             if (tag.getId().equals(removeFoodRequest.getTagId())) {
-                tag.getEatenFood().remove(foodService.getFoodByName(removeFoodRequest.getFood()));
+                removeEatenFood(tag, removeFoodRequest.getFood());
                 tagRepository.save(tag);
                 regularUserService.save(regularUser);
                 dairyRepository.save(dailyPlan);
+                return;
+            }
+        }
+    }
+
+    private void removeEatenFood(Tag tag, String food) throws InstanceNotFoundException {
+        FoodItem foodItem = foodService.getFoodByName(food);
+        for (EatenFood eatenFood : tag.getEatenFood()) {
+            if (eatenFood.getFoodItem().getName().equals(foodItem.getName())) {
+                tag.getEatenFood().remove(eatenFood);
                 return;
             }
         }
@@ -86,7 +95,7 @@ public class DairyService {
         DailyPlan dailyPlan = getDailyPlan(addTagRequest.getDailyPlanId());
         Tag tag = Tag.builder()
                 .tag(addTagRequest.getTagName())
-                .eatenFood(new HashMap<>())
+                .eatenFood(new ArrayList<>())
                 .build();
         dailyPlan.getTags().add(tag);
         dairyRepository.save(dailyPlan);

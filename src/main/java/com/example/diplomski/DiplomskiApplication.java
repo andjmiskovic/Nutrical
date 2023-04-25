@@ -9,7 +9,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableConfigurationProperties(AppProperties.class)
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication
+@EnableTransactionManagement
+@EnableAsync
+//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 public class DiplomskiApplication {
 
     public static void main(String[] args) {

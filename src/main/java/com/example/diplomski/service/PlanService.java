@@ -4,20 +4,21 @@ import com.example.diplomski.dto.ClientAddFoodRequest;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.PlanRepository;
 import com.example.diplomski.repository.TagRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class PlanService {
+    @Autowired
     private PlanRepository planRepository;
+    @Autowired
     private FoodService foodService;
+    @Autowired
     private TagRepository tagRepository;
 
     public void addFood(ClientAddFoodRequest addFoodRequest) {
@@ -30,14 +31,14 @@ public class PlanService {
         List<Tag> tags = dailyPlan.getTags();
         for (Tag tag : dailyPlan.getTags()) {
             if (Objects.equals(tag.getId(), addFoodRequest.getTagId())) {
-                tag.getEatenFood().put(foodItem, addFoodRequest.getAmount());
+                tag.getEatenFood().add(new EatenFood(foodItem, addFoodRequest.getAmount()));
                 return;
             }
         }
         Tag newTag = Tag.builder()
                 .tag("Tag " + (tags.size() + 1))
-                .eatenFood(new HashMap<>() {{
-                    put(foodItem, addFoodRequest.getAmount());
+                .eatenFood(new ArrayList<>() {{
+                    add(new EatenFood(foodItem, addFoodRequest.getAmount()));
                 }})
                 .build();
         tags.add(newTag);
