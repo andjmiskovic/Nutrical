@@ -1,0 +1,73 @@
+server:
+  port: 8085
+spring:
+  mail:
+    host: 'smtp.office365.com'
+    port: 587
+    username: ${EMAIL_SENDER_ADDRESS}
+    password: ${EMAIL_SENDER_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nutrical
+    username: postgres
+    password: postgres
+    sql.init.continue-on-error: true
+  jpa:
+    generate-ddl: 'true'
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        generate_statistics: 'false'
+        search:
+          default:
+            directory_provider: filesystem
+            indexBase: ./data/index/default
+        format_sql: 'true'
+    defer-datasource-initialization: 'true'
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: 'false'
+    open-in-view: false
+  servlet:
+  multipart:
+    max-file-size: 100MB
+    max-request-size: 100MB
+  devtools:
+    remote:
+      secret: "secret"
+  sql:
+    init:
+      data-locations: classpath:/data.sql
+      mode: always
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  profiles:
+    active: dev
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/nutrical?createDatabaseIfNotExist=true
+#jpa:
+#hibernate:
+#dialect: org.hibernate.dialect.PostgreSQL95Dialect
+app:
+  auth:
+    tokenSecret: ${env.TOKEN_SECRET}
+    tokenExpirationSeconds: 864000
+  cors:
+    allowedOrigins: http://localhost:3000, http://127.0.0.1:3000
+  mailing:
+    templatesLocation: templates
+    senderAddress: ${env.EMAIL_SENDER_ADDRESS}

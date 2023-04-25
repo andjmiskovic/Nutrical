@@ -58,7 +58,7 @@ public class SecurityConfig {
                     .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                     .and()
                 .authorizeHttpRequests()
-                    .requestMatchers("/auth/**")
+                    .requestMatchers("/api/auth/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated();

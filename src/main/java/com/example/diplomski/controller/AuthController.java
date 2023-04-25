@@ -3,6 +3,7 @@ package com.example.diplomski.controller;
 import com.example.diplomski.dto.*;
 import com.example.diplomski.model.User;
 import com.example.diplomski.service.AccountService;
+import com.example.diplomski.service.PDFService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -12,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/api/auth")
 public class AuthController {
 
     @Autowired
@@ -20,6 +21,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        PDFService.createPDF();
+//        return null;
         return accountService.login(loginRequest, response);
     }
 

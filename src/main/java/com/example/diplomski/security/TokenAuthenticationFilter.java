@@ -72,7 +72,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
-
     private void sendResponse(HttpServletResponse response, Integer status, String message) throws IOException {
         ResponseError responseError = new ResponseError(status, message);
         response.setStatus(status);
