@@ -1,72 +1,52 @@
 <template>
-  <div class="sidebar" :class="{ active: isActive }">
-    <div class="logo_content">
-      <i class="bx bx-menu" @click="toggle" id="menu-btn"></i>
-      <img class="logo" src="../assets/logo.png"  alt="logo"/>
-    </div>
+  <div class="sidebar">
+    <img src="../assets/icon_white.png" class="logo" style="margin-top: 10px" alt="">
+    <hr style="height: 1px; background: var(--blue)">
     <ul>
       <li>
-        <i class="bx bx-search"></i>
-        <input type="text" placeholder="Search..." />
-      </li>
-      <li>
-        <a href="#">
-          <i class="bx bx-grid-alt"></i>
-          <span class="links_name">Dashboard</span>
+        <a href="#" :class="{ currentPage: activePage === 'dashboard' }">
+          <i class="pi pi-check"></i>
         </a>
         <span class="tooltip">Dashboard</span>
       </li>
       <li>
-        <a href="#">
-          <i class="bx bx-user"></i>
-          <span class="links_name">My Profile</span>
+        <a href="#" :class="{ currentPage: activePage === 'profile' }">
+          <i class="pi pi-check"></i>
         </a>
         <span class="tooltip">My Profile</span>
       </li>
       <li>
-        <a href="#">
-          <i class="bx bx-grid-alt"></i>
-          <span class="links_name">Analytics</span>
+        <a href="#" :class="{ currentPage: activePage === 'analytics' }">
+          <i class="pi pi-check"></i>
         </a>
         <span class="tooltip">Analytics</span>
       </li>
       <li>
-        <a href="#">
-          <i class="bx bx-cog"></i>
-          <span class="links_name">Settings</span>
+        <a href="#" :class="{ currentPage: activePage === 'settings' }">
+          <i class="pi pi-check"></i>
         </a>
         <span class="tooltip">Settings</span>
       </li>
     </ul>
-    <div class="profile_content">
-      <div class="profile">
-        <div class="profile_details">
-          <img src="../assets/images/profile.jpg" alt="" />
-          <div class="name">Andjela Miskovic</div>
-        </div>
-        <i class="bx bx-log-out" id="log_out"></i>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["activePage"],
   name: "NavBar",
   data() {
-    return {
-      isActive: false,
-    };
+    return {};
   },
-  methods: {
-    toggle() {
-      this.isActive = !this.isActive;
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style>
+.logo {
+  max-height: 50px;
+}
+
 .sidebar {
   height: 100%;
   width: 78px;
@@ -75,37 +55,14 @@ export default {
   left: 0;
   position: fixed;
   padding: 6px 14px;
-  z-index: 99;
+  z-index: 98;
 }
-.sidebar.active {
-  width: 240px;
-}
-.sidebar .logo_content .logo {
-  display: flex;
-  height: 100%;
-  width: 150px;
-  align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  margin-left: 50px;
-}
-.sidebar.active .logo_content .logo {
-  opacity: 1;
-}
-.sidebar #menu-btn {
-  position: absolute;
-  color: var(--white);
-  cursor: pointer;
-  top: 6px;
-  font-size: 20px;
-  width: 50px;
-  text-align: center;
-  line-height: 50px;
-  height: 50px;
-}
+
 .sidebar ul {
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-left: -45px;
 }
+
 .sidebar ul li {
   height: 50px;
   margin: 0 5px;
@@ -114,6 +71,7 @@ export default {
   width: 100%;
   line-height: 50px;
 }
+
 .sidebar ul li a {
   color: var(--white);
   display: flex;
@@ -123,6 +81,7 @@ export default {
   transition: all 0.4s ease;
   white-space: nowrap;
 }
+
 .sidebar ul li .tooltip {
   position: absolute;
   height: 35px;
@@ -140,22 +99,13 @@ export default {
   pointer-events: none;
   display: block;
 }
-.sidebar.active ul li .tooltip {
-  display: none;
-}
-.sidebar.active .links_name {
-  opacity: 1;
-  pointer-events: auto;
-}
-.sidebar .links_name {
-  opacity: 0;
-  pointer-events: none;
-}
+
 .sidebar ul li:hover .tooltip {
   transition: all 0.5s ease;
   opacity: 1;
   top: 50%;
 }
+
 .sidebar ul li input {
   position: absolute;
   left: 0;
@@ -170,70 +120,21 @@ export default {
   color: var(--white);
   background: var(--gray);
 }
-.sidebar ul li .bx-search {
-  position: absolute;
-  z-index: 99;
-  color: var(--white);
-  transition: all 0.5s ease;
+
+.currentPage {
+  background-color: var(--gray);
 }
-.sidebar ul li .bx-search:hover {
-  background: var(--white);
-  color: var(--gray);
-}
+
 .sidebar ul li a:hover {
-  background: var(--gray);
+  cursor: pointer;
 }
+
 .sidebar ul li i {
   height: 50px;
+  color: var(--blue);
   min-width: 50px;
   border-radius: var(--border-radius);
   text-align: center;
   line-height: 50px;
-}
-.sidebar .profile_content {
-  position: absolute;
-  color: var(--white);
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-.sidebar .profile_content .profile {
-  position: relative;
-  padding: 10px 6px;
-  background: var(--gray);
-  height: 60px;
-}
-.sidebar .profile_content .profile_details {
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  opacity: 0;
-  pointer-events: none;
-  white-space: nowrap;
-}
-.sidebar .profile_content .profile_details img {
-  height: 45px;
-  width: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-}
-.sidebar.active .profile_content .profile_details {
-  opacity: 1;
-  pointer-events: auto;
-}
-.profile #log_out {
-  position: absolute;
-  left: 50%;
-  bottom: 5px;
-  transform: translateX(-50%);
-  min-width: 50px;
-  line-height: 50px;
-  font-size: 20px;
-  float: right;
-  text-align: center;
-}
-.sidebar.active .profile #log_out {
-  left: 90%;
 }
 </style>

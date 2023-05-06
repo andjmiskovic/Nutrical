@@ -64,7 +64,7 @@ spring:
 #dialect: org.hibernate.dialect.PostgreSQL95Dialect
 app:
   auth:
-    tokenSecret: ${env.TOKEN_SECRET}
+    tokenSecret: 124672bc59b44e1f90d5afc5f6c8d500a4713f0eadbc2c1acc2a7caf9c9c9cd8
     tokenExpirationSeconds: 864000
   cors:
     allowedOrigins: http://localhost:3000, http://127.0.0.1:3000

@@ -23,6 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -44,7 +45,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             tokenProvider.validateToken(token);
-            Long userId = tokenProvider.getUserIdFromToken(token);
+            UUID userId = tokenProvider.getUserIdFromToken(token);
 
             UserDetails userDetails = customUserDetailsService.loadUserById(userId);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

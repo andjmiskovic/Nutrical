@@ -1,8 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import '../src/assets/style.css';
-//import { router } from "./router";
-
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';

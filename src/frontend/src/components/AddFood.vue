@@ -75,8 +75,8 @@ export default {
       fetch("/api/calculator/get-food?search=" + this.search + "&limit=100")
       .then((response) => response.text())
       .then((data) => {
-        this.food = JSON.parse(data);
         console.log(this.food);
+        this.food = JSON.parse(data);
       });
     },
     closeDialog() {

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -23,7 +24,7 @@ public abstract class User implements UserDetails {
 
     @Id
     @Column(unique = true, nullable = false)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private String firstName;

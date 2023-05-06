@@ -21,8 +21,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        PDFService.createPDF();
-//        return null;
         return accountService.login(loginRequest, response);
     }
 

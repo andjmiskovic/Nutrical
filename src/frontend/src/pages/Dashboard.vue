@@ -1,5 +1,5 @@
 <template>
-  <NavBar></NavBar>
+  <NavBar active-page="dashboard"></NavBar>
   <img
       class="dashboard-background"
       src="../assets/images/dashboard-background.jpg"

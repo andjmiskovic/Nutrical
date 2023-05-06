@@ -22,13 +22,13 @@
   <div>
     <p style="width: 100%; float: right; margin-right: 10px">
       Don't have an account?
-<!--      <router-link :to="{name: 'Registration'}"><b>Create one</b></router-link>-->
+      <!--      <router-link :to="{name: 'Registration'}"><b>Create one</b></router-link>-->
     </p>
   </div>
 </template>
 
 <script>
-import AuthService from "@/services/AuthService.js";
+import AuthService2 from "@/services/AuthService2";
 
 export default {
   name: "Login",
@@ -39,19 +39,17 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
       console.log("EMAIL: ", this.email)
       console.log("PASSWORD: ", this.password)
-      AuthService.login(this.email, this.password)
-          .then((loginResponse) => {
-            console.log(loginResponse)
-            localStorage.setItem('token', "Bearer " + loginResponse["accessToken"]);
-            localStorage.setItem('userRole', loginResponse["role"]);
-            this.$router.push({name: 'Dashboard'});
-          })
-          .catch(error => {
-            console.log(error);
-          });
+      await AuthService2.login({"email": this.email, "password": this.password}).then((loginResponse) => {
+        console.log(loginResponse)
+        localStorage.setItem('token', "Bearer " + loginResponse["accessToken"]);
+        localStorage.setItem('userRole', loginResponse["role"]);
+        this.$router.push('/dashboard');
+      }).catch(error => {
+        console.log(error);
+      });
     }
   }
 }

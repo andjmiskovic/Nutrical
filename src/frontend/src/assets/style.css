@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import "bootstrap.min.css";
+@import url('https://kit.fontawesome.com/a076d05399.js');
 
 :root {
     --dark: #272d2d;
