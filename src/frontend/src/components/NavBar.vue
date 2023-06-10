@@ -5,27 +5,33 @@
     <ul>
       <li>
         <a href="#" :class="{ currentPage: activePage === 'dashboard' }">
-          <i class="pi pi-check"></i>
+          <i class="pi pi-microsoft"></i>
         </a>
         <span class="tooltip">Dashboard</span>
       </li>
       <li>
-        <a href="#" :class="{ currentPage: activePage === 'profile' }">
-          <i class="pi pi-check"></i>
+        <a href="#" :class="{ currentPage: activePage === 'clients' }">
+          <i class="pi pi-user"></i>
         </a>
-        <span class="tooltip">My Profile</span>
+        <span class="tooltip">Clients</span>
       </li>
       <li>
-        <a href="#" :class="{ currentPage: activePage === 'analytics' }">
-          <i class="pi pi-check"></i>
+        <a href="#" :class="{ currentPage: activePage === 'plans' }">
+          <i class="pi pi-file"></i>
         </a>
-        <span class="tooltip">Analytics</span>
+        <span class="tooltip">Plans</span>
       </li>
       <li>
         <a href="#" :class="{ currentPage: activePage === 'settings' }">
           <i class="pi pi-check"></i>
         </a>
         <span class="tooltip">Settings</span>
+      </li>
+      <li onclick="logout()">
+        <a href="#">
+          <i class="pi pi-sign-out"></i>
+        </a>
+        <span class="tooltip">Log out</span>
       </li>
     </ul>
   </div>
@@ -106,21 +112,6 @@ export default {
   top: 50%;
 }
 
-.sidebar ul li input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  border: none;
-  outline: none;
-  border-radius: var(--border-radius);
-  padding-left: 50px;
-  font-size: 0.9rem;
-  color: var(--white);
-  background: var(--gray);
-}
-
 .currentPage {
   background-color: var(--gray);
 }
@@ -131,8 +122,8 @@ export default {
 
 .sidebar ul li i {
   height: 50px;
-  color: var(--blue);
-  min-width: 50px;
+  color: var(--green);
+  min-width: 60px;
   border-radius: var(--border-radius);
   text-align: center;
   line-height: 50px;

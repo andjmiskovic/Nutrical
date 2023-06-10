@@ -17,4 +17,6 @@ import java.util.Set;
 public class Nutritionist extends User {
     @ManyToMany
     private Set<Client> clients;
+    private String licence;
+    private String phoneNumber;
 }

@@ -15,15 +15,13 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Getter
-@Setter
 @Table(name = "USERS")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 public abstract class User implements UserDetails {
 
     @Id
-    @Column(unique = true, nullable = false)
+    @Column(columnDefinition = "uuid")
     private UUID id;
 
     @Column(nullable = false)

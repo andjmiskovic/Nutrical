@@ -1,69 +1,29 @@
-import axios from 'axios';
+import {instance, fetch} from './http.js'
 
-const API_URL = '/auth';
+const login = body => {
+    return fetch(instance.post('/api/auth/login', body, configuration))
+}
 
-class AuthService {
+const logout = body => {
+    return fetch(instance.post('/api/auth/logout', body, configuration))
+}
 
-    // login(email, password) {
-    //     fetch("/api/auth/login",
-    //         {
-    //             method: 'POST',
-    //             body: JSON.stringify({email, password})
-    //         }
-    //     )
-    //         .then((response) => console.log(response));
-    // }
+const register = body => {
+    return fetch(instance.post('/api/auth/register', body, configuration))
+}
 
-    // static async login(email, password) {
-    //     const response = await fetch('/api/auth/login', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ email, password })
-    //     });
-    //     const data = await response.json();
-    //     if (response.ok) {
-    //         localStorage.setItem('token', data.token);
-    //         return true;
-    //     } else {
-    //         throw new Error(data.message || 'Failed to login');
-    //     }
-    // }
+const verify = body => {
+    return fetch(instance.post('/api/auth/register/verify', body, configuration))
+}
 
-    login(email, password) {
-        let body = {
-            "email": email,
-            "password": password
-        }
-        return axios.post(`/api/auth/login`, body, this.getHttpOptions());
-    }
-
-    logout() {
-        return axios.post(`${API_URL}/logout`);
-    }
-
-    register(registrationRequest) {
-        return axios.post(`${API_URL}/register`, registrationRequest);
-    }
-
-    verify(verificationRequest) {
-        return axios.post(`${API_URL}/register/verify`, verificationRequest);
-    }
-
-    getLoggedUserInfo() {
-        return axios.get(`${API_URL}/me`);
-    }
-
-    getHttpOptions(params = {}) {
-        return {
-            headers: {
-                'Authorization': localStorage.getItem('token') || 'authkey',
-                'Content-Type': 'application/json',
-            },
-            params: params,
-        };
+const configuration = {
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/json',
     }
 }
 
-export default new AuthService();
+export default {
+    login, logout, register, verify
+}

@@ -12,13 +12,10 @@ public class RegistrationRequest {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\\\d)(?=.*[@$!%*#?&^])[A-Za-z\\\\d@$!%*#?&^]{12,}$\n",
-            message = "Password must have at least 6 characters, at least one uppercase letter, " +
-                    "one lowercase letter and one digit.")
-    private String password;
+    private String username;
 
     @NotBlank
-    private String passwordConfirmation;
+    private String password;
 
     @NotBlank
     @Size(max = 40, message = "First name cannot be longer than 40 characters.")
@@ -27,4 +24,9 @@ public class RegistrationRequest {
     @NotBlank
     @Size(max = 40, message = "Last name cannot be longer than 40 characters.")
     private String lastName;
+
+    @NotBlank
+    private String phoneNumber;
+
+    private String licence;
 }

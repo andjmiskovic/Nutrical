@@ -10,8 +10,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class MailingService {
 
+    @Autowired
     private JavaMailSender mailSender;
     private final Path templatesLocation;
     private final String senderAddress;
@@ -46,17 +46,17 @@ public class MailingService {
     }
 
     private void sendMail(String to, String subject, String body) {
-//        try {
-////            MimeMessage mimeMessage = mailSender.createMimeMessage();
-////            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-////            helper.setText(body, true);
-////            helper.setTo(to);
-////            helper.setFrom(senderAddress);
-////            helper.setSubject(subject);
-////            mailSender.send(mimeMessage);
-//        } catch (MessagingException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            helper.setText(body, true);
+            helper.setTo(to);
+            helper.setFrom(senderAddress);
+            helper.setSubject(subject);
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String renderTemplate(String templateName, String... variables) {
@@ -76,7 +76,7 @@ public class MailingService {
 
     private String renderTemplate(String templateName, Map<String, String> variables) {
         File file = templatesLocation.resolve(templateName).toFile();
-        String message = null;
+        String message;
         try {
             message = FileUtils.readFileToString(file, "UTF-8");
         } catch (IOException e) {

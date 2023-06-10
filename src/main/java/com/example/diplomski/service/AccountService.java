@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -77,9 +78,12 @@ public class AccountService {
         checkEmailAvailability(registrationRequest.getEmail());
 
         Nutritionist nutritionist = new Nutritionist();
+        nutritionist.setId(UUID.randomUUID());
         nutritionist.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
         nutritionist.setRole(Role.NUTRITIONIST);
         nutritionist.setEmail(registrationRequest.getEmail());
+        nutritionist.setPhoneNumber(registrationRequest.getPhoneNumber());
+        nutritionist.setLicence(registrationRequest.getLicence());
         nutritionist.setFirstName(registrationRequest.getFirstName());
         nutritionist.setLastName(registrationRequest.getLastName());
         nutritionist.setEmailVerified(false);

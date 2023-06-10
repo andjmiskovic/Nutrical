@@ -39,7 +39,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-bottom: 50px;
-    padding: .5em;
+    /*padding: .5em;*/
 }
 
 .card {

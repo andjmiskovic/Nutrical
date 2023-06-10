@@ -4,8 +4,8 @@ spring:
   mail:
     host: 'smtp.office365.com'
     port: 587
-    username: ${EMAIL_SENDER_ADDRESS}
-    password: ${EMAIL_SENDER_PASSWORD}
+    username: bsep-test@outlook.com
+    password: bsep_bsep
     properties:
       mail:
         smtp:
@@ -70,4 +70,4 @@ app:
     allowedOrigins: http://localhost:3000, http://127.0.0.1:3000
   mailing:
     templatesLocation: templates
-    senderAddress: ${env.EMAIL_SENDER_ADDRESS}
+    senderAddress: bsep-test@outlook.com
