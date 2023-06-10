@@ -6,7 +6,9 @@ import com.example.diplomski.dto.RemoveTagRequest;
 import com.example.diplomski.dto.TagRequest;
 import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.DailyPlan;
+import com.example.diplomski.model.Plan;
 import com.example.diplomski.service.DairyService;
+import com.example.diplomski.service.PlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +20,16 @@ import javax.management.InstanceNotFoundException;
 public class DairyController {
 
     private DairyService dairyService;
+    private PlanService planService;
 
-    @GetMapping("/get-plan/{clientEmail}")
-    public DailyPlan getPlan(@PathVariable String clientEmail) throws UserNotFoundException {
-        return dairyService.getPlan(clientEmail);
+    @GetMapping("/get-plan/{planId}")
+    public Plan getPlan(@PathVariable Long planId) {
+        return planService.getPlan(planId);
+    }
+
+    @GetMapping("/get-plan/{planId}/{day}")
+    public DailyPlan getPlan(@PathVariable Long planId, @PathVariable int day) {
+        return planService.getPlan(planId, day);
     }
 
     @PostMapping("/add-food")

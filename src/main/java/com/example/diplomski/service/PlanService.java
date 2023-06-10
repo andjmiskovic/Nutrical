@@ -21,6 +21,19 @@ public class PlanService {
     @Autowired
     private TagRepository tagRepository;
 
+    public Plan getPlan(Long id) {
+        return planRepository.findById(id).get();
+    }
+
+    public DailyPlan getPlan(Long id, int day) {
+        Plan plan = getPlan(id);
+        if (plan.getDailyPlans().size() < day) {
+            plan.getDailyPlans().add(new DailyPlan());
+            planRepository.save(plan);
+        }
+        return plan.getDailyPlans().get(day - 1);
+    }
+
     public void addFood(ClientAddFoodRequest addFoodRequest) {
         Plan plan = planRepository.findByClientEmail(addFoodRequest.getClientEmail());
         DailyPlan dailyPlan = plan.getDailyPlans().get(addFoodRequest.getDay());

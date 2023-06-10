@@ -120,8 +120,4 @@ public class DairyService {
             dairyRepository.save(dailyPlan);
         }
     }
-
-    public DailyPlan getPlan(String clientEmail) throws UserNotFoundException {
-        return dairyRepository.findByUserEmail(clientEmail).orElseThrow(() -> new UserNotFoundException("Client or client plan not found."));
-    }
 }
