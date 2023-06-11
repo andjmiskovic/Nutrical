@@ -16,6 +16,10 @@ const verify = body => {
     return fetch(instance.post('/api/auth/register/verify', body, configuration))
 }
 
+const getLoggedUserInfo = () => {
+    return fetch(instance.get('/api/auth/me', configuration))
+}
+
 const configuration = {
     headers: {
         'Access-Control-Allow-Origin': '*',
@@ -25,5 +29,5 @@ const configuration = {
 }
 
 export default {
-    login, logout, register, verify
+    login, logout, register, verify, getLoggedUserInfo
 }

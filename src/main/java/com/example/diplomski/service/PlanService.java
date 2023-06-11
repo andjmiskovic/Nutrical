@@ -2,6 +2,7 @@ package com.example.diplomski.service;
 
 import com.example.diplomski.dto.ClientAddFoodRequest;
 import com.example.diplomski.model.*;
+import com.example.diplomski.repository.DairyRepository;
 import com.example.diplomski.repository.PlanRepository;
 import com.example.diplomski.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class PlanService {
     @Autowired
     private PlanRepository planRepository;
     @Autowired
+    private DairyRepository dairyRepository;
+    @Autowired
     private FoodService foodService;
     @Autowired
     private TagRepository tagRepository;
@@ -25,10 +28,17 @@ public class PlanService {
         return planRepository.findById(id).get();
     }
 
-    public DailyPlan getPlan(Long id, int day) {
+    public DailyPlan getPlan(Long id, int day) throws Exception {
         Plan plan = getPlan(id);
+        if (plan == null) {
+            throw new Exception("Plan does not exists");
+        }
         if (plan.getDailyPlans().size() < day) {
-            plan.getDailyPlans().add(new DailyPlan());
+            DailyPlan dailyPlan = new DailyPlan();
+            dailyPlan.setUserEmail(plan.getClient().getEmail());
+            dairyRepository.save(dailyPlan);
+
+            plan.getDailyPlans().add(dailyPlan);
             planRepository.save(plan);
         }
         return plan.getDailyPlans().get(day - 1);

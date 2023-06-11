@@ -1,8 +1,6 @@
 package com.example.diplomski.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DailyPlan {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToMany
     private List<Tag> tags;

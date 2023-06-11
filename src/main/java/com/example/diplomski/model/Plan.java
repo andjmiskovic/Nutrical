@@ -15,11 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Plan {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     private Client client;
     @ManyToOne
     private Nutritionist nutritionist;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<DailyPlan> dailyPlans;
 }

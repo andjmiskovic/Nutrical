@@ -8,8 +8,9 @@
       <span class="p-inputgroup-addon">
         <i class="pi pi-search"></i>
       </span>
-      <InputText v-model="search" @input="filteredClients" placeholder="Search clients..."/>
-      <Button label="Add Client" style="margin-left: 10px" icon="pi pi-plus" class="p-button-success" @click="openAddClientDialog" />
+      <InputText v-model="search" @input="filterClients" placeholder="Search clients..."/>
+      <Button label="Add Client" style="margin-left: 10px" icon="pi pi-plus" class="p-button-success"
+              @click="openAddClientDialog"/>
     </div>
 
     <DataTable
@@ -41,6 +42,8 @@
 import {FilterMatchMode} from "primevue/api";
 import NavBar from "../components/NavBar.vue";
 import AddClientDialog from "@/dialogs/AddClientDialog";
+import ClientsService from "@/services/ClientsService";
+import AuthService from "@/services/AuthService";
 
 export default {
   name: "Clients",
@@ -51,7 +54,9 @@ export default {
   data() {
     return {
       selectedClient: null,
+      nutritionistEmail: "",
       clients: [],
+      filteredClients: [],
       search: "",
       filters: {
         email: {value: null, matchMode: FilterMatchMode.STARTS_WITH},
@@ -61,31 +66,33 @@ export default {
     };
   },
   mounted() {
-    this.getClients();
+    AuthService.getLoggedUserInfo().then((data) => {
+      this.nutritionistEmail = data[0]["email"];
+      this.getClients();
+    })
   },
   methods: {
     getClients() {
-      // Make an API call to fetch the list of clients
-      // Replace this with your actual API call implementation
-      fetch("/api/clients")
-          .then((response) => response.json())
+      ClientsService.getClients(this.nutritionistEmail)
           .then((data) => {
-            this.clients = data;
+            this.clients = data[0];
+            this.filterClients();
           })
           .catch((error) => {
-            console.error("Error fetching clients:", error);
+            console.error("Error fetching clients");
+            console.error(error);
           });
     },
     viewDetails(client) {
       // Handle viewing client details
       console.log("View details for client:", client);
     },
-    viewPlan(client) {
-      // Handle viewing client plan
-      console.log("View plan for client:", client);
+    viewPlan(rowData) {
+      let planId = rowData["data"]["planId"];
+      this.$router.push({path: "/plan/" + planId});
     },
-    filteredClients() {
-      return this.clients.filter((client) => {
+    filterClients() {
+      this.filteredClients = this.clients.filter((client) => {
         // Apply your search logic based on client properties
         const emailMatch = client.email.toLowerCase().includes(this.search.toLowerCase());
         const nameMatch = client.name.toLowerCase().includes(this.search.toLowerCase());
@@ -97,7 +104,6 @@ export default {
     },
     openAddClientDialog() {
       this.$refs.newClientDialog.visible = true;
-      console.log("EOOO")
     },
   },
 };

@@ -20,11 +20,8 @@
         </div>
         <div class="p-field">
           <label for="activityStatus">Activity Status</label>
-          <Dropdown id="activityStatus" v-model="newClient.activityStatus" :options="activityStatusOptions" required>
-            <template #option="{ option }">
-              {{ option.label }} ({{ option.value }})
-            </template>
-          </Dropdown>
+          <Dropdown id="activityStatus" v-model="newClient.activityStatus" :options="activityStatusOptions"
+                    optionLabel="value" class="p-field"/>
         </div>
         <div class="p-field">
           <label for="weight">Weight (kg)</label>
@@ -40,15 +37,14 @@
         </div>
       </div>
 
-      <div class="p-dialog-footer">
-        <Button label="Cancel" class="p-button-text" @click="cancelAddClient"/>
-        <Button type="submit" label="Add" :disabled="!isFormValid"/>
-      </div>
+      <Button type="submit" style="width: 100%" label="Add" :disabled="!isFormValid"/>
     </form>
   </Dialog>
 </template>
 
 <script>
+
+import ClientsService from "@/services/ClientsService";
 
 export default {
   name: "AddClientDialog",
@@ -66,7 +62,7 @@ export default {
         height: null,
         dateOfBirth: null,
       },
-      healthStatusOptions: ["MAN", "WOMAN", "PREGNANT", "BREASTFEEDING"],
+      healthStatusOptions: ["Man", "Woman", "Pregnant", "Breastfeeding"],
       activityStatusOptions: [
         {label: "Sedentary", value: "Little or no exercise, desk job"},
         {label: "Lightly Active", value: "Light exercise/sports 1-3 days per week"},
@@ -84,11 +80,7 @@ export default {
   },
   methods: {
     showDialog() {
-      this.dialogVisible = true;
-    },
-    cancelAddClient() {
-      this.dialogVisible = false;
-      this.resetForm();
+      this.visible = true;
     },
     resetForm() {
       this.newClient = {
@@ -106,13 +98,10 @@ export default {
       if (!this.isFormValid) {
         return;
       }
-
-      // Perform the API call to add the new client using this.newClient data
-      // Replace the following console.log with your actual API call
-      console.log("Add new client:", this.newClient);
-
-      this.dialogVisible = false;
-      this.resetForm();
+      ClientsService.addClient(this.newClient).catch((() => {
+        this.visible = false;
+        this.resetForm();
+      }))
     },
   },
 };

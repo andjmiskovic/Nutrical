@@ -26,7 +26,7 @@ const router = createRouter({
             component: Dashboard
         },
         {
-            path: '/plan',
+            path: '/plan/:planId',
             component: Plan
         },
         {

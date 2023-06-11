@@ -17,7 +17,7 @@ import javax.management.InstanceNotFoundException;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/dairy")
-public class DairyController {
+public class PlanController {
 
     private DairyService dairyService;
     private PlanService planService;
@@ -28,7 +28,7 @@ public class DairyController {
     }
 
     @GetMapping("/get-plan/{planId}/{day}")
-    public DailyPlan getPlan(@PathVariable Long planId, @PathVariable int day) {
+    public DailyPlan getPlan(@PathVariable Long planId, @PathVariable int day) throws Exception {
         return planService.getPlan(planId, day);
     }
 

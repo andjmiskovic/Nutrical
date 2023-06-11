@@ -121,7 +121,7 @@ export default {
     };
   },
   mounted() {
-    const plan = this.$route.query.planId || "";
+    const plan = this.$route.params.planId || "";
     PlanService.getPlanByDay(plan, this.day).then((plan) => {
       console.log(plan);
     });

@@ -1,6 +1,7 @@
 package com.example.diplomski.controller;
 
 import com.example.diplomski.dto.BasicUserData;
+import com.example.diplomski.dto.ClientDetails;
 import com.example.diplomski.dto.ClientRequest;
 import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.Client;
@@ -24,9 +25,9 @@ public class NutritionistController {
         clientService.addClient(clientRequestDTO);
     }
 
-    @GetMapping("/get-client/{nutritionistEmail}/{search}")
-    public List<BasicUserData> getClients(@PathVariable("nutritionistEmail") String nutritionistEmail, @PathVariable("search") String search) throws UserNotFoundException {
-        return nutritionistService.getClients(nutritionistEmail, search);
+    @GetMapping("/get-clients/{nutritionistEmail}")
+    public List<ClientDetails> getClients(@PathVariable("nutritionistEmail") String nutritionistEmail) throws UserNotFoundException {
+        return nutritionistService.getClients(nutritionistEmail);
     }
 
     @GetMapping("/get-client/{nutritionistEmail}/{clientEmail}")
