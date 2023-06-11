@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="col-fixed" style="width: 100px">
-          <Button label="Add" icon="pi pi-check" @click="closeDialog" />
+          <Button label="Add" icon="pi pi-check" @click="addFood()" />
         </div>
       </div>
     </template>
@@ -51,14 +51,16 @@
 
 <script>
 import { FilterMatchMode } from "primevue/api";
+import PlanService from "@/services/PlanService";
 
 export default {
   name: "AddFood",
-  props: [],
+  props: ['plan', 'day'],
   data() {
     return {
       visible: false,
       serving: 100,
+      tagId: null,
       search: "",
       food: [],
       selectedFood: null,
@@ -82,6 +84,22 @@ export default {
     closeDialog() {
       this.visible = false;
     },
+    addFood() {
+      console.log(this.plan["id"]);
+      console.log(this.selectedFood["id"]);
+      let body = {
+        "tagId": this.tagId,
+        "planId": this.plan["id"],
+        "foodId": this.selectedFood["id"],
+        "clientEmail": this.plan["userEmail"],
+        "day": this.day,
+        "amount": this.serving
+      }
+      console.log(body)
+      PlanService.addFood(body).catch(() => {
+        this.closeDialog();
+      })
+    }
   },
 };
 </script>

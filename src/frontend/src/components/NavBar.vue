@@ -4,22 +4,16 @@
     <hr style="height: 1px; background: var(--blue)">
     <ul>
       <li>
-        <a href="#" :class="{ currentPage: activePage === 'dashboard' }">
+        <a href="#" @click="$router.push('/dashboard')" :class="{ currentPage: activePage === 'dashboard' }">
           <i class="pi pi-microsoft"></i>
         </a>
         <span class="tooltip">Dashboard</span>
       </li>
       <li>
-        <a href="#" :class="{ currentPage: activePage === 'clients' }">
+        <a href="#" @click="$router.push('/clients')" :class="{ currentPage: activePage === 'clients' }">
           <i class="pi pi-user"></i>
         </a>
         <span class="tooltip">Clients</span>
-      </li>
-      <li>
-        <a href="#" :class="{ currentPage: activePage === 'plans' }">
-          <i class="pi pi-file"></i>
-        </a>
-        <span class="tooltip">Plans</span>
       </li>
       <li>
         <a href="#" :class="{ currentPage: activePage === 'settings' }">
@@ -27,8 +21,8 @@
         </a>
         <span class="tooltip">Settings</span>
       </li>
-      <li onclick="logout()">
-        <a href="#">
+      <li>
+        <a href="#" @click="logout()">
           <i class="pi pi-sign-out"></i>
         </a>
         <span class="tooltip">Log out</span>
@@ -38,13 +32,21 @@
 </template>
 
 <script>
+import AuthService from "@/services/AuthService";
+
 export default {
   props: ["activePage"],
   name: "NavBar",
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    logout() {
+      AuthService.logout().catch(() => {
+        this.$router.push('/');
+      });
+    }
+  },
 };
 </script>
 

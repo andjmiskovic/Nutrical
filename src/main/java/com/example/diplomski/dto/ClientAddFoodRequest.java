@@ -13,8 +13,9 @@ import java.util.Date;
 @Builder
 public class ClientAddFoodRequest {
     private String clientEmail;
-    private int day;
+    private Long planId;
     private Long tagId;
-    private String food;
+    private int day;
+    private Long foodId;
     private Double amount;
 }

@@ -46,24 +46,24 @@ public class DairyService {
 
     private void addFoodToDailyPlan(RegularUser regularUser, AddFoodRequest addFoodRequest) throws InstanceNotFoundException {
         FoodItem foodItem = foodService.getFoodByName(addFoodRequest.getFood());
-        DailyPlan dailyPlan = regularUser.getDailyPlanByDate(addFoodRequest.getDate());
-        List<Tag> tags = dailyPlan.getTags();
-        for (Tag tag : tags) {
-            if (Objects.equals(tag.getId(), addFoodRequest.getTagId())) {
-                tag.getEatenFood().add(new EatenFood(foodItem, addFoodRequest.getAmount()));
-                tagRepository.save(tag);
-                return;
-            }
-        }
-        Tag newTag = Tag.builder()
-                .tag("Tag " + (tags.size() + 1))
-                .eatenFood(new ArrayList<>() {{
-                    add(new EatenFood(foodItem, addFoodRequest.getAmount()));
-                }})
-                .build();
-        tags.add(newTag);
-        tagRepository.save(newTag);
-        dairyRepository.save(dailyPlan);
+//        DailyPlan dailyPlan = regularUser.getDailyPlanByDate(addFoodRequest.getDate());
+//        List<Tag> tags = dailyPlan.getTags();
+//        for (Tag tag : tags) {
+//            if (Objects.equals(tag.getId(), addFoodRequest.getTagId())) {
+//                tag.getEatenFood().add(new EatenFood(foodItem, addFoodRequest.getAmount()));
+//                tagRepository.save(tag);
+//                return;
+//            }
+//        }
+//        Tag newTag = Tag.builder()
+//                .tag("Tag " + (tags.size() + 1))
+//                .eatenFood(new ArrayList<>() {{
+//                    add(new EatenFood(foodItem, addFoodRequest.getAmount()));
+//                }})
+//                .build();
+//        tags.add(newTag);
+//        tagRepository.save(newTag);
+//        dairyRepository.save(dailyPlan);
     }
 
     public void removeFood(RemoveFoodRequest removeFoodRequest) throws UserNotFoundException, InstanceNotFoundException {

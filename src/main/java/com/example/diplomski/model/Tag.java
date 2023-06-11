@@ -17,9 +17,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class Tag {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tag;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<EatenFood> eatenFood;
 }

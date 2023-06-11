@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.InstanceNotFoundException;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/client")
@@ -16,7 +18,7 @@ public class ClientController {
     private PlanService planService;
 
     @PostMapping("/add-food")
-    public void addFood(@RequestBody ClientAddFoodRequest addFoodRequest) {
+    public void addFood(@RequestBody ClientAddFoodRequest addFoodRequest) throws InstanceNotFoundException {
         planService.addFood(addFoodRequest);
     }
 }

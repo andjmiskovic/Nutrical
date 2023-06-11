@@ -5,7 +5,7 @@
       src="../assets/images/dashboard-background.jpg"
       alt=""
   />
-  <h2 class="welcome">Plan for {{client}}</h2>
+  <h2 class="welcome">Plan for {{plan.userEmail}}</h2>
   <div style="margin: 100px; margin-top: 30px">
     <div class="grid" style="width: 90%; margin: auto">
       <div class="col-9">
@@ -13,7 +13,7 @@
           <div class="col-fixed" style="width: 100px">
             <Button
                 v-if="day > 1"
-                @click="day -= 1"
+                @click="previousDay"
                 style="float: left; margin-left: 20px"
                 v-tooltip.top="'Day before'"
                 icon="pi pi-angle-left"
@@ -21,11 +21,11 @@
             />
           </div>
           <div class="col">
-            <h3 style="text-align: center">{{ formatedDate }}</h3>
+            <h3 style="text-align: center">Day #{{ day }}</h3>
           </div>
           <div class="col-fixed" style="width: 100px">
             <Button
-                @click="day += 1"
+                @click="nextDay"
                 style="float: right; margin-right: 20px"
                 v-tooltip.top="'Day after'"
                 icon="pi pi-angle-right"
@@ -50,7 +50,7 @@
         </div>
         <div class="grid">
           <div class="col">
-            <DailyFood></DailyFood>
+            <DailyFood ref="dailyFoodRef"></DailyFood>
           </div>
         </div>
         <div class="grid">
@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <AddFood ref="addFoodDialog"></AddFood>
+  <AddFood ref="addFoodDialog" :plan="plan" :day="day"></AddFood>
   <Dialog v-model:visible="nutrientsDialogVisible" style="width: 60%">
     <template #header>
       <h3><i class="bx bxs-info-circle"></i> {{ nutrient.nutrient }}</h3>
@@ -109,8 +109,12 @@ export default {
         function: "",
         source: "",
       },
+      plan: {
+        userEmail: '',
+        tags: [],
+        notes: []
+      },
       day: 1,
-      formatedDate: "",
       options: {
         weekday: "long",
         year: "numeric",
@@ -123,10 +127,24 @@ export default {
   mounted() {
     const plan = this.$route.params.planId || "";
     PlanService.getPlanByDay(plan, this.day).then((plan) => {
-      console.log(plan);
+      this.plan = plan[0];
+      console.log(this.plan);
+
+      this.$refs.dailyFoodRef.plan = this.plan;
+      this.$refs.dailyFoodRef.day = this.day;
+      console.log("UPDATE DATA FROM PLAN")
+      this.$refs.dailyFoodRef.updateData();
     });
   },
   methods: {
+    nextDay() {
+      this.day += 1;
+      this.$refs.dailyFoodRed.day = this.day;
+    },
+    previousDay() {
+      this.day -= 1;
+      this.$refs.dailyFoodRed.day = this.day;
+    },
     openDialog(data) {
       this.nutrient = data;
       this.nutrientsDialogVisible = true;
@@ -134,7 +152,7 @@ export default {
     addFood() {
       this.$refs.addFoodDialog.visible = true;
     },
-  },
+  }
 };
 </script>
 

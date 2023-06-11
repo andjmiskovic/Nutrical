@@ -1,6 +1,7 @@
 package com.example.diplomski.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.*;
@@ -16,12 +17,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class FoodItem {
     @Id
-    private String id;
+    private Long id;
     private String name;
     private Double calories;
     private Double protein;
     private Double fat;
     private Double carbs;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<NutrientQuantity> nutrients;
 }

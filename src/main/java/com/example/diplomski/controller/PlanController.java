@@ -1,9 +1,6 @@
 package com.example.diplomski.controller;
 
-import com.example.diplomski.dto.AddFoodRequest;
-import com.example.diplomski.dto.RemoveFoodRequest;
-import com.example.diplomski.dto.RemoveTagRequest;
-import com.example.diplomski.dto.TagRequest;
+import com.example.diplomski.dto.*;
 import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.DailyPlan;
 import com.example.diplomski.model.Plan;
@@ -33,6 +30,11 @@ public class PlanController {
     }
 
     @PostMapping("/add-food")
+    public void addFood(@RequestBody ClientAddFoodRequest addFoodRequest) throws InstanceNotFoundException {
+        planService.addFood(addFoodRequest);
+    }
+
+    @PostMapping("/add-food-regular-user")
     public void addFood(@RequestBody AddFoodRequest addFoodRequest) throws UserNotFoundException, InstanceNotFoundException {
         dairyService.addFood(addFoodRequest);
     }

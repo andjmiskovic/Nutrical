@@ -1,8 +1,6 @@
 package com.example.diplomski.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,13 +12,9 @@ import lombok.*;
 @NoArgsConstructor
 public class EatenFood {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private FoodItem foodItem;
     private Double quantity;
-
-    public EatenFood(FoodItem foodItem, Double amount) {
-        this.foodItem = foodItem;
-        this.quantity = amount;
-    }
 }
