@@ -5,7 +5,7 @@
       <div class="progress-element">
         <p class="progress-label">Calories consumed</p>
         <p class="progress-procent">
-          {{ calories }}/{{ goalCalories }}kcal
+          {{ calories.toFixed(0) }}/{{ goalCalories.toFixed(0) }}kcal
         </p>
         <div id="calories-pb" class="progress-container">
           <progress
@@ -15,7 +15,7 @@
         </div>
       </div>
       <Divider/>
-      <p>Remaining calories: {{ goalCalories - calories }}kcal</p>
+      <p>Remaining calories: {{ (goalCalories - calories).toFixed(0) }}kcal</p>
 <!--      <p>Calories burned throw exercise: {{ exercise }}kcal</p>-->
     </template>
   </Card>
@@ -26,10 +26,17 @@ export default {
   mounted() {
     this.caloriesPercent = Math.round((this.calories / this.goalCalories) * 100);
   },
+  methods: {
+    updateCalories(calories, goal) {
+      this.calories = calories;
+      this.goalCalories = goal;
+      this.caloriesPercent = Math.round((this.calories / this.goalCalories) * 100);
+    }
+  },
   data() {
     return {
-      calories: 2000,
-      goalCalories: 2300,
+      calories: 0,
+      goalCalories: 0,
       caloriesPercent: 0,
       // exercise: 250,
     };

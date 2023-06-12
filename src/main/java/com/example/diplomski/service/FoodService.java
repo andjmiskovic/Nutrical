@@ -23,10 +23,6 @@ public class FoodService {
     @Autowired
     private NutrientQuantityRepository nutrientQuantityRepository;
 
-//    FoodService() {
-//        this.loadFood();
-//    }
-
     public List<FoodItem> getFood(String search, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return foodItemRepository.findByNameContaining(search, pageable);
@@ -88,10 +84,6 @@ public class FoodService {
 
     public FoodItem getFoodById(Long id) throws InstanceNotFoundException {
         return foodItemRepository.findById(id).orElseThrow(() -> new InstanceNotFoundException("Food item not found."));
-    }
-
-    public double calculateBMI(double weight, double height) {
-        return weight / (height * height / 10000);
     }
 
     public ArrayList<ActivityStatus> getActivityStatuses() {

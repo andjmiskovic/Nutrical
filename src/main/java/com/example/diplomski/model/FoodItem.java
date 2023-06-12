@@ -1,5 +1,6 @@
 package com.example.diplomski.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -23,6 +24,6 @@ public class FoodItem {
     private Double protein;
     private Double fat;
     private Double carbs;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private Set<NutrientQuantity> nutrients;
 }

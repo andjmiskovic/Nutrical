@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Nutritionist extends User {
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Client> clients;
     private String licence;
     private String phoneNumber;

@@ -1,73 +1,39 @@
-export default class NutrientService {
+import axios from 'axios';
 
-    nutrients;
-    food;
+const baseUrl = '/api/calculator';
 
-    static loadFood() {
-        fetch("/api/calculator/get-food")
-            .then((response) => response.text())
-            .then((data) => {
-                this.food = JSON.parse(data);
-            });
-    }
+const getNutrientsInPlan = (nutrientsRequest) => {
+    return axios.post(`${baseUrl}/get-nutrients-in-plan`, nutrientsRequest, configuration);
+};
 
-    static loadNutrients() {
-        fetch("/api/calculator/get-nutrients")
-            .then((response) => response.text())
-            .then((data) => {
-                this.nutrients = JSON.parse(data);
-                for (var i = 0; i < this.nutrients.length; i++) {
-                    this.data.push({
-                        nutrient: this.nutrients[i].name,
-                        function: this.nutrients[i].function,
-                        sources: this.nutrients[i].sources,
-                        quantity: 0,
-                        unit: this.nutrients[i].unit,
-                        progress: 0,
-                    });
-                }
-            });
-    }
+const getNutrientsList = () => {
+    return axios.get(`${baseUrl}/get-nutrients`, configuration);
+};
 
-    static getNutrients() {
-        return this.nutrients;
-    }
+const getFood = (search, limit) => {
+    return axios.get(`${baseUrl}/get-food`, { params: { search, limit } }, configuration);
+};
 
-    static getFood() {
-        return this.food;
-    }
+const getFoodByName = (name) => {
+    return axios.get(`${baseUrl}/get-food-by-name`, { params: { name } }, configuration);
+};
 
-    static getNutrientsByKind(kind) {
-        fetch("/api/calculator/get-nutrients")
-            .then((response) => response.text())
-            .then((data) => {
-                this.nutrients = JSON.parse(data);
-                return this.nutrients.filter(obj => {
-                    return obj.kind === kind;
-                });
-            });
-    }
+const getActivityStatuses = () => {
+    return axios.get(`${baseUrl}/get-activity-statuses`);
+};
 
-    static getNutrientData(kind) {
-        fetch("/api/calculator/get-nutrients")
-            .then((response) => response.text())
-            .then((data) => {
-                var n = JSON.parse(data).filter((obj) => {
-                    return obj.kind === kind;
-                });
-                console.log(n)
-                var nutrientData = [];
-                for (var i = 0; i < n.length; i++) {
-                    nutrientData.push({
-                        nutrient: n[i].name,
-                        function: n[i].function,
-                        sources: n[i].sources,
-                        quantity: 0,
-                        unit: n[i].unit,
-                        progress: 0,
-                    });
-                }
-                return nutrientData;
-            });
+const configuration = {
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/json',
     }
 }
+
+export default {
+    getNutrientsInPlan,
+    getNutrientsList,
+    getFood,
+    getFoodByName,
+    getActivityStatuses
+};

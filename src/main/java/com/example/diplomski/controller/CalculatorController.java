@@ -1,5 +1,7 @@
 package com.example.diplomski.controller;
 
+import com.example.diplomski.dto.NutrientsRequest;
+import com.example.diplomski.dto.NutrientsResponse;
 import com.example.diplomski.enums.ActivityStatus;
 import com.example.diplomski.model.FoodItem;
 import com.example.diplomski.model.Nutrient;
@@ -7,10 +9,7 @@ import com.example.diplomski.service.FoodService;
 import com.example.diplomski.service.NutrientsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceNotFoundException;
 import java.util.ArrayList;
@@ -26,9 +25,9 @@ public class CalculatorController {
     @Autowired
     private final FoodService foodService;
 
-    @GetMapping("/get-nutrients/{planId}")
-    public HashMap<Nutrient, Double> getNutrients(@PathVariable Long planId) {
-        return nutrientsService.getNutrients(planId);
+    @PostMapping("/get-nutrients-in-plan")
+    public NutrientsResponse getNutrientsInPlan(@RequestBody NutrientsRequest nutrientsRequest) {
+        return nutrientsService.getNutrients(nutrientsRequest);
     }
 
     @GetMapping("/get-nutrients")

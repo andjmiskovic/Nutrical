@@ -16,7 +16,7 @@ public class DailyPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private List<Tag> tags;
     private String notes;
     private String userEmail;

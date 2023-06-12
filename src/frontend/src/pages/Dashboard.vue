@@ -40,8 +40,8 @@
           <div class="col">
             <Button
                 class="add-button p-button-text"
-                label="ADD FOOD"
-                @click="addFood"
+                label="ADD MEAL"
+                @click="addMeal"
             />
           </div>
           <div class="col">
@@ -142,8 +142,8 @@ export default {
       this.nutrient = data;
       this.nutrientsDialogVisible = true;
     },
-    addFood() {
-      this.$refs.addFoodDialog.visible = true;
+    addMeal() {
+      this.$refs.addMealDialog.visible = true;
     },
   },
 };

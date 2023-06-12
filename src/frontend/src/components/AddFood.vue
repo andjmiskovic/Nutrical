@@ -85,8 +85,6 @@ export default {
       this.visible = false;
     },
     addFood() {
-      console.log(this.plan["id"]);
-      console.log(this.selectedFood["id"]);
       let body = {
         "tagId": this.tagId,
         "planId": this.plan["id"],
@@ -95,9 +93,9 @@ export default {
         "day": this.day,
         "amount": this.serving
       }
-      console.log(body)
-      PlanService.addFood(body).catch(() => {
+      PlanService.addFood(body).then(() => {
         this.closeDialog();
+        this.$parent.$parent.reloadPlan();
       })
     }
   },

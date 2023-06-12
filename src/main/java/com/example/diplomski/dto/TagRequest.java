@@ -12,5 +12,6 @@ import lombok.Setter;
 public class TagRequest {
     private String tagName;
     private Long tagId;
-    private Long dailyPlanId;
+    private Long planId;
+    private int day;
 }

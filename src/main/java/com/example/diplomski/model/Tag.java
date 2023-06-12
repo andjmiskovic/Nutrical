@@ -2,17 +2,14 @@ package com.example.diplomski.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Data
 @Getter
 @Setter
-@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tag {
@@ -21,6 +18,6 @@ public class Tag {
     private Long id;
     private String tag;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<EatenFood> eatenFood;
 }

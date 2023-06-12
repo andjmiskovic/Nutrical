@@ -7,6 +7,7 @@ import com.example.diplomski.dto.TagRequest;
 import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.DairyRepository;
+import com.example.diplomski.repository.PlanRepository;
 import com.example.diplomski.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.management.InstanceNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class DairyService {
@@ -26,6 +26,8 @@ public class DairyService {
     private FoodService foodService;
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private PlanRepository planRepository;
 
     public DailyPlan getDailyPlan(String email) throws InstanceNotFoundException {
         return dairyRepository.findByUserEmail(email).orElseThrow(() -> new InstanceNotFoundException("Plan not found."));
@@ -33,6 +35,10 @@ public class DairyService {
 
     public DailyPlan getDailyPlan(Long id) throws InstanceNotFoundException {
         return dairyRepository.findById(id).orElseThrow(() -> new InstanceNotFoundException("Plan not found."));
+    }
+
+    public DailyPlan getDailyPlan(Long planId, int day) throws InstanceNotFoundException {
+        return planRepository.findById(planId).orElseThrow(() -> new InstanceNotFoundException("Plan not found.")).getDailyPlans().get(day - 1);
     }
 
     public void addFood(AddFoodRequest addFoodRequest) throws UserNotFoundException, InstanceNotFoundException {
@@ -92,14 +98,14 @@ public class DairyService {
     }
 
     public void addTag(TagRequest addTagRequest) throws InstanceNotFoundException {
-        DailyPlan dailyPlan = getDailyPlan(addTagRequest.getDailyPlanId());
-        Tag tag = Tag.builder()
-                .tag(addTagRequest.getTagName())
-                .eatenFood(new ArrayList<>())
-                .build();
+        DailyPlan dailyPlan = getDailyPlan(addTagRequest.getPlanId(), addTagRequest.getDay());
+        Tag tag = new Tag();
+        tag.setTag(addTagRequest.getTagName());
+        tag.setEatenFood(new ArrayList<>());
+        tagRepository.save(tag);
+
         dailyPlan.getTags().add(tag);
         dairyRepository.save(dailyPlan);
-        tagRepository.save(tag);
     }
 
     public void renameTag(TagRequest renameTagRequest) throws InstanceNotFoundException {

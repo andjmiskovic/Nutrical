@@ -16,11 +16,13 @@
         <template #groupheader="tag">
           <div class="tag">
             <span>{{ tag.data.tag }}</span>
-            <Button
-                class="add-button p-button-text"
-                label="ADD FOOD"
-                @click="addFood(tag.data.id)"
-            />
+            <div style="float: right">
+              <Button icon="pi pi-plus" @click="addFood(tag.data.id)"
+                      class="p-button-sm blue p-button-rounded p-button-text"/>
+              <Button icon="pi pi-ellipsis-v" class="p-button-sm p-button-text blue p-button-rounded" @click="toggle"
+                      aria-haspopup="true" aria-controls="overlay_menu"/>
+              <Menu id="overlay_menu" ref="menu" :model="items" :popup="true"/>
+            </div>
           </div>
         </template>
 
@@ -44,14 +46,23 @@ export default {
         tags: []
       },
       day: 1,
-      data: []
-      // data: [
-      //     {"food": "Egg", "quantity": 1, "calories": 80, "tag": "Meal 1"},
-      //     {"food": "Egg", "quantity": 1, "calories": 80, "tag": "Meal 1"},
-      //     {"food": "Egg", "quantity": 1, "calories": 80, "tag": "Meal 2"},
-      //     {"food": "Egg", "quantity": 1, "calories": 80, "tag": "Meal 2"},
-      //     {"food": "Egg", "quantity": 1, "calories": 80, "tag": "Meal 2"}
-      // ]
+      data: [],
+      menuVisible: false,
+      items: [
+        {
+          label: 'Tag options',
+          items: [
+            {
+              label: 'Rename',
+              icon: 'pi pi-pencil',
+
+            },
+            {
+              label: 'Delete tag',
+              icon: 'pi pi-trash',
+            }
+          ]
+        }]
     };
   },
   methods: {
@@ -59,12 +70,13 @@ export default {
       this.$refs.addFoodDialog.tagId = tagId;
       this.$refs.addFoodDialog.visible = true;
     },
+    toggle(event) {
+      this.$refs.menu.toggle(event);
+    },
     updateData() {
-      console.log("UPDATE DATA")
-      console.log(this.plan.tags)
+      this.data = [];
       for (let tag of this.plan.tags) {
-        console.log(tag.eatenFood.length)
-        if(tag.eatenFood.length === 0) {
+        if (tag.eatenFood.length === 0) {
           this.data.push({
             "food": "",
             "quantity": "",
@@ -73,11 +85,11 @@ export default {
             "id": tag.id
           })
         }
-        for (let foodItem of tag["eatenFood"]) {
+        for (let food of tag["eatenFood"]) {
           this.data.push({
-            "food": foodItem.name,
-            "quantity": foodItem + "g",
-            "calories": foodItem.calories + "kcal",
+            "food": food["foodItem"].name,
+            "quantity": food.quantity + "g",
+            "calories": food["foodItem"].calories + "kcal",
             "tag": tag.tag,
             "id": tag.id
           })
@@ -91,6 +103,10 @@ export default {
 <style scoped>
 ::v-deep(.p-card-body) {
   padding: 0 !important;
+}
+
+.blue {
+  color: var(--blue);
 }
 
 .tag {

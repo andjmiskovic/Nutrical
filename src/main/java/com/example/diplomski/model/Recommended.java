@@ -1,5 +1,6 @@
 package com.example.diplomski.model;
 
+import com.example.diplomski.enums.HealthStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,4 +21,21 @@ public class Recommended {
     private Double pregnant;
     private Double breastfeeding;
     private Double max;
+
+    public Double getValue(HealthStatus healthStatus) {
+        switch (healthStatus) {
+            case MAN -> {
+                return man;
+            }
+            case WOMAN -> {
+                return woman;
+            }
+            case PREGNANT -> {
+                return pregnant;
+            }
+            default -> {
+                return breastfeeding;
+            }
+        }
+    }
 }

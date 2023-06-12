@@ -14,16 +14,16 @@ VALUES ('client1@example.com', 'John', 'Doe', 1),
        ('client2@example.com', 'Jane', 'Smith', 2);
 
 INSERT INTO TAG(id, tag)
-VALUES (1, 'Meal 1'),
-       (2, 'Meal 1');
+VALUES (11928471, 'Meal 1'),
+       (21192847, 'Meal 1');
 
 INSERT INTO daily_plan(id, notes, user_email)
 VALUES (1, '', 'client1@example.com'),
        (2, '', 'client2@example.com');
 
 INSERT INTO daily_plan_tags(daily_plan_id, tags_id)
-VALUES (1, 1),
-       (2, 2);
+VALUES (1, 11928471),
+       (2, 21192847);
 
 INSERT INTO NUTRITIONIST_CLIENTS (nutritionist_id, clients_email)
 VALUES ('e3661c31-d1a4-47ab-94b6-1c6500dccf24', 'client1@example.com'),

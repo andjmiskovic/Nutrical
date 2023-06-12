@@ -37,8 +37,8 @@
           <div class="col">
             <Button
                 class="add-button p-button-text"
-                label="ADD FOOD"
-                @click="addFood"
+                label="ADD MEAL"
+                @click="addMeal"
             />
           </div>
           <div class="col">
@@ -58,7 +58,7 @@
             <TargetsKnob></TargetsKnob>
           </div>
           <div class="col-6">
-            <CaloriesBurned></CaloriesBurned>
+            <CaloriesBurned ref="calories"></CaloriesBurned>
           </div>
         </div>
         <div class="grid">
@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <AddFood ref="addFoodDialog" :plan="plan" :day="day"></AddFood>
+  <AddMeal ref="addMealDialog" :plan="plan" :day="day"></AddMeal>
   <Dialog v-model:visible="nutrientsDialogVisible" style="width: 60%">
     <template #header>
       <h3><i class="bx bxs-info-circle"></i> {{ nutrient.nutrient }}</h3>
@@ -89,9 +89,10 @@ import NavBar from "../components/NavBar.vue";
 import TargetsKnob from "../components/TargetsKnob.vue";
 import CaloriesBurned from "../components/CaloriesBurned.vue";
 import ScoreVitamins from "../components/ScoreVitamins.vue";
-import AddFood from "../components/AddFood.vue";
 import DailyFood from "../components/DailyFood.vue";
+import AddMeal from "../dialogs/AddMeal.vue";
 import PlanService from "@/services/PlanService";
+import NutrientService from "@/services/NutrientService";
 
 export default {
   name: "Plan",
@@ -100,8 +101,8 @@ export default {
     TargetsKnob,
     CaloriesBurned,
     ScoreVitamins,
-    AddFood,
-    DailyFood
+    DailyFood,
+    AddMeal
   },
   data() {
     return {
@@ -125,18 +126,31 @@ export default {
     };
   },
   mounted() {
-    const plan = this.$route.params.planId || "";
-    PlanService.getPlanByDay(plan, this.day).then((plan) => {
-      this.plan = plan[0];
-      console.log(this.plan);
-
-      this.$refs.dailyFoodRef.plan = this.plan;
-      this.$refs.dailyFoodRef.day = this.day;
-      console.log("UPDATE DATA FROM PLAN")
-      this.$refs.dailyFoodRef.updateData();
-    });
+    this.reloadPlan();
   },
   methods: {
+    reloadPlan() {
+      const plan = this.$route.params.planId || "";
+      PlanService.getPlanByDay(plan, this.day).then((plan) => {
+        this.plan = plan[0];
+        console.log(this.plan);
+        this.$refs.dailyFoodRef.plan = this.plan;
+        this.$refs.dailyFoodRef.day = this.day;
+        this.$refs.dailyFoodRef.updateData();
+        this.getNutrients();
+      });
+    },
+    getNutrients() {
+      let body = {
+        "planId": this.plan.id,
+        "day": this.day
+      }
+      NutrientService.getNutrientsInPlan(body).then((nutrients) => {
+        console.log(nutrients.data.calories);
+        console.log(nutrients.data.caloriesGoal);
+        this.$refs.calories.updateCalories(nutrients.data.calories, nutrients.data.caloriesGoal);
+      })
+    },
     nextDay() {
       this.day += 1;
       this.$refs.dailyFoodRed.day = this.day;
@@ -149,8 +163,8 @@ export default {
       this.nutrient = data;
       this.nutrientsDialogVisible = true;
     },
-    addFood() {
-      this.$refs.addFoodDialog.visible = true;
+    addMeal() {
+      this.$refs.addMealDialog.visible = true;
     },
   }
 };

@@ -254,7 +254,6 @@ export default {
     async register() {
       this.emailSending = true;
       await AuthService.register(this.getFormData()).then((registerResponse) => {
-        console.log(registerResponse);
         this.$bvModal.show("success");
         this.emailSending = false;
       }).catch((err) => {

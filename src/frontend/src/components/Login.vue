@@ -66,7 +66,6 @@ export default {
         this.nonExistent = true;
       } else {
         await AuthService.login({"email": this.email, "password": this.password}).then((loginResponse) => {
-          console.log(loginResponse);
           if (loginResponse[0]["accessToken"] === null) {
             this.nonExistent = true;
           } else {

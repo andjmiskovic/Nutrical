@@ -1,5 +1,6 @@
 package com.example.diplomski.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,6 @@ public class Plan {
     private Client client;
     @ManyToOne
     private Nutritionist nutritionist;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<DailyPlan> dailyPlans;
 }
