@@ -1,15 +1,15 @@
 <template>
   <Card class="border">
-    <template #title> {{ kind }} </template>
+    <template #title> {{ kind }}</template>
     <template #content>
       <div>
         <DataTable :value="data" class="hide-header">
           <Column field="nutrient">
             <template #body="{ data }">
               <p
-                style="cursor: pointer"
-                v-tooltip.top="'About nutrient'"
-                @click="showDetails(data)"
+                  style="cursor: pointer"
+                  v-tooltip.top="'About nutrient'"
+                  @click="showDetails(data)"
               >
                 {{ data.nutrient }}
               </p>
@@ -22,7 +22,7 @@
           </Column>
           <Column field="progress" style="min-width: 5rem">
             <template #body="{ data }">
-              <ProgressBar :value="data.progress" />
+              <ProgressBar :value="data.progress"/>
             </template>
           </Column>
         </DataTable>
@@ -39,31 +39,48 @@ export default {
       data: [],
     };
   },
-  mounted() {
-    fetch("/api/calculator/get-nutrients")
-      .then((response) => response.text())
-      .then((data) => {
-        const n = JSON.parse(data).filter((obj) => {
-          return obj.kind === this.kind;
-        });
-        const nutrientData = [];
-        for (let i = 0; i < n.length; i++) {
-          nutrientData.push({
-            nutrient: n[i].name,
-            function: n[i].function,
-            sources: n[i].sources,
-            quantity: 0,
-            unit: n[i].unit,
-            progress: 0,
-          });
-        }
-        this.data = nutrientData;
-      });
-  },
+  // mounted() {
+  //   fetch("/api/calculator/get-nutrients")
+  //       .then((response) => response.text())
+  //       .then((data) => {
+  //         const n = JSON.parse(data).filter((obj) => {
+  //           return obj.kind === this.kind;
+  //         });
+  //         const nutrientData = [];
+  //         for (let i = 0; i < n.length; i++) {
+  //           nutrientData.push({
+  //             nutrient: n[i].name,
+  //             function: n[i].function,
+  //             sources: n[i].sources,
+  //             quantity: 0,
+  //             unit: n[i].unit,
+  //             progress: 0,
+  //           });
+  //         }
+  //         this.data = nutrientData;
+  //       });
+  // },
   methods: {
     showDetails(data) {
       this.$parent.openDialog(data);
     },
+    updateValues(nutrients) {
+      console.log(nutrients);
+      const nutrientData = [];
+      for (let n of nutrients) {
+        if (n.nutrient.kind === this.kind) {
+          nutrientData.push({
+            nutrient: n.nutrient.name,
+            function: n.nutrient.function,
+            sources: n.nutrient.sources,
+            quantity: n.amount,
+            unit: n.nutrient.unit,
+            progress: n.amount / n.goal * 100,
+          });
+        }
+      }
+      this.data = nutrientData;
+    }
   },
 };
 </script>

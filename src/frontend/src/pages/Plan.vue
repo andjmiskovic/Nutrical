@@ -63,10 +63,10 @@
         </div>
         <div class="grid">
           <div class="col">
-            <ScoreVitamins kind="VITAMINS"></ScoreVitamins>
+            <ScoreVitamins ref="vitamins" kind="VITAMINS"></ScoreVitamins>
           </div>
           <div class="col">
-            <ScoreVitamins kind="MINERALS"></ScoreVitamins>
+            <ScoreVitamins ref="minerals" kind="MINERALS"></ScoreVitamins>
           </div>
         </div>
       </div>
@@ -146,9 +146,10 @@ export default {
         "day": this.day
       }
       NutrientService.getNutrientsInPlan(body).then((nutrients) => {
-        console.log(nutrients.data.calories);
-        console.log(nutrients.data.caloriesGoal);
+        console.log(nutrients.data);
         this.$refs.calories.updateCalories(nutrients.data.calories, nutrients.data.caloriesGoal);
+        this.$refs.vitamins.updateValues(nutrients.data.nutrientsScore);
+        this.$refs.minerals.updateValues(nutrients.data.nutrientsScore);
       })
     },
     nextDay() {

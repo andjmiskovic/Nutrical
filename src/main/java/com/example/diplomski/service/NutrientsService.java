@@ -1,5 +1,6 @@
 package com.example.diplomski.service;
 
+import com.example.diplomski.dto.NutrientScore;
 import com.example.diplomski.dto.NutrientsRequest;
 import com.example.diplomski.dto.NutrientsResponse;
 import com.example.diplomski.enums.HealthStatus;
@@ -88,54 +89,42 @@ public class NutrientsService {
         return nutrientRepository.findAll();
     }
 
-    public HashMap<Nutrient, Double> createEmptyNutrientMap() {
-        HashMap<Nutrient, Double> hashMap = new HashMap<>();
-        for (Nutrient nutrient : getNutrients()) {
-            hashMap.put(nutrient, 0.0);
-        }
-        return hashMap;
-    }
-
     public NutrientsResponse getNutrients(NutrientsRequest nutrientsRequest) {
-        NutrientsResponse nutrientsResponse = new NutrientsResponse();
 
         Plan plan = planRepository.findById(nutrientsRequest.getPlanId()).get();
         DailyPlan dailyPlan = plan.getDailyPlans().get(nutrientsRequest.getDay() - 1);
         ClientData clientData = clientRepository.findByEmail(dailyPlan.getUserEmail()).getClientData();
+
+        NutrientsResponse nutrientsResponse = new NutrientsResponse(getNutrients(), clientData.getHealthStatus());
         nutrientsResponse.setCaloriesGoal(calculateCalories(clientData));
-        nutrientsResponse.setNutrientsGoals(setNutrientsGoal(clientData.getHealthStatus()));
-        nutrientsResponse.setNutrients(createEmptyNutrientMap());
 
         for (Tag tag : dailyPlan.getTags()) {
             for (EatenFood food : tag.getEatenFood()) {
                 FoodItem item = food.getFoodItem();
                 nutrientsResponse.addCalories(item.getCalories() * food.getQuantity() / 100);
-                addFoodNutrients(nutrientsResponse.getNutrients(), item, food.getQuantity());
+                addFoodNutrients(nutrientsResponse.getNutrientsScore(), item, food.getQuantity());
             }
         }
         return nutrientsResponse;
     }
 
-    private HashMap<Nutrient, Double> setNutrientsGoal(HealthStatus healthStatus) {
-        HashMap<Nutrient, Double> nutrients = new HashMap<>();
-        for (Nutrient nutrient : getNutrients()) {
-            nutrients.put(nutrient, nutrient.getRecommended().getValue(healthStatus));
+    private void addFoodNutrients(List<NutrientScore> nutrients, FoodItem foodItem, Double amount) {
+        for (NutrientScore score : nutrients) {
+            for (NutrientQuantity n : foodItem.getNutrients()) {
+                if (score.getNutrient().getSymbol().equals(n.getNutrient())) {
+                    score.addAmount(getNutrientQuantity(foodItem, n.getNutrient()) * amount / 100);
+                }
+            }
         }
-        return nutrients;
     }
 
-    private void addFoodNutrients(HashMap<Nutrient, Double> nutrients, FoodItem foodItem, Double amount) {
-        nutrients.replaceAll((nutrient, value) -> nutrients.get(nutrient) + getNutrientQuantity(foodItem, nutrient) * amount / 100);
-    }
-
-    private Double getNutrientQuantity(FoodItem foodItem, Nutrient nutrient) {
+    private Double getNutrientQuantity(FoodItem foodItem, String nutrientSymbol) {
         for (NutrientQuantity nutrientQuantity : foodItem.getNutrients()) {
-            System.out.println(nutrientQuantity.getNutrient() + " : " + nutrient.getSymbol());
-            if (nutrientQuantity.getNutrient().equals(nutrient.getSymbol())) {
+            if (nutrientQuantity.getNutrient().equals(nutrientSymbol)) {
                 return nutrientQuantity.getQuantity();
             }
         }
-        System.out.println("Nutrient not found: " + nutrient.getSymbol());
+        System.out.println("Nutrient not found: " + nutrientSymbol);
         return 0.0;
     }
 

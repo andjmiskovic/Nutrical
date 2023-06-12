@@ -1,11 +1,13 @@
 package com.example.diplomski.dto;
 
+import com.example.diplomski.enums.HealthStatus;
 import com.example.diplomski.model.Nutrient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -13,13 +15,14 @@ import java.util.HashMap;
 public class NutrientsResponse {
     private Double caloriesGoal;
     private Double calories;
-    private HashMap<Nutrient, Double> nutrientsGoals;
-    private HashMap<Nutrient, Double> nutrients;
+    private List<NutrientScore> nutrientsScore;
 
-    public NutrientsResponse() {
+    public NutrientsResponse(List<Nutrient> nutrients, HealthStatus healthStatus) {
         this.calories = 0.0;
-        this.nutrients = new HashMap<>();
-        this.nutrientsGoals = new HashMap<>();
+        this.nutrientsScore = new ArrayList<>();
+        for (Nutrient n : nutrients) {
+            this.nutrientsScore.add(new NutrientScore(n, n.getRecommended().getValue(healthStatus), 0.0));
+        }
     }
 
     public void addCalories(double v) {
