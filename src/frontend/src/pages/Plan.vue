@@ -5,70 +5,74 @@
       src="../assets/images/dashboard-background.jpg"
       alt=""
   />
-  <h2 class="welcome">Plan for {{plan.userEmail}}</h2>
-  <div style="margin: 100px; margin-top: 30px">
-    <div class="grid" style="width: 90%; margin: auto">
-      <div class="col-9">
-        <div class="grid" style="margin-top: 20px">
-          <div class="col-fixed" style="width: 100px">
-            <Button
-                v-if="day > 1"
-                @click="previousDay"
-                style="float: left; margin-left: 20px"
-                v-tooltip.top="'Day before'"
-                icon="pi pi-angle-left"
-                class="p-button-rounded p-button-primary"
-            />
-          </div>
-          <div class="col">
-            <h3 style="text-align: center">Day #{{ day }}</h3>
-          </div>
-          <div class="col-fixed" style="width: 100px">
-            <Button
-                @click="nextDay"
-                style="float: right; margin-right: 20px"
-                v-tooltip.top="'Day after'"
-                icon="pi pi-angle-right"
-                class="p-button-rounded p-button-primary"
-            />
-          </div>
-        </div>
-        <div class="grid" style="margin: 10px">
-          <div class="col">
-            <Button
-                class="add-button p-button-text"
-                label="ADD MEAL"
-                @click="addMeal"
-            />
-          </div>
-          <div class="col">
-            <Button class="add-button p-button-text" label="ADD EXERCISE"/>
-          </div>
-          <div class="col">
-            <Button class="add-button p-button-text" label="ADD NOTES"/>
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col">
-            <DailyFood ref="dailyFoodRef"></DailyFood>
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col-6">
-            <TargetsKnob></TargetsKnob>
-          </div>
-          <div class="col-6">
-            <CaloriesBurned ref="calories"></CaloriesBurned>
-          </div>
-        </div>
-        <div class="grid">
-          <div class="col">
-            <ScoreVitamins ref="vitamins" kind="VITAMINS"></ScoreVitamins>
-          </div>
-          <div class="col">
-            <ScoreVitamins ref="minerals" kind="MINERALS"></ScoreVitamins>
-          </div>
-        </div>
+  <div class="grid" style="margin-left: 100px; margin-top: -80px;">
+    <div class="welcome col-9" style="float: left">
+      <p style="font-size: 30px">Client: {{ plan.name }} {{ plan.surname }}</p>
+      <p style="line-height: 5px">plan id: {{ plan.id }}</p>
+    </div>
+    <div class="col-3">
+      <Button style="margin-top: 20px; float: right; margin-right: 20px">Generate plan PDF</Button>
+    </div>
+  </div>
+  <div style="width: 70%; margin: auto;">
+    <div class="grid" style="margin-top: 20px">
+      <div class="col-fixed" style="width: 100px">
+        <Button
+            v-if="day > 1"
+            @click="previousDay"
+            style="float: left; margin-left: 20px"
+            v-tooltip.top="'Day before'"
+            icon="pi pi-angle-left"
+            class="p-button-rounded p-button-primary"
+        />
+      </div>
+      <div class="col">
+        <h3 style="text-align: center">Day #{{ day }}</h3>
+      </div>
+      <div class="col-fixed" style="width: 100px">
+        <Button
+            @click="nextDay"
+            style="float: right; margin-right: 20px"
+            v-tooltip.top="'Day after'"
+            icon="pi pi-angle-right"
+            class="p-button-rounded p-button-primary"
+        />
+      </div>
+    </div>
+    <div class="grid" style="margin: 10px">
+      <div class="col">
+        <Button
+            class="add-button p-button-text"
+            label="ADD MEAL"
+            @click="addMeal"
+        />
+      </div>
+      <div class="col">
+        <Button class="add-button p-button-text" label="ADD EXERCISE"/>
+      </div>
+      <div class="col">
+        <Button class="add-button p-button-text" label="ADD NOTES"/>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <DailyFood ref="dailyFoodRef"></DailyFood>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <TargetsKnob></TargetsKnob>
+      </div>
+      <div class="col-6">
+        <CaloriesBurned ref="calories"></CaloriesBurned>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <ScoreVitamins ref="vitamins" kind="VITAMINS"></ScoreVitamins>
+      </div>
+      <div class="col">
+        <ScoreVitamins ref="minerals" kind="MINERALS"></ScoreVitamins>
       </div>
     </div>
   </div>
@@ -180,11 +184,8 @@ export default {
 }
 
 .welcome {
-  margin-top: -65px;
-  margin-left: 90px;
   color: white;
   text-shadow: 2px 2px 10px black;
-  font-size: 35px;
 }
 
 .energy-ration {

@@ -3,20 +3,20 @@
     <template #title><i class='bx bxs-hot'></i> Calories</template>
     <template #content>
       <div class="progress-element">
-        <p class="progress-label">Calories consumed</p>
-        <p class="progress-procent">
-          {{ calories.toFixed(0) }}/{{ goalCalories.toFixed(0) }}kcal
+        <p>
+          <span class="progress-label">Calories consumed</span>
+          <span class="progress-procent">
+            {{ calories.toFixed(0) }}/{{ goalCalories.toFixed(0) }}kcal
+          </span>
         </p>
-        <div id="calories-pb" class="progress-container">
-          <progress
-              max="100"
-              :value="caloriesPercent"
-          ></progress>
-        </div>
+        <br>
+        <p id="calories-pb" class="progress-container">
+          <ProgressBar :value="caloriesPercent" :showValue="false"/>
+        </p>
       </div>
       <Divider/>
       <p>Remaining calories: {{ (goalCalories - calories).toFixed(0) }}kcal</p>
-<!--      <p>Calories burned throw exercise: {{ exercise }}kcal</p>-->
+      <!--      <p>Calories burned throw exercise: {{ exercise }}kcal</p>-->
     </template>
   </Card>
 </template>
@@ -51,17 +51,17 @@ export default {
 
 .progress-procent {
   float: right;
-  margin-top: -20px;
-  top: 0;
-  right: 0;
+}
+
+.progress-label {
+  float: left;
 }
 
 ::-webkit-progress-bar {
   background-color: aliceblue;
 }
 
-progress {
-  -webkit-appearance: none;
+.progress-container {
   width: 100%;
 }
 

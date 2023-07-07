@@ -17,12 +17,17 @@
           </Column>
           <Column field="quantity">
             <template #body="{ data }">
-              {{ data.quantity }} {{ data.unit }}
+              {{ data.quantity.toFixed(1) }} {{ data.unit }}
             </template>
           </Column>
-          <Column field="progress" style="min-width: 5rem">
+          <Column field="progress" style="width: 6rem">
             <template #body="{ data }">
-              <ProgressBar :value="data.progress"/>
+              <ProgressBar :value="data.progress" :showValue="false"/>
+            </template>
+          </Column>
+          <Column field="percent">
+            <template #body="{ data }">
+              {{ data.progress }}%
             </template>
           </Column>
         </DataTable>
@@ -39,27 +44,6 @@ export default {
       data: [],
     };
   },
-  // mounted() {
-  //   fetch("/api/calculator/get-nutrients")
-  //       .then((response) => response.text())
-  //       .then((data) => {
-  //         const n = JSON.parse(data).filter((obj) => {
-  //           return obj.kind === this.kind;
-  //         });
-  //         const nutrientData = [];
-  //         for (let i = 0; i < n.length; i++) {
-  //           nutrientData.push({
-  //             nutrient: n[i].name,
-  //             function: n[i].function,
-  //             sources: n[i].sources,
-  //             quantity: 0,
-  //             unit: n[i].unit,
-  //             progress: 0,
-  //           });
-  //         }
-  //         this.data = nutrientData;
-  //       });
-  // },
   methods: {
     showDetails(data) {
       this.$parent.openDialog(data);
@@ -75,7 +59,7 @@ export default {
             sources: n.nutrient.sources,
             quantity: n.amount,
             unit: n.nutrient.unit,
-            progress: n.amount / n.goal * 100,
+            progress: (n.amount / n.goal * 100).toFixed(1),
           });
         }
       }
@@ -93,5 +77,9 @@ export default {
 ::v-deep(.p-datatable .p-datatable-tbody tr td) {
   padding: 5px !important;
   font-size: 12px !important;
+}
+
+::v-deep(.p-progressbar .p-progressbar-value) {
+  background: var(--green);
 }
 </style>
