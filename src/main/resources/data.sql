@@ -18,12 +18,12 @@ VALUES (11928471, 'Meal 1'),
        (21192847, 'Meal 1');
 
 INSERT INTO daily_plan(id, notes, user_email)
-VALUES (1, '', 'client1@example.com'),
-       (2, '', 'client2@example.com');
+VALUES (1123421, '', 'client1@example.com'),
+       (21244, '', 'client2@example.com');
 
 INSERT INTO daily_plan_tags(daily_plan_id, tags_id)
-VALUES (1, 11928471),
-       (2, 21192847);
+VALUES (1123421, 11928471),
+       (21244, 21192847);
 
 INSERT INTO NUTRITIONIST_CLIENTS (nutritionist_id, clients_email)
 VALUES ('e3661c31-d1a4-47ab-94b6-1c6500dccf24', 'client1@example.com'),
@@ -34,5 +34,5 @@ VALUES (1, 'client1@example.com', 'e3661c31-d1a4-47ab-94b6-1c6500dccf24'),
        (2, 'client2@example.com', 'e3661c31-d1a4-47ab-94b6-1c6500dccf24');
 
 INSERT INTO plan_daily_plans(plan_id, daily_plans_id)
-VALUES (1, 1),
-       (2, 2);
+VALUES (1, 1123421),
+       (2, 21244);

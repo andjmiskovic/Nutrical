@@ -22,7 +22,7 @@
           </Column>
           <Column field="progress" style="width: 6rem">
             <template #body="{ data }">
-              <ProgressBar :value="data.progress" :showValue="false"/>
+              <ProgressBar :value="data.progress" :showValue="false" :class="{'green-progress' : data.progress >= 100}"/>
             </template>
           </Column>
           <Column field="percent">
@@ -59,7 +59,7 @@ export default {
             sources: n.nutrient.sources,
             quantity: n.amount,
             unit: n.nutrient.unit,
-            progress: (n.amount / n.goal * 100).toFixed(1),
+            progress: +(n.amount / n.goal * 100).toFixed(1),
           });
         }
       }
@@ -80,6 +80,10 @@ export default {
 }
 
 ::v-deep(.p-progressbar .p-progressbar-value) {
+  background: var(--gray);
+}
+
+::v-deep(.p-progressbar.green-progress .p-progressbar-value) {
   background: var(--green);
 }
 </style>

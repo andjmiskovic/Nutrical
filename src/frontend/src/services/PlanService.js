@@ -1,4 +1,4 @@
-import { instance, fetch } from './http.js'
+import {instance, fetch} from './http.js'
 
 const getPlan = planId => {
     return fetch(instance.get(`/api/dairy/get-plan/${planId}`, configuration))
@@ -28,12 +28,25 @@ const removeTag = removeTagRequest => {
     return fetch(instance.post('/api/dairy/remove-tag', removeTagRequest, configuration))
 }
 
+const generatePlan = planId => {
+    return fetch(instance.get('/api/dairy/generate-plan/' + planId, downloadConfiguration))
+}
+
 const configuration = {
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Authorization': localStorage.getItem('token') || 'authkey',
         'Content-Type': 'application/json',
     }
+}
+
+const downloadConfiguration = {
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/json',
+    },
+    responseType: 'blob',
 }
 
 export default {
@@ -43,5 +56,6 @@ export default {
     removeFood,
     addTag,
     renameTag,
-    removeTag
+    removeTag,
+    generatePlan
 }

@@ -79,9 +79,6 @@ public class DairyService {
         for (Tag tag : tags) {
             if (tag.getId().equals(removeFoodRequest.getTagId())) {
                 removeEatenFood(tag, removeFoodRequest.getFood());
-                tagRepository.save(tag);
-                regularUserService.save(regularUser);
-                dairyRepository.save(dailyPlan);
                 return;
             }
         }
@@ -92,13 +89,14 @@ public class DairyService {
         for (EatenFood eatenFood : tag.getEatenFood()) {
             if (eatenFood.getFoodItem().getName().equals(foodItem.getName())) {
                 tag.getEatenFood().remove(eatenFood);
+                tagRepository.save(tag);
                 return;
             }
         }
     }
 
     public void addTag(TagRequest addTagRequest) throws InstanceNotFoundException {
-        DailyPlan dailyPlan = getDailyPlan(addTagRequest.getPlanId(), addTagRequest.getDay());
+        DailyPlan dailyPlan = getDailyPlan(addTagRequest.getPlanId());
         Tag tag = new Tag();
         tag.setTag(addTagRequest.getTagName());
         tag.setEatenFood(new ArrayList<>());

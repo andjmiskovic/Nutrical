@@ -14,7 +14,7 @@
         </Column>
 
         <template #groupheader="tag">
-          <div class="tag">
+          <div class="tag" >
             <span>{{ tag.data.tag }}</span>
             <div style="float: right">
               <Button icon="pi pi-plus" @click="addFood(tag.data.id)"

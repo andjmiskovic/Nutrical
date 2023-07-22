@@ -11,7 +11,7 @@
       <p style="line-height: 5px">plan id: {{ plan.id }}</p>
     </div>
     <div class="col-3">
-      <Button style="margin-top: 20px; float: right; margin-right: 20px">Generate plan PDF</Button>
+      <Button style="margin-top: 20px; float: right; margin-right: 20px" @click="generatePlan">Generate plan PDF</Button>
     </div>
   </div>
   <div style="width: 70%; margin: auto;">
@@ -120,6 +120,7 @@ export default {
         notes: []
       },
       day: 1,
+      planId: 0,
       options: {
         weekday: "long",
         year: "numeric",
@@ -130,14 +131,13 @@ export default {
     };
   },
   mounted() {
+    this.planId = this.$route.params.planId || "";
     this.reloadPlan();
   },
   methods: {
     reloadPlan() {
-      const plan = this.$route.params.planId || "";
-      PlanService.getPlanByDay(plan, this.day).then((plan) => {
+      PlanService.getPlanByDay(this.planId, this.day).then((plan) => {
         this.plan = plan[0];
-        console.log(this.plan);
         this.$refs.dailyFoodRef.plan = this.plan;
         this.$refs.dailyFoodRef.day = this.day;
         this.$refs.dailyFoodRef.updateData();
@@ -146,7 +146,7 @@ export default {
     },
     getNutrients() {
       let body = {
-        "planId": this.plan.id,
+        "planId": this.planId,
         "day": this.day
       }
       NutrientService.getNutrientsInPlan(body).then((nutrients) => {
@@ -158,11 +158,13 @@ export default {
     },
     nextDay() {
       this.day += 1;
-      this.$refs.dailyFoodRed.day = this.day;
+      this.$refs.dailyFoodRef.day = this.day;
+      this.reloadPlan();
     },
     previousDay() {
       this.day -= 1;
-      this.$refs.dailyFoodRed.day = this.day;
+      this.$refs.dailyFoodRef.day = this.day;
+      this.reloadPlan();
     },
     openDialog(data) {
       this.nutrient = data;
@@ -171,6 +173,18 @@ export default {
     addMeal() {
       this.$refs.addMealDialog.visible = true;
     },
+    generatePlan() {
+      PlanService.generatePlan(this.planId).then((content) => {
+        console.log(content)
+        const element = document.createElement('a');
+        const file = new Blob([content[0]], {type: 'application/pdf'});
+        element.href = URL.createObjectURL(file);
+        element.download = "report.pdf";
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      });
+    }
   }
 };
 </script>

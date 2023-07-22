@@ -5,11 +5,18 @@ import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.DailyPlan;
 import com.example.diplomski.model.Plan;
 import com.example.diplomski.service.DairyService;
+import com.example.diplomski.service.PDFService;
 import com.example.diplomski.service.PlanService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.InstanceNotFoundException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @RestController
 @AllArgsConstructor
@@ -57,5 +64,16 @@ public class PlanController {
     @PostMapping("/remove-tag")
     public void removeTag(@RequestBody RemoveTagRequest removeTagRequest) throws InstanceNotFoundException {
         dairyService.removeTag(removeTagRequest);
+    }
+
+    @GetMapping(value = "/generate-plan/{planId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generatePlan(@PathVariable String planId) throws IOException {
+        Plan plan = planService.getPlan(Long.parseLong(planId));
+
+        ByteArrayInputStream byteFile = PDFService.createPDF(plan);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=report.pdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
 }
