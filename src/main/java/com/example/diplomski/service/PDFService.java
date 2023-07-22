@@ -1,15 +1,14 @@
 package com.example.diplomski.service;
 
-import com.example.diplomski.model.DailyPlan;
-import com.example.diplomski.model.EatenFood;
-import com.example.diplomski.model.Plan;
-import com.example.diplomski.model.Tag;
+import com.example.diplomski.model.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.*;
+
+import static com.example.diplomski.service.ClientUtils.*;
 
 public class PDFService {
 
@@ -22,12 +21,9 @@ public class PDFService {
             PdfWriter.getInstance(document, output);
             document.open();
 
-            Paragraph title = new Paragraph("Nutrition Plan");
-            document.add(title);
-
-            PdfPTable table = createTable(plan);
-            document.add(table);
-
+            document.add(new Paragraph("Nutrition Plan"));
+            document.add(createClientInfo(plan.getClient()));
+            document.add(createTable(plan));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -50,6 +46,20 @@ public class PDFService {
 
         byte[] pdfBytes = byteArrayOutputStream.toByteArray();
         return new ByteArrayInputStream(pdfBytes);
+    }
+
+    private static Paragraph createClientInfo(Client client) {
+        Paragraph clientInfo = new Paragraph();
+        clientInfo.add(new Chunk("Client Data\n\n"));
+        clientInfo.add(new Chunk("Name: " + client.getName() + " " + client.getSurname() + "\n"));
+        clientInfo.add(new Chunk("Email: " + client.getEmail() + "\n"));
+        clientInfo.add(new Chunk("Date of birth: " + client.getClientData().getDateOfBirth() + "\n"));
+        clientInfo.add(new Chunk("Age: " + calculateAge(client.getClientData().getDateOfBirth()) + "\n"));
+        clientInfo.add(new Chunk("Health status: " + client.getClientData().getHealthStatus() + "\n"));
+        clientInfo.add(new Chunk("Activity status: " + client.getClientData().getActivityStatus() + "\n"));
+        clientInfo.add(new Chunk("BMI: " + calculateBMI(client.getClientData()) + "\n"));
+        clientInfo.add(new Chunk("Maintenance Calories: " + calculateCalories(client.getClientData()) + "\n"));
+        return clientInfo;
     }
 
     private static PdfPTable createTable(Plan plan) {

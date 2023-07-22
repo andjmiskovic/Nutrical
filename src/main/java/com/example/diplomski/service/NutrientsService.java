@@ -3,29 +3,25 @@ package com.example.diplomski.service;
 import com.example.diplomski.dto.NutrientScore;
 import com.example.diplomski.dto.NutrientsRequest;
 import com.example.diplomski.dto.NutrientsResponse;
-import com.example.diplomski.enums.HealthStatus;
 import com.example.diplomski.enums.NutrientKind;
 import com.example.diplomski.model.*;
-import com.example.diplomski.repository.*;
+import com.example.diplomski.repository.ClientRepository;
+import com.example.diplomski.repository.NutrientRepository;
+import com.example.diplomski.repository.PlanRepository;
+import com.example.diplomski.repository.RecommendedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.webjars.NotFoundException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+
+import static com.example.diplomski.service.ClientUtils.calculateCalories;
 
 @Service
 public class NutrientsService {
@@ -128,26 +124,4 @@ public class NutrientsService {
         return 0.0;
     }
 
-    public double calculateBMI(double weight, double height) {
-        return weight / (height * height / 10000);
-    }
-
-    public double calculateCalories(ClientData clientData) {
-        int age = calculateAge(clientData.getDateOfBirth());
-        double base = 9.99 * clientData.getWeight() + 6.25 * clientData.getHeight() - 4.92 * age;
-        switch (clientData.getHealthStatus()) {
-            case MAN -> base += 5;
-            case WOMAN -> base -= 161;
-            case PREGNANT -> base += 340;
-            default -> base += 400;
-        }
-        return base * clientData.getActivityStatus().getMultiplyValue();
-    }
-
-    private int calculateAge(Date dateOfBirth) {
-        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        int d1 = Integer.parseInt(formatter.format(dateOfBirth));
-        int d2 = Integer.parseInt(formatter.format(new Date()));
-        return (d2 - d1) / 10000;
-    }
 }
