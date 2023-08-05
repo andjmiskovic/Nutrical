@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @Builder
 public class BasicUserData {
     private String name;

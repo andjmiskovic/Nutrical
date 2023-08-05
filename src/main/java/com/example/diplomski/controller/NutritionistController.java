@@ -1,6 +1,6 @@
 package com.example.diplomski.controller;
 
-import com.example.diplomski.dto.BasicUserData;
+import com.example.diplomski.dto.ClientCalculations;
 import com.example.diplomski.dto.ClientDetails;
 import com.example.diplomski.dto.ClientRequest;
 import com.example.diplomski.exceptions.UserNotFoundException;
@@ -25,6 +25,11 @@ public class NutritionistController {
         clientService.addClient(clientRequestDTO);
     }
 
+    @PostMapping("/edit-client")
+    public void editClient(@RequestBody ClientRequest clientRequestDTO) throws UserNotFoundException {
+        clientService.editClient(clientRequestDTO);
+    }
+
     @GetMapping("/get-clients/{nutritionistEmail}")
     public List<ClientDetails> getClients(@PathVariable("nutritionistEmail") String nutritionistEmail) throws UserNotFoundException {
         return nutritionistService.getClients(nutritionistEmail);
@@ -33,5 +38,10 @@ public class NutritionistController {
     @GetMapping("/get-client/{nutritionistEmail}/{clientEmail}")
     public Client getClient(@PathVariable("nutritionistEmail") String nutritionistEmail, @PathVariable("clientEmail") String clientEmail) throws UserNotFoundException {
         return nutritionistService.getClient(nutritionistEmail, clientEmail);
+    }
+
+    @GetMapping("/get-client-details/{nutritionistEmail}/{clientEmail}")
+    public ClientCalculations getClientDetails(@PathVariable("nutritionistEmail") String nutritionistEmail, @PathVariable("clientEmail") String clientEmail) throws UserNotFoundException {
+        return clientService.getClientCalculations(nutritionistService.getClient(nutritionistEmail, clientEmail));
     }
 }

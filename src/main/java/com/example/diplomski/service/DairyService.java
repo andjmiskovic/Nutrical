@@ -117,11 +117,13 @@ public class DairyService {
     }
 
     public void removeTag(RemoveTagRequest removeTagRequest) throws InstanceNotFoundException {
-        DailyPlan dailyPlan = getDailyPlan(removeTagRequest.getDailyPlanId());
+        Plan plan = planRepository.findById(removeTagRequest.getPlanId()).get();
+        DailyPlan dailyPlan = plan.getDailyPlans().get(removeTagRequest.getDay() - 1);
         if (tagRepository.findById(removeTagRequest.getTagId()).isPresent()) {
             Tag tag = tagRepository.findById(removeTagRequest.getTagId()).get();
             dailyPlan.getTags().remove(tag);
             dairyRepository.save(dailyPlan);
+            tagRepository.delete(tag);
         }
     }
 }

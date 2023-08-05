@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @Builder
 public class ClientDetails {
     private String name;

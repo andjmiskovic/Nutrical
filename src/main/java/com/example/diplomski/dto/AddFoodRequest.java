@@ -8,8 +8,6 @@ import lombok.Setter;
 import java.util.Date;
 
 @Data
-@Getter
-@Setter
 @Builder
 public class AddFoodRequest {
     private String email;

@@ -1,6 +1,5 @@
 package com.example.diplomski.service;
 
-import com.example.diplomski.dto.BasicUserData;
 import com.example.diplomski.dto.ClientDetails;
 import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.Client;
@@ -8,7 +7,6 @@ import com.example.diplomski.model.Nutritionist;
 import com.example.diplomski.model.Plan;
 import com.example.diplomski.repository.NutritionistRepository;
 import com.example.diplomski.repository.PlanRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

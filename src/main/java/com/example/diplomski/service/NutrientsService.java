@@ -21,8 +21,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.List;
 
-import static com.example.diplomski.service.ClientUtils.calculateCalories;
-
 @Service
 public class NutrientsService {
     @Autowired
@@ -92,7 +90,7 @@ public class NutrientsService {
         ClientData clientData = clientRepository.findByEmail(dailyPlan.getUserEmail()).getClientData();
 
         NutrientsResponse nutrientsResponse = new NutrientsResponse(getNutrients(), clientData.getHealthStatus());
-        nutrientsResponse.setCaloriesGoal(calculateCalories(clientData));
+        nutrientsResponse.setCaloriesGoal(clientData.getCalorieGoal());
 
         for (Tag tag : dailyPlan.getTags()) {
             for (EatenFood food : tag.getEatenFood()) {

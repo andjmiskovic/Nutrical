@@ -59,6 +59,10 @@ public class PDFService {
         clientInfo.add(new Chunk("Activity status: " + client.getClientData().getActivityStatus() + "\n"));
         clientInfo.add(new Chunk("BMI: " + calculateBMI(client.getClientData()) + "\n"));
         clientInfo.add(new Chunk("Maintenance Calories: " + calculateCalories(client.getClientData()) + "\n"));
+        clientInfo.add(new Chunk("Daily calorie goal: " + client.getClientData().getCalorieGoal() + "\n"));
+        clientInfo.add(new Chunk("Macronutrient ratio: C(" + client.getClientData().getCarbsPercent() + "%) P(" + client.getClientData().getProteinPercent() + "%) F(" + client.getClientData().getFatPercent() + "%)\n"));
+        clientInfo.add(new Chunk("Additional information: \n"));
+        clientInfo.add(new Chunk(client.getClientData().getAdditionalInformation()));
         return clientInfo;
     }
 
