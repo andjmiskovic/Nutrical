@@ -32,9 +32,11 @@ public class NutrientsService {
     @Autowired
     private PlanRepository planRepository;
 
+    private static final String NUTRIENTS_FILE = "src/main/resources/static/nutrients.xml";
+
     public void loadNutrients() {
         try {
-            File file = new File("src/main/resources/static/nutrients.xml");
+            File file = new File(NUTRIENTS_FILE);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(file);
@@ -54,19 +56,24 @@ public class NutrientsService {
                     nutrient.setUnit(eElement.getElementsByTagName("unit").item(0).getTextContent());
 
                     Recommended recommended = new Recommended();
-                    Element e = (Element) eElement.getElementsByTagName("recommended").item(0);
+                    if (eElement.getElementsByTagName("recommended_per_kg").getLength() == 0) {
+                        Element e = (Element) eElement.getElementsByTagName("recommended").item(0);
 
-                    recommended.setMan(Double.valueOf(e.getElementsByTagName("man").item(0).getTextContent()));
-                    recommended.setWoman(Double.valueOf(e.getElementsByTagName("woman").item(0).getTextContent()));
-                    recommended.setPregnant(Double.valueOf(e.getElementsByTagName("pregnant").item(0).getTextContent()));
-                    recommended.setBreastfeeding(Double.valueOf(e.getElementsByTagName("breastfeeding").item(0).getTextContent()));
+                        recommended.setMan(Double.valueOf(e.getElementsByTagName("man").item(0).getTextContent()));
+                        recommended.setWoman(Double.valueOf(e.getElementsByTagName("woman").item(0).getTextContent()));
+                        recommended.setPregnant(Double.valueOf(e.getElementsByTagName("pregnant").item(0).getTextContent()));
+                        recommended.setBreastfeeding(Double.valueOf(e.getElementsByTagName("breastfeeding").item(0).getTextContent()));
 
-                    double max = Double.POSITIVE_INFINITY;
-                    try {
-                        max = Double.parseDouble(e.getElementsByTagName("max").item(0).getTextContent());
-                    } catch (Exception ignored) {
+                        double max = Double.POSITIVE_INFINITY;
+                        try {
+                            max = Double.parseDouble(e.getElementsByTagName("max").item(0).getTextContent());
+                        } catch (Exception ignored) {
+                        }
+                        recommended.setMax(max);
+                    } else {
+                        Element e = (Element) eElement.getElementsByTagName("recommended_per_kg").item(0);
+                        recommended.setRecommendedPerKg(Double.valueOf(e.getTextContent()));
                     }
-                    recommended.setMax(max);
                     recommendedRepository.save(recommended);
 
                     nutrient.setRecommended(recommended);
@@ -84,12 +91,11 @@ public class NutrientsService {
     }
 
     public NutrientsResponse getNutrients(NutrientsRequest nutrientsRequest) {
-
         Plan plan = planRepository.findById(nutrientsRequest.getPlanId()).get();
         DailyPlan dailyPlan = plan.getDailyPlans().get(nutrientsRequest.getDay() - 1);
         ClientData clientData = clientRepository.findByEmail(dailyPlan.getUserEmail()).getClientData();
 
-        NutrientsResponse nutrientsResponse = new NutrientsResponse(getNutrients(), clientData.getHealthStatus());
+        NutrientsResponse nutrientsResponse = new NutrientsResponse(getNutrients(), clientData);
         nutrientsResponse.setCaloriesGoal(clientData.getCalorieGoal());
 
         for (Tag tag : dailyPlan.getTags()) {

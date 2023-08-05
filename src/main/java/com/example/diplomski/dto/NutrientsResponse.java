@@ -1,6 +1,6 @@
 package com.example.diplomski.dto;
 
-import com.example.diplomski.enums.HealthStatus;
+import com.example.diplomski.model.ClientData;
 import com.example.diplomski.model.Nutrient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,11 +17,11 @@ public class NutrientsResponse {
     private Double calories;
     private List<NutrientScore> nutrientsScore;
 
-    public NutrientsResponse(List<Nutrient> nutrients, HealthStatus healthStatus) {
+    public NutrientsResponse(List<Nutrient> nutrients, ClientData clientData) {
         this.calories = 0.0;
         this.nutrientsScore = new ArrayList<>();
         for (Nutrient n : nutrients) {
-            this.nutrientsScore.add(new NutrientScore(n, n.getRecommended().getValue(healthStatus), 0.0));
+            this.nutrientsScore.add(new NutrientScore(n, n.getRecommended().getValue(clientData), 0.0));
         }
     }
 

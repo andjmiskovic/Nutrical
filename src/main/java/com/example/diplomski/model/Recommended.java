@@ -21,8 +21,16 @@ public class Recommended {
     private Double pregnant;
     private Double breastfeeding;
     private Double max;
+    private Double recommendedPerKg;
 
-    public Double getValue(HealthStatus healthStatus) {
+    public Double getValue(ClientData clientData) {
+        if (recommendedPerKg != null) {
+            return recommendedPerKg * clientData.getWeight();
+        }
+        return getValue(clientData.getHealthStatus());
+    }
+
+    private Double getValue(HealthStatus healthStatus) {
         switch (healthStatus) {
             case MAN -> {
                 return man;
