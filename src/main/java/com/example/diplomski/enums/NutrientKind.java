@@ -6,5 +6,6 @@ public enum NutrientKind {
     LIPIDS,
     MINERALS,
     PROTEIN,
+    MACRO,
     GENERAL
 }

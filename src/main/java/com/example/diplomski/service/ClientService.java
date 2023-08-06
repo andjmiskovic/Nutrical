@@ -7,6 +7,7 @@ import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.ClientRepository;
 import com.example.diplomski.repository.PlanRepository;
+import com.example.diplomski.util.ClientUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

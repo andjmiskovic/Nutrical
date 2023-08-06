@@ -1,4 +1,4 @@
-package com.example.diplomski.service;
+package com.example.diplomski.util;
 
 import com.example.diplomski.model.ClientData;
 

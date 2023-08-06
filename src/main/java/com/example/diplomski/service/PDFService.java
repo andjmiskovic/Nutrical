@@ -8,7 +8,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.*;
 
-import static com.example.diplomski.service.ClientUtils.*;
+import static com.example.diplomski.util.ClientUtils.*;
 
 public class PDFService {
 
