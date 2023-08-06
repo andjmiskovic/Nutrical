@@ -49,10 +49,24 @@
         />
       </div>
       <div class="col">
-        <Button class="add-button p-button-text" label="ADD EXERCISE"/>
+        <Button v-if="!trainingVisible" class="add-button p-button-text" @click="trainingVisible = true"
+                label="SHOW EXERCISE"/>
+        <Button v-if="trainingVisible" class="add-button p-button-text" @click="trainingVisible = false"
+                label="HIDE EXERCISE"/>
       </div>
       <div class="col">
-        <Button class="add-button p-button-text" label="ADD NOTES"/>
+        <Button v-if="!notesVisible" class="add-button p-button-text" @click="notesVisible = true"
+                label="SHOW NOTES"/>
+        <Button v-if="notesVisible" class="add-button p-button-text" @click="notesVisible = false"
+                label="HIDE NOTES"/>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6" v-if="trainingVisible">
+        <Training ref="training" :plan-id="plan.id" :day="day"></Training>
+      </div>
+      <div class="col-6" v-if="notesVisible">
+        <Notes ref="notes" :plan-id="plan.id" :day="day"></Notes>
       </div>
     </div>
     <div class="grid">
@@ -62,7 +76,7 @@
     </div>
     <div class="grid">
       <div class="col-6">
-        <Training ref="training" :plan-id="plan.id" :day="day"></Training>
+        <MyDonutChart></MyDonutChart>
       </div>
       <div class="col-6">
         <CaloriesBurned ref="calories"></CaloriesBurned>
@@ -101,11 +115,15 @@ import AddMeal from "../dialogs/AddMeal.vue";
 import PlanService from "@/services/PlanService";
 import NutrientService from "@/services/NutrientService";
 import Training from "../components/Training";
+import Notes from "../components/Notes";
+import MyDonutChart from "@/components/MyDonutChart";
 
 export default {
   name: "Plan",
   components: {
+    MyDonutChart,
     NavBar,
+    Notes,
     CaloriesBurned,
     ScoreVitamins,
     DailyFood,
@@ -118,6 +136,8 @@ export default {
         function: "",
         source: "",
       },
+      notesVisible: true,
+      trainingVisible: true,
       plan: {
         userEmail: '',
         tags: [],
@@ -146,6 +166,7 @@ export default {
         this.$refs.dailyFoodRef.plan = this.plan;
         this.$refs.dailyFoodRef.day = this.day;
         this.$refs.dailyFoodRef.updateData();
+        this.$refs.notes.notes = this.plan.notes;
         this.$refs.training.trainingPlan = this.plan.training;
         if (this.plan.training === '') {
           this.$refs.training.restDay = "Rest day";

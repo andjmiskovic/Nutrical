@@ -129,4 +129,10 @@ public class DairyService {
         dailyPlan.setTraining(trainingRequest.getTraining());
         dairyRepository.save(dailyPlan);
     }
+
+    public void addNotes(TrainingRequest trainingRequest) throws InstanceNotFoundException {
+        DailyPlan dailyPlan = getDailyPlan(trainingRequest.getPlanId());
+        dailyPlan.setNotes(trainingRequest.getTraining());
+        dairyRepository.save(dailyPlan);
+    }
 }
