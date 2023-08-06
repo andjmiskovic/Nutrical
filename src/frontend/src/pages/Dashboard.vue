@@ -58,7 +58,7 @@
         </div>
         <div class="grid">
           <div class="col-6">
-            <TargetsKnob></TargetsKnob>
+<!--            <TargetsKnob></TargetsKnob>-->
           </div>
           <div class="col-6">
             <CaloriesBurned></CaloriesBurned>
@@ -90,8 +90,7 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import EnergyRatio from "../components/EnergyRatio.vue";
-import TargetsKnob from "../components/TargetsKnob.vue";
-import CaloriesBurned from "../components/CaloriesBurned.vue";
+import CaloriesBurned from "../components/MacronutrientsTarget.vue";
 import MyCalendar from "../components/MyCalendar.vue";
 import ScoreVitamins from "../components/ScoreVitamins.vue";
 import AddFood from "../components/AddFood.vue";
@@ -102,7 +101,6 @@ export default {
   components: {
     NavBar,
     EnergyRatio,
-    TargetsKnob,
     CaloriesBurned,
     MyCalendar,
     ScoreVitamins,

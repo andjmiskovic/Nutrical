@@ -8,6 +8,7 @@
     --light-gray: #bebebe;
     --pink: #9C27B0;
     --green: #23CE6B;
+    --red: #DC143C;
     --white: #F6F8FF;
     --blue: #277BC0;
     --border-radius: 12px;
@@ -40,7 +41,6 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-bottom: 50px;
-    /*padding: .5em;*/
 }
 
 .card {
@@ -86,4 +86,12 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf;
+}
+
+.p-progressbar .p-progressbar-value {
+    background: var(--gray) !important;
+}
+
+.p-progressbar {
+    height: 0.8rem !important;
 }

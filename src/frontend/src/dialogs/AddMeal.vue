@@ -8,7 +8,8 @@
         </div>
       </div>
 
-      <Button type="submit" style="width: 100%" label="Create" :disabled="!isFormValid"/>
+      <Button v-if="tagId" type="submit" style="width: 100%" label="Create" :disabled="!isFormValid"/>
+      <Button v-if="!tagId" type="submit" style="width: 100%" label="Rename" :disabled="!isFormValid"/>
     </form>
   </Dialog>
 </template>
@@ -18,12 +19,11 @@ import PlanService from "@/services/PlanService";
 
 export default {
   name: "AddMeal",
-  props: ["plan", "day"],
+  props: ["plan", "day", "tagId", "tagName"],
   data() {
     return {
       visible: false,
       dialogHeader: "Add Meal",
-      tagName: "",
     };
   },
   computed: {
@@ -44,10 +44,17 @@ export default {
         "planId": this.plan.id,
         "day": this.day
       }
-      PlanService.addTag(body).then((() => {
-        this.visible = false;
-        this.$parent.reloadPlan();
-      }))
+      if (!this.tagId) {
+        PlanService.addTag(body).then((() => {
+          this.visible = false;
+          this.$parent.reloadPlan();
+        }))
+      } else {
+        PlanService.renameTag(body).then((() => {
+          this.visible = false;
+          this.$parent.reloadPlan();
+        }))
+      }
     },
   },
 };

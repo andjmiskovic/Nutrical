@@ -5,13 +5,14 @@
       src="../assets/images/dashboard-background.jpg"
       alt=""
   />
-  <div class="grid" style="margin-left: 100px; margin-top: -80px;">
+  <div class="grid" style="margin-left: 20px; margin-top: -80px;">
     <div class="welcome col-9" style="float: left">
-      <p style="font-size: 30px">Client: {{ plan.name }} {{ plan.surname }}</p>
+      <p style="font-size: 30px">Client: {{ plan.name }} {{ plan.surname }} {{ plan.userEmail }}</p>
       <p style="line-height: 5px">plan id: {{ plan.id }}</p>
     </div>
     <div class="col-3">
-      <Button style="margin-top: 20px; float: right; margin-right: 20px" @click="generatePlan">Generate plan PDF</Button>
+      <Button style="margin-top: 20px; float: right; margin-right: 20px" @click="generatePlan">Generate plan PDF
+      </Button>
     </div>
   </div>
   <div style="width: 70%; margin: auto;">
@@ -56,12 +57,12 @@
     </div>
     <div class="grid">
       <div class="col">
-        <DailyFood ref="dailyFoodRef"></DailyFood>
+        <DailyFood ref="dailyFoodRef" :daily-plan-id="plan.id"></DailyFood>
       </div>
     </div>
     <div class="grid">
       <div class="col-6">
-        <TargetsKnob></TargetsKnob>
+<!--        <TargetsKnob ref="targets"></TargetsKnob>-->
       </div>
       <div class="col-6">
         <CaloriesBurned ref="calories"></CaloriesBurned>
@@ -69,14 +70,17 @@
     </div>
     <div class="grid">
       <div class="col">
-        <ScoreVitamins ref="vitamins" kind="VITAMINS"></ScoreVitamins>
+        <ScoreVitamins ref="carbs" kind="CARBOHYDRATES"></ScoreVitamins>
+        <ScoreVitamins ref="lipids" kind="LIPIDS"></ScoreVitamins>
+        <ScoreVitamins ref="proteins" kind="PROTEIN"></ScoreVitamins>
       </div>
       <div class="col">
+        <ScoreVitamins ref="vitamins" kind="VITAMINS"></ScoreVitamins>
         <ScoreVitamins ref="minerals" kind="MINERALS"></ScoreVitamins>
       </div>
     </div>
   </div>
-  <AddMeal ref="addMealDialog" :plan="plan" :day="day"></AddMeal>
+  <AddMeal ref="addMealDialog" :plan="plan" :day="day" :tag-name="''"></AddMeal>
   <Dialog v-model:visible="nutrientsDialogVisible" style="width: 60%">
     <template #header>
       <h3><i class="bx bxs-info-circle"></i> {{ nutrient.nutrient }}</h3>
@@ -90,8 +94,7 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import TargetsKnob from "../components/TargetsKnob.vue";
-import CaloriesBurned from "../components/CaloriesBurned.vue";
+import CaloriesBurned from "../components/MacronutrientsTarget.vue";
 import ScoreVitamins from "../components/ScoreVitamins.vue";
 import DailyFood from "../components/DailyFood.vue";
 import AddMeal from "../dialogs/AddMeal.vue";
@@ -102,7 +105,6 @@ export default {
   name: "Plan",
   components: {
     NavBar,
-    TargetsKnob,
     CaloriesBurned,
     ScoreVitamins,
     DailyFood,
@@ -151,9 +153,12 @@ export default {
       }
       NutrientService.getNutrientsInPlan(body).then((nutrients) => {
         console.log(nutrients.data);
-        this.$refs.calories.updateCalories(nutrients.data.calories, nutrients.data.caloriesGoal);
+        this.$refs.calories.updateValues(nutrients.data, nutrients.data.calories, nutrients.data.caloriesGoal);
         this.$refs.vitamins.updateValues(nutrients.data.nutrientsScore);
         this.$refs.minerals.updateValues(nutrients.data.nutrientsScore);
+        this.$refs.proteins.updateValues(nutrients.data.nutrientsScore);
+        this.$refs.lipids.updateValues(nutrients.data.nutrientsScore);
+        this.$refs.carbs.updateValues(nutrients.data.nutrientsScore);
       })
     },
     nextDay() {
