@@ -51,6 +51,11 @@ public class PlanController {
         dairyService.removeFood(removeFoodRequest);
     }
 
+    @PostMapping("/add-training")
+    public void addTraining(@RequestBody TrainingRequest trainingRequest) throws InstanceNotFoundException {
+        dairyService.addTraining(trainingRequest);
+    }
+
     @PostMapping("/add-tag")
     public void addTag(@RequestBody TagRequest addTagRequest) throws InstanceNotFoundException {
         dairyService.addTag(addTagRequest);

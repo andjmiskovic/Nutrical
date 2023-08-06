@@ -62,7 +62,6 @@ export default {
       return +(nutrient.amount / nutrient.goal * 100).toFixed(1);
     },
     updateValues(nutrients) {
-      console.log(nutrients);
       const nutrientData = [];
       for (let n of nutrients) {
         if (n.nutrient.kind === this.kind) {
@@ -91,6 +90,10 @@ export default {
 ::v-deep(.p-datatable .p-datatable-tbody tr td) {
   padding: 5px !important;
   font-size: 12px !important;
+}
+
+::v-deep(.p-progressbar .p-progressbar-value) {
+  background: var(--gray);
 }
 
 ::v-deep(.p-progressbar.green-progress .p-progressbar-value) {

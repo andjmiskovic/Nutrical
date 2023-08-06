@@ -20,6 +20,10 @@ const addTag = addTagRequest => {
     return fetch(instance.post('/api/dairy/add-tag', addTagRequest, configuration))
 }
 
+const saveTraining = addTrainingRequest => {
+    return fetch(instance.post('/api/dairy/add-training', addTrainingRequest, configuration))
+}
+
 const renameTag = renameTagRequest => {
     return fetch(instance.post('/api/dairy/rename-tag', renameTagRequest, configuration))
 }
@@ -57,5 +61,6 @@ export default {
     addTag,
     renameTag,
     removeTag,
-    generatePlan
+    generatePlan,
+    saveTraining
 }

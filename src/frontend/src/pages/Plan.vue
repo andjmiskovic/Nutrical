@@ -62,7 +62,7 @@
     </div>
     <div class="grid">
       <div class="col-6">
-<!--        <TargetsKnob ref="targets"></TargetsKnob>-->
+        <Training ref="training" :plan-id="plan.id" :day="day"></Training>
       </div>
       <div class="col-6">
         <CaloriesBurned ref="calories"></CaloriesBurned>
@@ -100,6 +100,7 @@ import DailyFood from "../components/DailyFood.vue";
 import AddMeal from "../dialogs/AddMeal.vue";
 import PlanService from "@/services/PlanService";
 import NutrientService from "@/services/NutrientService";
+import Training from "../components/Training";
 
 export default {
   name: "Plan",
@@ -108,6 +109,7 @@ export default {
     CaloriesBurned,
     ScoreVitamins,
     DailyFood,
+    Training,
     AddMeal
   },
   data() {
@@ -139,10 +141,15 @@ export default {
   methods: {
     reloadPlan() {
       PlanService.getPlanByDay(this.planId, this.day).then((plan) => {
+        console.log(plan[0]);
         this.plan = plan[0];
         this.$refs.dailyFoodRef.plan = this.plan;
         this.$refs.dailyFoodRef.day = this.day;
         this.$refs.dailyFoodRef.updateData();
+        this.$refs.training.trainingPlan = this.plan.training;
+        if (this.plan.training === '') {
+          this.$refs.training.restDay = "Rest day";
+        }
         this.getNutrients();
       });
     },

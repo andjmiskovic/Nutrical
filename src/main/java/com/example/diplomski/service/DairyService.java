@@ -1,9 +1,6 @@
 package com.example.diplomski.service;
 
-import com.example.diplomski.dto.AddFoodRequest;
-import com.example.diplomski.dto.RemoveFoodRequest;
-import com.example.diplomski.dto.RemoveTagRequest;
-import com.example.diplomski.dto.TagRequest;
+import com.example.diplomski.dto.*;
 import com.example.diplomski.exceptions.UserNotFoundException;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.DairyRepository;
@@ -125,5 +122,11 @@ public class DairyService {
             dairyRepository.save(dailyPlan);
             tagRepository.delete(tag);
         }
+    }
+
+    public void addTraining(TrainingRequest trainingRequest) throws InstanceNotFoundException {
+        DailyPlan dailyPlan = getDailyPlan(trainingRequest.getPlanId());
+        dailyPlan.setTraining(trainingRequest.getTraining());
+        dairyRepository.save(dailyPlan);
     }
 }

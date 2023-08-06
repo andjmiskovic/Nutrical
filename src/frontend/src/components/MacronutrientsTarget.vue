@@ -82,8 +82,12 @@ export default {
 </script>
 
 <style scoped>
+p {
+  font-size: 13px;
+}
+
 .border {
-  margin: 10px;
+  margin: 15px;
 }
 
 .progress-procent {
@@ -98,11 +102,11 @@ export default {
   background-color: aliceblue;
 }
 
-.progress-container {
-  width: 100%;
+::v-deep(.p-progressbar .p-progressbar-value) {
+  background: var(--gray);
 }
 
-#calories-pb::-webkit-progress-value {
-  background-color: var(--green);
+.progress-container {
+  width: 100%;
 }
 </style>

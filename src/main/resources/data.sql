@@ -17,9 +17,9 @@ INSERT INTO TAG(id, tag)
 VALUES (11928471, 'Meal 1'),
        (21192847, 'Meal 1');
 
-INSERT INTO daily_plan(id, notes, user_email)
-VALUES (1123421, '', 'client1@example.com'),
-       (21244, '', 'client2@example.com');
+INSERT INTO daily_plan(id, notes, user_email, training)
+VALUES (1123421, '', 'client1@example.com', ''),
+       (21244, '', 'client2@example.com', '');
 
 INSERT INTO daily_plan_tags(daily_plan_id, tags_id)
 VALUES (1123421, 11928471),

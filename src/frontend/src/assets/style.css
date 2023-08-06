@@ -88,10 +88,6 @@ body {
     background-color: #a8bbbf;
 }
 
-.p-progressbar .p-progressbar-value {
-    background: var(--gray) !important;
-}
-
 .p-progressbar {
     height: 0.8rem !important;
 }

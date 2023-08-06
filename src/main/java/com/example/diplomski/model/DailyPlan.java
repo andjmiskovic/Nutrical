@@ -18,4 +18,5 @@ public class DailyPlan {
     private List<Tag> tags;
     private String notes;
     private String userEmail;
+    private String training;
 }

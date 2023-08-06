@@ -3,6 +3,7 @@ package com.example.diplomski.dto;
 import com.example.diplomski.model.ClientData;
 import com.example.diplomski.model.FoodItem;
 import com.example.diplomski.model.Nutrient;
+import com.example.diplomski.util.ClientUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,10 +38,10 @@ public class NutrientsResponse {
     }
 
     public void addMacronutrients(FoodItem item, double quantity) {
-        this.addCalories(item.getCalories() * quantity / 100);
-        this.addProtein(item.getProtein() * quantity / 100);
-        this.addCarbs(item.getCarbs() * quantity / 100);
-        this.addFat(item.getFat() * quantity / 100);
+        this.addCalories(ClientUtils.roundAvoid(item.getCalories() * quantity / 100, 1));
+        this.addProtein(ClientUtils.roundAvoid(item.getProtein() * quantity / 100, 1));
+        this.addCarbs(ClientUtils.roundAvoid(item.getCarbs() * quantity / 100, 1));
+        this.addFat(ClientUtils.roundAvoid(item.getFat() * quantity / 100, 1));
     }
 
     public void setGoals(ClientData clientData) {

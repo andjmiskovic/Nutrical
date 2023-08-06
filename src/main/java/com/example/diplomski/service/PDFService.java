@@ -13,6 +13,8 @@ import static com.example.diplomski.util.ClientUtils.*;
 public class PDFService {
 
     private static final String FILE_LOCATION = "src/main/resources/report.pdf";
+    private static final Font HEADER_FONT = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+    private static final Font CELL_FONT = FontFactory.getFont(FontFactory.HELVETICA, 10);
 
     public static ByteArrayInputStream createPDF(Plan plan) throws IOException {
         Document document = new Document(PageSize.A4);
@@ -71,33 +73,43 @@ public class PDFService {
         table.setWidthPercentage(100);
         table.setPaddingTop(5);
 
-        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
-        Font cellFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
-
         int i = 1;
         for (DailyPlan dailyPlan : plan.getDailyPlans()) {
             // Add a single row for the day
-            PdfPCell dayCell = new PdfPCell(new Phrase("Day " + i, headerFont));
+            PdfPCell dayCell = new PdfPCell(new Phrase("Day " + i, HEADER_FONT));
             dayCell.setColspan(3);
             dayCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             table.addCell(dayCell);
 
             // Add multiple rows for each meal of the day
             for (Tag tag : dailyPlan.getTags()) {
-                PdfPCell mealCell = new PdfPCell(new Phrase(tag.getTag(), cellFont));
+                PdfPCell mealCell = new PdfPCell(new Phrase(tag.getTag(), CELL_FONT));
                 mealCell.setRowspan(tag.getEatenFood().size());
                 table.addCell(mealCell);
 
                 for (EatenFood food : tag.getEatenFood()) {
-                    PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), cellFont));
+                    PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), CELL_FONT));
                     table.addCell(foodNameCell);
 
-                    PdfPCell quantityCell = new PdfPCell(new Phrase(food.getQuantity().toString() + "g", cellFont));
+                    PdfPCell quantityCell = new PdfPCell(new Phrase(food.getQuantity().toString() + "g", CELL_FONT));
                     table.addCell(quantityCell);
                 }
             }
+
+            addNotes(table, dailyPlan.getTraining(), "Training");
+            addNotes(table, dailyPlan.getNotes(), "Notes");
             i++;
         }
         return table;
+    }
+
+    private static void addNotes(PdfPTable table, String value, String header) {
+        if (!value.trim().isEmpty()) {
+            PdfPCell notes = new PdfPCell(new Phrase(header, CELL_FONT));
+            table.addCell(notes);
+            PdfPCell notesContent = new PdfPCell(new Phrase(value, CELL_FONT));
+            notesContent.setColspan(2);
+            table.addCell(notesContent);
+        }
     }
 }
