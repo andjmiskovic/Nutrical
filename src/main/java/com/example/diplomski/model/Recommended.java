@@ -1,6 +1,6 @@
 package com.example.diplomski.model;
 
-import com.example.diplomski.enums.HealthStatus;
+import com.example.diplomski.enums.BiologicalStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,11 +27,11 @@ public class Recommended {
         if (recommendedPerKg != null) {
             return recommendedPerKg * clientData.getWeight();
         }
-        return getValue(clientData.getHealthStatus());
+        return getValue(clientData.getBiologicalStatus());
     }
 
-    private Double getValue(HealthStatus healthStatus) {
-        switch (healthStatus) {
+    private Double getValue(BiologicalStatus biologicalStatus) {
+        switch (biologicalStatus) {
             case MAN -> {
                 return man;
             }

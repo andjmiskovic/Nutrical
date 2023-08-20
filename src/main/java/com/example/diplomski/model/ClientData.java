@@ -1,7 +1,7 @@
 package com.example.diplomski.model;
 
 import com.example.diplomski.enums.ActivityStatus;
-import com.example.diplomski.enums.HealthStatus;
+import com.example.diplomski.enums.BiologicalStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class ClientData {
     @Id
     private Long id;
     @Enumerated(EnumType.STRING)
-    private HealthStatus healthStatus;
+    private BiologicalStatus biologicalStatus;
     @Enumerated(EnumType.STRING)
     private ActivityStatus activityStatus;
     @Column(name = "weight_kg")

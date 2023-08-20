@@ -14,12 +14,11 @@
 
 <script>
 import AuthService from "@/services/AuthService";
-import Menubar from 'primevue/menubar';
 
 export default {
   props: ["activePage"],
   name: "NavBar",
-  components: {Menubar},
+  components: {},
   data() {
     return {};
   },

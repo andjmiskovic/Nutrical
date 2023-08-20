@@ -4,7 +4,7 @@
       <div class="p-fluid">
         <div class="p-field">
           <label for="name">Meal name</label>
-          <InputText id="name" v-model="tagName" required/>
+          <InputText id="name" v-model="newTagName" required/>
         </div>
       </div>
 
@@ -24,12 +24,16 @@ export default {
     return {
       visible: false,
       dialogHeader: "Add Meal",
+      newTagName: ""
     };
   },
   computed: {
     isFormValid() {
-      return this.tagName !== "";
+      return this.newTagName !== "";
     },
+  },
+  mounted() {
+    this.newTagName = this.tagName;
   },
   methods: {
     showDialog() {
@@ -40,7 +44,7 @@ export default {
         return;
       }
       let body = {
-        "tagName": this.tagName,
+        "tagName": this.newTagName,
         "planId": this.plan.id,
         "day": this.day
       }

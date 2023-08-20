@@ -8,10 +8,12 @@
   <div class="grid" style="margin-left: 20px; margin-top: -80px;">
     <div class="welcome col-9" style="float: left">
       <p style="font-size: 30px">Client: {{ plan.name }} {{ plan.surname }} {{ plan.userEmail }}</p>
-      <p style="line-height: 5px">plan id: {{ plan.id }}</p>
+      <p style="line-height: 5px">plan id: {{ planId }}</p>
     </div>
     <div class="col-3">
-      <Button style="margin-top: 20px; float: right; margin-right: 20px" @click="generatePlan">Generate plan PDF
+      <Button icon="pi pi-send" label="Send" style="margin-top: 20px; float: right; margin-right: 20px" @click="send">
+      </Button>
+      <Button icon="pi pi-download" label="Download" style="margin-top: 20px; float: right; margin-right: 20px" @click="generatePlan">
       </Button>
     </div>
   </div>
@@ -29,6 +31,17 @@
       </div>
       <div class="col">
         <h3 style="text-align: center">Day #{{ day }}</h3>
+        <div class="number-list">
+          <div
+              v-for="number in plan.daysInPlan"
+              :key="number"
+              class="number-item"
+              :class="{ selected: number === day }"
+              @click="selectDay(number)"
+          >
+            {{ number }}
+          </div>
+        </div>
       </div>
       <div class="col-fixed" style="width: 100px">
         <Button
@@ -40,6 +53,7 @@
         />
       </div>
     </div>
+
     <div class="grid" style="margin: 10px">
       <div class="col">
         <Button
@@ -50,15 +64,15 @@
       </div>
       <div class="col">
         <Button v-if="!trainingVisible" class="add-button p-button-text" @click="trainingVisible = true"
-                label="SHOW EXERCISE"/>
+                label="ADD EXERCISE"/>
         <Button v-if="trainingVisible" class="add-button p-button-text" @click="trainingVisible = false"
-                label="HIDE EXERCISE"/>
+                label="REMOVE EXERCISE"/>
       </div>
       <div class="col">
         <Button v-if="!notesVisible" class="add-button p-button-text" @click="notesVisible = true"
-                label="SHOW NOTES"/>
+                label="ADD NOTES"/>
         <Button v-if="notesVisible" class="add-button p-button-text" @click="notesVisible = false"
-                label="HIDE NOTES"/>
+                label="REMOVE NOTES"/>
       </div>
     </div>
     <div class="grid">
@@ -76,7 +90,7 @@
     </div>
     <div class="grid">
       <div class="col-6">
-        <MyDonutChart></MyDonutChart>
+        <MyDonutChart ref="donutChart"></MyDonutChart>
       </div>
       <div class="col-6">
         <CaloriesBurned ref="calories"></CaloriesBurned>
@@ -94,7 +108,10 @@
       </div>
     </div>
   </div>
-  <AddMeal ref="addMealDialog" :plan="plan" :day="day" :tag-name="''"></AddMeal>
+
+  <AddMeal ref="addMealDialog" :plan="plan" :day="day" :meal-name="''"></AddMeal>
+  <SendPlanDialog ref="sendPlanDialog" :plan="plan"></SendPlanDialog>
+
   <Dialog v-model:visible="nutrientsDialogVisible" style="width: 60%">
     <template #header>
       <h3><i class="bx bxs-info-circle"></i> {{ nutrient.nutrient }}</h3>
@@ -112,6 +129,7 @@ import CaloriesBurned from "../components/MacronutrientsTarget.vue";
 import ScoreVitamins from "../components/ScoreVitamins.vue";
 import DailyFood from "../components/DailyFood.vue";
 import AddMeal from "../dialogs/AddMeal.vue";
+import SendPlanDialog from "../dialogs/SendPlanDialog.vue";
 import PlanService from "@/services/PlanService";
 import NutrientService from "@/services/NutrientService";
 import Training from "../components/Training";
@@ -128,7 +146,8 @@ export default {
     ScoreVitamins,
     DailyFood,
     Training,
-    AddMeal
+    AddMeal,
+    SendPlanDialog
   },
   data() {
     return {
@@ -140,7 +159,7 @@ export default {
       trainingVisible: true,
       plan: {
         userEmail: '',
-        tags: [],
+        meals: [],
         notes: []
       },
       day: 1,
@@ -187,15 +206,17 @@ export default {
         this.$refs.proteins.updateValues(nutrients.data.nutrientsScore);
         this.$refs.lipids.updateValues(nutrients.data.nutrientsScore);
         this.$refs.carbs.updateValues(nutrients.data.nutrientsScore);
+        this.$refs.donutChart.updateValues(nutrients.data);
       })
     },
     nextDay() {
-      this.day += 1;
-      this.$refs.dailyFoodRef.day = this.day;
-      this.reloadPlan();
+      this.selectDay(this.day + 1);
     },
     previousDay() {
-      this.day -= 1;
+      this.selectDay(this.day - 1);
+    },
+    selectDay(n) {
+      this.day = n;
       this.$refs.dailyFoodRef.day = this.day;
       this.reloadPlan();
     },
@@ -217,6 +238,9 @@ export default {
         element.click();
         document.body.removeChild(element);
       });
+    },
+    send() {
+      this.$refs.sendPlanDialog.visible = true;
     }
   }
 };
@@ -244,5 +268,48 @@ export default {
   font-weight: 600;
   text-align: center;
   color: var(--gray) !important;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-fixed {
+  flex: 0 0 auto;
+}
+
+.col {
+  flex: 1 1 auto;
+}
+
+.number-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.number-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.3s;
+}
+
+.number-item:hover {
+  background-color: #ccc;
+}
+
+.number-item.selected {
+  background-color: var(--green);
+  color: white;
 }
 </style>

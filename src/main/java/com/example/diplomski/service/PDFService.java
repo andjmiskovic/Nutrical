@@ -57,7 +57,7 @@ public class PDFService {
         clientInfo.add(new Chunk("Email: " + client.getEmail() + "\n"));
         clientInfo.add(new Chunk("Date of birth: " + client.getClientData().getDateOfBirth() + "\n"));
         clientInfo.add(new Chunk("Age: " + calculateAge(client.getClientData().getDateOfBirth()) + "\n"));
-        clientInfo.add(new Chunk("Health status: " + client.getClientData().getHealthStatus() + "\n"));
+        clientInfo.add(new Chunk("Biological status: " + client.getClientData().getBiologicalStatus() + "\n"));
         clientInfo.add(new Chunk("Activity status: " + client.getClientData().getActivityStatus() + "\n"));
         clientInfo.add(new Chunk("BMI: " + calculateBMI(client.getClientData()) + "\n"));
         clientInfo.add(new Chunk("Maintenance Calories: " + calculateCalories(client.getClientData()) + "\n"));
@@ -82,12 +82,12 @@ public class PDFService {
             table.addCell(dayCell);
 
             // Add multiple rows for each meal of the day
-            for (Tag tag : dailyPlan.getTags()) {
-                PdfPCell mealCell = new PdfPCell(new Phrase(tag.getTag(), CELL_FONT));
-                mealCell.setRowspan(tag.getEatenFood().size());
+            for (Meal meal : dailyPlan.getMeals()) {
+                PdfPCell mealCell = new PdfPCell(new Phrase(meal.getName(), CELL_FONT));
+                mealCell.setRowspan(meal.getEatenFood().size());
                 table.addCell(mealCell);
 
-                for (EatenFood food : tag.getEatenFood()) {
+                for (EatenFood food : meal.getEatenFood()) {
                     PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), CELL_FONT));
                     table.addCell(foodNameCell);
 
@@ -104,7 +104,7 @@ public class PDFService {
     }
 
     private static void addNotes(PdfPTable table, String value, String header) {
-        if (!value.trim().isEmpty()) {
+        if (!(value == null || !value.trim().isEmpty())) {
             PdfPCell notes = new PdfPCell(new Phrase(header, CELL_FONT));
             table.addCell(notes);
             PdfPCell notesContent = new PdfPCell(new Phrase(value, CELL_FONT));

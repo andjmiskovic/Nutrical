@@ -3,7 +3,7 @@
     <template #title>
       Notes
     </template>
-    <template #content style="margin-top: -30px">
+    <template #content>
       <div v-if="editing">
           <Textarea v-model="notes"
                     style="width: 100%; max-height: 130px; min-height: 70px" rows="50" cols="30"/>
@@ -13,7 +13,7 @@
         <p>
           <i class="pi pi-pencil" style="cursor: pointer; color: var(--pink)" @click="editing = !editing"
              v-tooltip="'Edit'"></i>
-          {{ notes }}<span style="color: var(--light-gray)" v-if="notes === ''">Write something...</span>
+          {{ notes }}<span style="color: var(--light-gray)" v-if="notes.length === 0">Write something...</span>
         </p>
       </div>
     </template>

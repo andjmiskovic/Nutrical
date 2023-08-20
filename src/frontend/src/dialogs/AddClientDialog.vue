@@ -15,8 +15,8 @@
           <InputText id="email" v-model="newClient.email" required/>
         </div>
         <div class="p-field">
-          <label for="healthStatus">Health Status</label>
-          <Dropdown id="healthStatus" v-model="newClient.healthStatus" :options="healthStatusOptions" required/>
+          <label for="biologicalStatus">Biological Status</label>
+          <Dropdown id="biologicalStatus" v-model="newClient.biologicalStatus" :options="healthStatusOptions" required/>
         </div>
         <div class="p-field">
           <label for="activityStatus">Activity Status</label>
@@ -56,7 +56,7 @@ export default {
         name: "",
         lastName: "",
         email: "",
-        healthStatus: null,
+        biologicalStatus: null,
         activityStatus: null,
         weight: null,
         height: null,
@@ -74,8 +74,8 @@ export default {
   },
   computed: {
     isFormValid() {
-      const {name, lastName, email, healthStatus, activityStatus, weight, height, dateOfBirth} = this.newClient;
-      return name && lastName && email && healthStatus && activityStatus && weight && height && dateOfBirth;
+      const {name, lastName, email, biologicalStatus, activityStatus, weight, height, dateOfBirth} = this.newClient;
+      return name && lastName && email && biologicalStatus && activityStatus && weight && height && dateOfBirth;
     },
   },
   methods: {
@@ -87,7 +87,7 @@ export default {
         name: "",
         lastName: "",
         email: "",
-        healthStatus: null,
+        biologicalStatus: null,
         activityStatus: null,
         weight: null,
         height: null,

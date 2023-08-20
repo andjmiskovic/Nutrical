@@ -21,7 +21,7 @@ public class ClientUtils {
     public static double calculateCalories(ClientData clientData) {
         int age = calculateAge(clientData.getDateOfBirth());
         double base = 9.99 * clientData.getWeight() + 6.25 * clientData.getHeight() - 4.92 * age;
-        switch (clientData.getHealthStatus()) {
+        switch (clientData.getBiologicalStatus()) {
             case MAN -> base += 5;
             case WOMAN -> base -= 161;
             case PREGNANT -> base += 340;

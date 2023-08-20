@@ -1,37 +1,33 @@
 <template>
   <Card class="border">
     <template #content>
-      <DataTable :value="data" rowGroupMode="subheader" groupRowsBy="tag" class="hide-header"
-                 style="min-height: 200px">
+      <DataTable :value="data" rowGroupMode="subheader" groupRowsBy="meal" class="hide-header" responsiveLayout="scroll"
+                 sortMode="single" sortField="meal.data.meal" :sortOrder="1" scrollable style="min-height: 200px">
         <Column field="food" header="Food">
-          <template #body="tag">{{ tag.data.food }}</template>
+          <template #body="meal">{{ meal.data.food }}</template>
         </Column>
         <Column field="quantity" header="Quantity">
-          <template #body="tag"> {{ tag.data.quantity }}</template>
+          <template #body="meal"> {{ meal.data.quantity }}</template>
         </Column>
         <Column field="energy" header="Energy">
-          <template #body="tag"> {{ tag.data.calories }}</template>
+          <template #body="meal"> {{ meal.data.calories }}</template>
         </Column>
 
-        <template #groupheader="tag">
-          <div class="tag">
-            <span>{{ tag.data.tag }}</span>
-            <div style="float: right">
-              <Button icon="pi pi-plus" @click="addFood(tag.data.id)" v-tooltip.top="'Add food'"
-                      class="p-button-sm blue p-button-rounded p-button-text"/>
-              <Button icon="pi pi-ellipsis-v" class="p-button-sm p-button-text blue p-button-rounded"
-                      @click="toggle($event, tag)"
-                      aria-haspopup="true" aria-controls="overlay_menu"/>
-              <Menu id="overlay_menu" ref="menu" :model="items" :popup="true"/>
-            </div>
-          </div>
+        <template #groupheader="meal">
+          <span style="margin-right: 30px">{{ meal.data.meal }}</span>
+          <Button icon="pi pi-plus" @click="addFood(meal.data.id)" v-tooltip.top="'Add food'"
+                  class="p-button-sm blue p-button-rounded p-button-text"/>
+          <Button icon="pi pi-ellipsis-v" class="p-button-sm p-button-text blue p-button-rounded"
+                  @click="toggle($event, meal)"
+                  aria-haspopup="true" aria-controls="overlay_menu"/>
+          <Menu id="overlay_menu" ref="menu" :model="items" :popup="true"/>
         </template>
 
       </DataTable>
     </template>
   </Card>
   <AddFood ref="addFoodDialog" :plan="plan" :day="day"></AddFood>
-  <AddMeal ref="editMealDialog" :plan="plan" :day="day" :tag-name="selectedTagName" :tag-id="selectedTagId"></AddMeal>
+  <AddMeal ref="editMealDialog" :plan="plan" :day="day" :meal-name="selectedTagName" :meal-id="selectedTagId"></AddMeal>
 </template>
 
 <script>
@@ -48,7 +44,7 @@ export default {
   data() {
     return {
       plan: {
-        tags: []
+        meals: []
       },
       day: 1,
       data: [],
@@ -58,7 +54,7 @@ export default {
       selectedTagName: '',
       items: [
         {
-          label: 'Tag options',
+          label: 'Meal options',
           items: [
             {
               label: 'Rename',
@@ -68,7 +64,7 @@ export default {
               }
             },
             {
-              label: 'Delete tag',
+              label: 'Delete meal',
               icon: 'pi pi-trash',
               command: () => {
                 let body = {
@@ -90,33 +86,33 @@ export default {
       this.$refs.addFoodDialog.tagId = tagId;
       this.$refs.addFoodDialog.visible = true;
     },
-    toggle(event, tag) {
+    toggle(event, meal) {
       this.$refs.menu.toggle(event);
-      this.selectTag(tag);
+      this.selectTag(meal);
     },
-    selectTag(tag) {
-      this.selectedTagId = tag.data.id;
-      this.selectedTagName = tag.data.tag;
+    selectTag(meal) {
+      this.selectedTagId = meal.data.id;
+      this.selectedTagName = meal.data.name;
     },
     updateData() {
       this.data = [];
-      for (let tag of this.plan.tags) {
-        if (tag.eatenFood.length === 0) {
+      for (let meal of this.plan.meals) {
+        if (meal.eatenFood.length === 0) {
           this.data.push({
             "food": "",
             "quantity": "",
             "calories": "",
-            "tag": tag.tag,
-            "id": tag.id
+            "meal": meal.name,
+            "id": meal.id
           })
         }
-        for (let food of tag["eatenFood"]) {
+        for (let food of meal["eatenFood"]) {
           this.data.push({
             "food": food["foodItem"].name,
             "quantity": food.quantity + "g",
             "calories": food["foodItem"].calories + "kcal",
-            "tag": tag.tag,
-            "id": tag.id
+            "meal": meal.name,
+            "id": meal.id
           })
         }
       }
@@ -134,9 +130,22 @@ export default {
   color: var(--blue);
 }
 
-.tag {
+.meal {
   color: var(--blue);
   font-weight: 600;
   width: 100%;
+}
+
+.p-rowgroup-footer td {
+  font-weight: 700;
+}
+
+:deep(.p-rowgroup-header) span {
+  font-weight: 700;
+}
+
+:deep(.p-rowgroup-header) .p-row-toggler {
+  vertical-align: middle;
+  margin-right: .25rem;
 }
 </style>

@@ -7,16 +7,15 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DailyPlan {
+public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
-    @ManyToMany
-    private List<Meal> meals;
-    private String notes;
-    private String userEmail;
-    private String training;
+    @OneToMany
+    private List<EatenFood> eatenFood;
 }

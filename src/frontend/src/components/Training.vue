@@ -5,7 +5,7 @@
       <SelectButton @click="saveTrainingPlan()" v-model="restDay" :options="options"
                     style="margin-top: -20px; margin-left: 20px"/>
     </template>
-    <template #content style="margin-top: -30px">
+    <template #content>
       <div v-if="restDay === 'Training'">
         <div v-if="editing">
           <Textarea v-model="trainingPlan" style="width: 100%; max-height: 130px; min-height: 70px" rows="50" cols="30"/>
@@ -15,7 +15,7 @@
           <p>
             <i class="pi pi-pencil" style="cursor: pointer; color: var(--pink)" @click="editing = !editing"
                v-tooltip="'Edit'"></i>
-            {{ trainingPlan }}<span style="color: var(--light-gray)" v-if="trainingPlan === ''">Write something...</span>
+            {{ trainingPlan }}<span style="color: var(--light-gray)" v-if="trainingPlan.length === 0">Write something...</span>
           </p>
         </div>
       </div>

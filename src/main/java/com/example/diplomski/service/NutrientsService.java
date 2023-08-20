@@ -105,8 +105,8 @@ public class NutrientsService {
         NutrientsResponse nutrientsResponse = new NutrientsResponse(getNutrients(), clientData);
         nutrientsResponse.setGoals(clientData);
 
-        for (Tag tag : dailyPlan.getTags()) {
-            for (EatenFood food : tag.getEatenFood()) {
+        for (Meal meal : dailyPlan.getMeals()) {
+            for (EatenFood food : meal.getEatenFood()) {
                 FoodItem item = food.getFoodItem();
                 nutrientsResponse.addMacronutrients(item, food.getQuantity());
                 addFoodNutrients(nutrientsResponse.getNutrientsScore(), item, food.getQuantity());

@@ -10,40 +10,18 @@
         <div class="tab">
           <label style="font-size: 14px; margin-bottom: 20px">Enter your login credentials.</label>
           <div style="height: 70px">
-            <input
-                type="email"
-                placeholder="Email address"
-                class="form-control"
-                id="email"
-                v-model="email"
-            />
+            <InputText id="email" v-model="email" style="width: 100%" placeholder="Email address" required/>
           </div>
           <div style="height: 70px">
-            <input
-                type="text"
-                placeholder="Username"
-                class="form-control"
-                id="username"
-                v-model="username"
-            />
+            <InputText id="username" v-model="username" style="width: 100%" placeholder="Username"/>
           </div>
           <div style="height: 70px">
-            <input
-                type="password"
-                placeholder="Password"
-                class="form-control"
-                id="password"
-                v-model="password"
-            />
+            <Password v-model="password" placeholder="Password" id="password" style="width: 100%" toggleMask
+                      :feedback="false" required></Password>
           </div>
           <div style="height: 70px">
-            <input
-                type="password"
-                placeholder="Repeat password"
-                class="form-control"
-                id="password2"
-                v-model="password2"
-            />
+            <Password v-model="password2" placeholder="Repeat password" id="password2" style="width: 100%" toggleMask
+                      :feedback="false" required></Password>
           </div>
         </div>
 
@@ -51,39 +29,16 @@
         <div class="tab">
           <label style="font-size: 14px; margin-bottom: 20px">Enter your primary data.</label>
           <div style="height: 70px">
-            <input
-                type="text"
-                placeholder="Name"
-                class="form-control"
-                v-model="name"
-            />
+            <InputText id="name" v-model="name" style="width: 100%" placeholder="Name" required/>
           </div>
           <div style="height: 70px">
-            <input
-                type="text"
-                placeholder="Surname"
-                class="form-control"
-                id="surname"
-                v-model="surname"
-            />
+            <InputText id="surname" v-model="surname" style="width: 100%" placeholder="Surname" required/>
           </div>
           <div style="height: 70px">
-            <input
-                type="text"
-                placeholder="Phone number"
-                class="form-control"
-                id="phoneNumber"
-                v-model="phoneNumber"
-            />
+            <InputText id="phoneNumber" v-model="phoneNumber" style="width: 100%" placeholder="Phone number" required/>
           </div>
           <div style="height: 70px">
-            <input
-                type="text"
-                placeholder="Nutritionist licence number"
-                class="form-control"
-                id="licence"
-                v-model="licence"
-            />
+            <InputText id="licence" v-model="licence" style="width: 100%" placeholder="Nutritionist licence number"/>
           </div>
         </div>
 
@@ -101,7 +56,8 @@
             >Next
             </Button
             >
-            <Button v-if="currentTab === 1 && !emailSending" @click="register" style="margin-left: 5px" class="prime-btn"
+            <Button v-if="currentTab === 1 && !emailSending" @click="register" style="margin-left: 5px"
+                    class="prime-btn"
             >Submit
             </Button
             >
@@ -123,24 +79,28 @@
           <span class="step"></span>
           <span class="step"></span>
         </div>
+        <div style="text-align: center; margin-top: 20px; font-size: 13px">
+          <span @click="changeToLogin()" style="cursor: pointer">Back to login</span>
+        </div>
       </form>
       <div class="image-holder"></div>
     </div>
   </div>
+  <Toast />
 </template>
 
 <script>
-import {
-  required,
-  minLength,
-  email,
-  maxLength,
-  sameAs,
-} from "vuelidate/lib/validators";
 import AuthService from "@/services/AuthService";
+// import { useToast } from "primevue/usetoast";
+// import Toast from 'primevue/toast';
+//
+// const toast = useToast();
 
 export default {
   name: "Registration",
+  components: {
+    // Toast
+  },
   mounted() {
     this.showTab(0);
   },
@@ -155,60 +115,8 @@ export default {
       phoneNumber: "",
       licence: "",
       password2: "",
-      emailClicked: false,
-      usernameClicked: false,
-      passwordClicked: false,
-      nameClicked: false,
-      surnameClicked: false,
-      phoneNumberClicked: false,
-      countryClicked: false,
-      cityClicked: false,
-      typeClicked: false,
-      descriptionClicked: false,
-      password2Clicked: false,
       emailSending: false,
     };
-  },
-  validations: {
-    name: {
-      required,
-      minLength: minLength(2),
-      maxLength: maxLength(20),
-    },
-    email: {
-      required,
-      email,
-      minLength: minLength(2),
-    },
-    username: {
-      required,
-      minLength: minLength(2),
-      maxLength: maxLength(20),
-    },
-    password: {
-      required,
-      minLength: minLength(2),
-      maxLength: maxLength(20),
-    },
-    surname: {
-      required,
-      minLength: minLength(2),
-      maxLength: maxLength(20),
-    },
-    phoneNumber: {
-      required,
-      minLength: minLength(2),
-      maxLength: maxLength(20),
-    },
-    password2: {
-      required,
-      minLength: minLength(2),
-      maxLength: maxLength(20),
-      sameAsPassword: sameAs("password"),
-    },
-    type: {
-      required,
-    },
   },
   methods: {
     showTab(n) {
@@ -218,12 +126,8 @@ export default {
       else document.getElementById("prevBtn").style.display = "inline";
       this.fixStepIndicator(n);
     },
-    validateForm() {
-      return true;
-    },
     nextPrev(n) {
       const x = document.getElementsByClassName("tab");
-      if (n === 1 && !this.validateForm()) return false;
       x[this.currentTab].style.display = "none";
       this.currentTab = this.currentTab + n;
       if (this.currentTab >= x.length) {
@@ -251,39 +155,58 @@ export default {
       formData.append("licence", this.licence);
       return formData;
     },
+    formValid() {
+      const requiredFields = [
+        "email",
+        "password",
+        "password2",
+        "name",
+        "surname",
+        "phoneNumber",
+      ];
+
+      for (const field of requiredFields) {
+        if (!this[field]) {
+          return false;
+        }
+      }
+
+      if (!this.validateEmail(this.email)) {
+        this.emailError = "Invalid email format.";
+        return false;
+      }
+      return this.password === this.password2;
+    },
+    validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    },
     async register() {
-      this.emailSending = true;
-      await AuthService.register(this.getFormData()).then((registerResponse) => {
-        this.$bvModal.show("success");
-        this.emailSending = false;
-      }).catch((err) => {
-        console.log(err);
-      });
+      if (!this.formValid()) {
+        // toast.add({severity: 'warn', summary: 'Invalid form', detail: 'Check your input', life: 3000});
+      } else {
+        this.emailSending = true;
+        await AuthService.register(this.getFormData()).then(() => {
+          // toast.add({
+          //   severity: 'success',
+          //   summary: 'Email sent!',
+          //   detail: 'Check your email to verify account',
+          //   life: 3000
+          // });
+          this.emailSending = false;
+        }).catch(() => {
+          // toast.add({severity: 'warn', summary: 'Error', detail: 'We could not send an email :(', life: 3000});
+        });
+      }
     },
     changeToLogin() {
-      this.$router.push({path: "/login"});
-    },
-    isEmpty(str) {
-      return (!str || str.length === 0);
-    },
+      this.$router.push({path: "/"});
+    }
   },
 };
 </script>
 
 <style>
-.ok-border {
-  border-color: #16c79a;
-}
-
-#regForm {
-  background-color: #ffffff;
-  margin: 100px auto;
-  padding: 40px;
-  width: 70%;
-  min-width: 300px;
-}
-
-/* Hide all steps by default: */
 .tab {
   display: none;
 }
@@ -292,7 +215,6 @@ export default {
   background-color: #bbbbbb;
 }
 
-/* Make circles that indicate the steps of the form: */
 .step {
   height: 15px;
   width: 15px;

@@ -72,21 +72,21 @@ public class DairyService {
     public void removeFood(RemoveFoodRequest removeFoodRequest) throws UserNotFoundException, InstanceNotFoundException {
         RegularUser regularUser = regularUserService.getByEmail(removeFoodRequest.getEmail());
         DailyPlan dailyPlan = regularUser.getDailyPlanByDate(removeFoodRequest.getDate());
-        List<Tag> tags = dailyPlan.getTags();
-        for (Tag tag : tags) {
-            if (tag.getId().equals(removeFoodRequest.getTagId())) {
-                removeEatenFood(tag, removeFoodRequest.getFood());
+        List<Meal> meals = dailyPlan.getMeals();
+        for (Meal meal : meals) {
+            if (meal.getId().equals(removeFoodRequest.getTagId())) {
+                removeEatenFood(meal, removeFoodRequest.getFood());
                 return;
             }
         }
     }
 
-    private void removeEatenFood(Tag tag, String food) throws InstanceNotFoundException {
+    private void removeEatenFood(Meal meal, String food) throws InstanceNotFoundException {
         FoodItem foodItem = foodService.getFoodByName(food);
-        for (EatenFood eatenFood : tag.getEatenFood()) {
+        for (EatenFood eatenFood : meal.getEatenFood()) {
             if (eatenFood.getFoodItem().getName().equals(foodItem.getName())) {
-                tag.getEatenFood().remove(eatenFood);
-                tagRepository.save(tag);
+                meal.getEatenFood().remove(eatenFood);
+                tagRepository.save(meal);
                 return;
             }
         }
@@ -94,20 +94,20 @@ public class DairyService {
 
     public void addTag(TagRequest addTagRequest) throws InstanceNotFoundException {
         DailyPlan dailyPlan = getDailyPlan(addTagRequest.getPlanId());
-        Tag tag = new Tag();
-        tag.setTag(addTagRequest.getTagName());
-        tag.setEatenFood(new ArrayList<>());
-        tagRepository.save(tag);
+        Meal meal = new Meal();
+        meal.setName(addTagRequest.getTagName());
+        meal.setEatenFood(new ArrayList<>());
+        tagRepository.save(meal);
 
-        dailyPlan.getTags().add(tag);
+        dailyPlan.getMeals().add(meal);
         dairyRepository.save(dailyPlan);
     }
 
     public void renameTag(TagRequest renameTagRequest) throws InstanceNotFoundException {
         if (tagRepository.findById(renameTagRequest.getTagId()).isPresent()) {
-            Tag tag = tagRepository.findById(renameTagRequest.getTagId()).get();
-            tag.setTag(renameTagRequest.getTagName());
-            tagRepository.save(tag);
+            Meal meal = tagRepository.findById(renameTagRequest.getTagId()).get();
+            meal.setName(renameTagRequest.getTagName());
+            tagRepository.save(meal);
         } else {
             throw new InstanceNotFoundException("Tag not found.");
         }
@@ -117,10 +117,10 @@ public class DairyService {
         Plan plan = planRepository.findById(removeTagRequest.getPlanId()).get();
         DailyPlan dailyPlan = plan.getDailyPlans().get(removeTagRequest.getDay() - 1);
         if (tagRepository.findById(removeTagRequest.getTagId()).isPresent()) {
-            Tag tag = tagRepository.findById(removeTagRequest.getTagId()).get();
-            dailyPlan.getTags().remove(tag);
+            Meal meal = tagRepository.findById(removeTagRequest.getTagId()).get();
+            dailyPlan.getMeals().remove(meal);
             dairyRepository.save(dailyPlan);
-            tagRepository.delete(tag);
+            tagRepository.delete(meal);
         }
     }
 

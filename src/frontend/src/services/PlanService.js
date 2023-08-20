@@ -40,6 +40,10 @@ const generatePlan = planId => {
     return fetch(instance.get('/api/dairy/generate-plan/' + planId, downloadConfiguration))
 }
 
+const sendPlan = emailDto => {
+    return fetch(instance.get('/api/dairy/send-plan/' + emailDto, configuration))
+}
+
 const configuration = {
     headers: {
         'Access-Control-Allow-Origin': '*',
@@ -67,5 +71,6 @@ export default {
     removeTag,
     generatePlan,
     saveTraining,
-    saveNotes
+    saveNotes,
+    sendPlan
 }

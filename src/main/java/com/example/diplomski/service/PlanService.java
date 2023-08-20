@@ -1,6 +1,7 @@
 package com.example.diplomski.service;
 
 import com.example.diplomski.dto.ClientAddFoodRequest;
+import com.example.diplomski.dto.DailyPlanResponse;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.DairyRepository;
 import com.example.diplomski.repository.EatenFoodRepository;
@@ -13,7 +14,6 @@ import javax.management.InstanceNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 @Service
 public class PlanService {
@@ -32,26 +32,40 @@ public class PlanService {
         return planRepository.findById(id).get();
     }
 
-    public DailyPlan getPlan(Long id, int day) throws Exception {
+    public DailyPlanResponse getPlan(Long id, int day) throws Exception {
         Plan plan = getPlan(id);
         if (plan == null) {
             throw new Exception("Plan does not exists");
         }
         if (plan.getDailyPlans().size() < day) {
-            Tag tag = new Tag();
-            tag.setTag("Meal 1");
-            tag.setEatenFood(new ArrayList<>());
-            tagRepository.save(tag);
+            Meal meal = new Meal();
+            meal.setName("Meal 1");
+            meal.setEatenFood(new ArrayList<>());
+            tagRepository.save(meal);
 
             DailyPlan dailyPlan = new DailyPlan();
             dailyPlan.setUserEmail(plan.getClient().getEmail());
-            dailyPlan.setTags(List.of(tag));
+            dailyPlan.setMeals(List.of(meal));
+            dailyPlan.setNotes("");
+            dailyPlan.setTraining("");
             dairyRepository.save(dailyPlan);
 
             plan.getDailyPlans().add(dailyPlan);
             planRepository.save(plan);
         }
-        return plan.getDailyPlans().get(day - 1);
+        return getDailyPlanResponse(plan, day);
+    }
+
+    private DailyPlanResponse getDailyPlanResponse(Plan plan, int day) {
+        DailyPlan dailyPlan = plan.getDailyPlans().get(day - 1);
+        return DailyPlanResponse.builder()
+                .id(dailyPlan.getId())
+                .meals(dailyPlan.getMeals())
+                .notes(dailyPlan.getNotes())
+                .training(dailyPlan.getTraining())
+                .userEmail(dailyPlan.getUserEmail())
+                .daysInPlan(plan.getDailyPlans().size())
+                .build();
     }
 
     public void addFood(ClientAddFoodRequest addFoodRequest) throws InstanceNotFoundException {
@@ -62,23 +76,23 @@ public class PlanService {
 
     private void addFoodToDailyPlan(DailyPlan dailyPlan, ClientAddFoodRequest addFoodRequest) throws InstanceNotFoundException {
         FoodItem foodItem = foodService.getFoodById(addFoodRequest.getFoodId());
-        Tag selectedTag = null;
+        Meal selectedMeal = null;
 
-        for (Tag tag : dailyPlan.getTags()) {
-            if (Objects.equals(tag.getId(), addFoodRequest.getTagId())) {
-                selectedTag = tag;
+        for (Meal meal : dailyPlan.getMeals()) {
+            if (Objects.equals(meal.getId(), addFoodRequest.getTagId())) {
+                selectedMeal = meal;
                 break;
             }
         }
 
-        if (selectedTag != null) {
+        if (selectedMeal != null) {
             EatenFood eaten = new EatenFood();
             eaten.setFoodItem(foodItem);
             eaten.setQuantity(addFoodRequest.getAmount());
             eatenFoodRepository.save(eaten);
 
-            selectedTag.getEatenFood().add(eaten);
-            tagRepository.save(selectedTag);
+            selectedMeal.getEatenFood().add(eaten);
+            tagRepository.save(selectedMeal);
         }
     }
 }

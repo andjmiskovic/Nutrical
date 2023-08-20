@@ -32,7 +32,7 @@ public class PlanController {
     }
 
     @GetMapping("/get-plan/{planId}/{day}")
-    public DailyPlan getPlan(@PathVariable Long planId, @PathVariable int day) throws Exception {
+    public DailyPlanResponse getPlan(@PathVariable Long planId, @PathVariable int day) throws Exception {
         return planService.getPlan(planId, day);
     }
 

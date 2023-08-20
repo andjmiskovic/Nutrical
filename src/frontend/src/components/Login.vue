@@ -9,28 +9,16 @@
             style="height: 100px; margin-top: -20px"
             src="../assets/logo.png"
             alt=""/>
-        <div class="form-group">
-          <input
-              class="form-control"
-              v-model="email"
-              placeholder="Email"
-          />
-        </div>
-        <div class="form-group">
-          <input
-              class="form-control"
-              type="password"
-              v-model="password"
-              placeholder="Password"
-          />
-        </div>
-        <div class="form-group">
-          <Button
-              style="width: 100%; background-color: var(--green);
-              text-align: center; border-color: var(--green); display: block; margin-top: 15px"
-              @click="login">Login
-          </Button>
-        </div>
+        <p>
+          <InputText v-model="email" style="width: 100%" placeholder="Email"/>
+        </p>
+        <p>
+          <Password v-model="password" style="width: 100%" placeholder="Password" toggleMask :feedback="false"></Password>
+        </p>
+        <Button
+            class="login-button"
+            @click="login">Login
+        </Button>
         <span v-if="nonExistent" class="already" style="font-size: 15px; color: #dc143c">
           Wrong email or password. Please try again.
         </span>
@@ -88,6 +76,10 @@ export default {
   padding: 40px 0;
 }
 
+.p-inputtext {
+  width: 100%;
+}
+
 .register-photo .image-holder {
   display: table-cell;
   width: auto;
@@ -101,6 +93,15 @@ export default {
   width: 90%;
   margin: 0 auto;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-button {
+  width: 100%;
+  background-color: var(--green);
+  text-align: center;
+  border-color: var(--green);
+  display: block;
+  margin-top: 15px;
 }
 
 .register-photo form {
