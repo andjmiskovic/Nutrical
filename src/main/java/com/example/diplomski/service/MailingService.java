@@ -2,9 +2,9 @@ package com.example.diplomski.service;
 
 import com.example.diplomski.config.AppProperties;
 import com.example.diplomski.model.Nutritionist;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -16,10 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class MailingService {
@@ -57,6 +54,23 @@ public class MailingService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Async
+    public void sendMailWithAttachment(String email, String text, String subject, String path) throws MessagingException {
+        System.out.println("Sending email...");
+        MimeMessage message = mailSender.createMimeMessage();
+        message.setSubject(subject);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(email);
+        helper.setFrom(senderAddress);
+        helper.setText(text);
+
+        FileSystemResource file = new FileSystemResource(new File(path));
+        helper.addAttachment("plan.pdf", file);
+
+        mailSender.send(message);
+        System.out.println("Email sent!");
     }
 
     private String renderTemplate(String templateName, String... variables) {

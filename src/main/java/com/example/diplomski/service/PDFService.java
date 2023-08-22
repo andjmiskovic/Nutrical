@@ -12,13 +12,12 @@ import static com.example.diplomski.util.ClientUtils.*;
 
 public class PDFService {
 
-    private static final String FILE_LOCATION = "src/main/resources/report.pdf";
     private static final Font HEADER_FONT = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
     private static final Font CELL_FONT = FontFactory.getFont(FontFactory.HELVETICA, 10);
 
     public static ByteArrayInputStream createPDF(Plan plan) throws IOException {
         Document document = new Document(PageSize.A4);
-        FileOutputStream output = new FileOutputStream(FILE_LOCATION);
+        FileOutputStream output = new FileOutputStream(getFileLocation(plan.getId()));
         try {
             PdfWriter.getInstance(document, output);
             document.open();
@@ -32,11 +31,11 @@ public class PDFService {
             document.close();
         }
 
-        return renderPdf();
+        return renderPdf(plan.getId());
     }
 
-    private static ByteArrayInputStream renderPdf() throws IOException {
-        File readFile = new File(FILE_LOCATION);
+    private static ByteArrayInputStream renderPdf(Long planId) throws IOException {
+        File readFile = new File(getFileLocation(planId));
         FileInputStream fileInputStream = new FileInputStream(readFile);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -63,8 +62,10 @@ public class PDFService {
         clientInfo.add(new Chunk("Maintenance Calories: " + calculateCalories(client.getClientData()) + "\n"));
         clientInfo.add(new Chunk("Daily calorie goal: " + client.getClientData().getCalorieGoal() + "\n"));
         clientInfo.add(new Chunk("Macronutrient ratio: C(" + client.getClientData().getCarbsPercent() + "%) P(" + client.getClientData().getProteinPercent() + "%) F(" + client.getClientData().getFatPercent() + "%)\n"));
-        clientInfo.add(new Chunk("Additional information: \n"));
-        clientInfo.add(new Chunk(client.getClientData().getAdditionalInformation()));
+        if (!client.getClientData().getAdditionalInformation().trim().isEmpty()) {
+            clientInfo.add(new Chunk("Additional information: \n"));
+            clientInfo.add(new Chunk(client.getClientData().getAdditionalInformation()));
+        }
         return clientInfo;
     }
 
@@ -111,5 +112,9 @@ public class PDFService {
             notesContent.setColspan(2);
             table.addCell(notesContent);
         }
+    }
+
+    public static String getFileLocation(Long planId) {
+        return "src/main/resources/report" + planId + ".pdf";
     }
 }

@@ -110,5 +110,6 @@ export default {
 <style>
 .p-field {
   margin-bottom: 10px;
+  width: 100%;
 }
 </style>

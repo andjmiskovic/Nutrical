@@ -2,11 +2,11 @@ package com.example.diplomski.controller;
 
 import com.example.diplomski.dto.*;
 import com.example.diplomski.exceptions.UserNotFoundException;
-import com.example.diplomski.model.DailyPlan;
 import com.example.diplomski.model.Plan;
 import com.example.diplomski.service.DairyService;
 import com.example.diplomski.service.PDFService;
 import com.example.diplomski.service.PlanService;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -85,5 +85,10 @@ public class PlanController {
         headers.add("Content-Disposition", "inline; filename=report.pdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+    @PostMapping("/send-plan")
+    public void sendPlan(@RequestBody PlanEmailRequest planEmail) throws MessagingException, IOException {
+        planService.sendEmail(planEmail);
     }
 }

@@ -76,10 +76,10 @@
       </div>
     </div>
     <div class="grid">
-      <div class="col-6" v-if="trainingVisible">
+      <div :class="notesVisible ? 'col-6' : 'col-12'" v-if="trainingVisible">
         <Training ref="training" :plan-id="plan.id" :day="day"></Training>
       </div>
-      <div class="col-6" v-if="notesVisible">
+      <div :class="trainingVisible ? 'col-6' : 'col-12'" v-if="notesVisible">
         <Notes ref="notes" :plan-id="plan.id" :day="day"></Notes>
       </div>
     </div>

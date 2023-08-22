@@ -2,31 +2,20 @@
   <Card class="border energy-ratio">
     <template #title><i class='bx bxs-hot'></i>Macronutrient Ratio</template>
     <template #content>
-      <Chart type="doughnut" :data="chartData" :options="chartOptions"/>
+      <Chart ref="chart" type="doughnut" :data="chartData"/>
     </template>
   </Card>
 </template>
 
 <script>
 export default {
-  methods: {
-    updateValues(macronutrients) {
-      console.log(macronutrients)
-      this.protein = macronutrients.protein.percent;
-      this.carbs = macronutrients.carbs.percent;
-      this.fat = macronutrients.fat.percent;
-    }
-  },
   data() {
     return {
-      protein: 20,
-      carbs: 60,
-      fat: 20,
       chartData: {
         labels: ['Protein', 'Carbs', 'Fat'],
         datasets: [
           {
-            data: [this.protein, this.carbs, this.fat],
+            data: [20, 60, 20],
             backgroundColor: [
               "#23CE6B",
               "#277BC0",
@@ -40,6 +29,14 @@ export default {
           }
         ]
       }
+    }
+  },
+  methods: {
+    updateValues(macronutrients) {
+      this.chartData.datasets.data = [macronutrients.protein.percent, macronutrients.carbs.percent, macronutrients.fat.percent];
+      console.log(this.chartData);
+      this.$refs.chart.dataset = this.chartData.datasets;
+      this.$refs.chart.refresh();
     }
   }
 };

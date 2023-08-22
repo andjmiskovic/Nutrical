@@ -41,7 +41,7 @@ const generatePlan = planId => {
 }
 
 const sendPlan = emailDto => {
-    return fetch(instance.get('/api/dairy/send-plan/' + emailDto, configuration))
+    return fetch(instance.post('/api/dairy/send-plan', emailDto, configuration))
 }
 
 const configuration = {

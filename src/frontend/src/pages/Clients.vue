@@ -7,7 +7,10 @@
         <i class="pi pi-search"></i>
       </span>
       <InputText v-model="search" @input="filterClients" placeholder="Search clients..."/>
-      <Button label="Add Client" style="margin-left: 10px" icon="pi pi-plus" class="p-button-success"
+      <Button label="Add Client"
+              style="margin-left: 10px; background-color: var(--green); border-color: var(--green)"
+              icon="pi pi-plus"
+              class="p-button-success"
               @click="openAddClientDialog"/>
     </div>
 
@@ -23,12 +26,19 @@
       <Column style="min-width: 25%" field="surname" header="Surname"></Column>
       <Column style="min-width: 100px">
         <template #body="rowData">
-          <Button v-tooltip="'View details'" icon="pi pi-align-left" @click="viewDetails(rowData)" class="p-button-icon p-button-info"></Button>
+          <Button v-tooltip="'View details'"
+                  icon="pi pi-align-left"
+                  @click="viewDetails(rowData)"
+                  class="p-button-icon p-button-info"></Button>
         </template>
       </Column>
       <Column style="min-width: 100px">
         <template #body="rowData">
-          <Button v-tooltip="'View plan'" icon="pi pi-file" @click="viewPlan(rowData)" class="p-button-icon p-button-success"></Button>
+          <Button v-tooltip="'View plan'"
+                  icon="pi pi-file"
+                  style="background-color: var(--green); border-color: var(--green)"
+                  @click="viewPlan(rowData)"
+                  class="p-button-icon p-button-success"></Button>
         </template>
       </Column>
     </DataTable>

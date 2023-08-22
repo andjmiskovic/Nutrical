@@ -2,15 +2,18 @@ package com.example.diplomski.service;
 
 import com.example.diplomski.dto.ClientAddFoodRequest;
 import com.example.diplomski.dto.DailyPlanResponse;
+import com.example.diplomski.dto.PlanEmailRequest;
 import com.example.diplomski.model.*;
 import com.example.diplomski.repository.DairyRepository;
 import com.example.diplomski.repository.EatenFoodRepository;
 import com.example.diplomski.repository.PlanRepository;
 import com.example.diplomski.repository.TagRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +30,8 @@ public class PlanService {
     private TagRepository tagRepository;
     @Autowired
     private EatenFoodRepository eatenFoodRepository;
+    @Autowired
+    private MailingService mailingService;
 
     public Plan getPlan(Long id) {
         return planRepository.findById(id).get();
@@ -94,5 +99,14 @@ public class PlanService {
             selectedMeal.getEatenFood().add(eaten);
             tagRepository.save(selectedMeal);
         }
+    }
+
+    public void sendEmail(PlanEmailRequest planEmailRequest) throws IOException, MessagingException {
+        Plan plan = planRepository.findById(planEmailRequest.getPlanId()).get();
+
+        String subject = "Nutrical - Plan by " + plan.getNutritionist().getFirstName() + " " + plan.getNutritionist().getLastName();
+        PDFService.createPDF(plan);
+
+        mailingService.sendMailWithAttachment(plan.getClient().getEmail(), planEmailRequest.getText(), subject, PDFService.getFileLocation(plan.getId()));
     }
 }
