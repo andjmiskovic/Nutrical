@@ -29,5 +29,9 @@ const configuration = {
 }
 
 export default {
-    login, logout, register, verify, getLoggedUserInfo
+    login,
+    logout,
+    register,
+    verify,
+    getLoggedUserInfo
 }

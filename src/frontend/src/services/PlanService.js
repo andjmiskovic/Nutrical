@@ -44,20 +44,18 @@ const sendPlan = emailDto => {
     return fetch(instance.post('/api/dairy/send-plan', emailDto, configuration))
 }
 
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Authorization': localStorage.getItem('token') || 'authkey',
+    'Content-Type': 'application/json',
+}
+
 const configuration = {
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': localStorage.getItem('token') || 'authkey',
-        'Content-Type': 'application/json',
-    }
+    headers: headers
 }
 
 const downloadConfiguration = {
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': localStorage.getItem('token') || 'authkey',
-        'Content-Type': 'application/json',
-    },
+    headers: headers,
     responseType: 'blob',
 }
 

@@ -14,7 +14,7 @@ public class DataProvider implements CommandLineRunner {
     private NutrientsService nutrientsService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         nutrientsService.loadNutrients();
         foodService.loadFood();
     }

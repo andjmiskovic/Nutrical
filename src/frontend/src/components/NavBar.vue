@@ -16,7 +16,6 @@
 import AuthService from "@/services/AuthService";
 
 export default {
-  props: ["activePage"],
   name: "NavBar",
   components: {},
   data() {
@@ -41,7 +40,7 @@ export default {
   position: sticky;
   top: 0;
   background-color: #ffffff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 

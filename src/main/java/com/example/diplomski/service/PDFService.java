@@ -84,16 +84,18 @@ public class PDFService {
 
             // Add multiple rows for each meal of the day
             for (Meal meal : dailyPlan.getMeals()) {
-                PdfPCell mealCell = new PdfPCell(new Phrase(meal.getName(), CELL_FONT));
-                mealCell.setRowspan(meal.getEatenFood().size());
-                table.addCell(mealCell);
+                if (meal.getEatenFood().size() > 0) {
+                    PdfPCell mealCell = new PdfPCell(new Phrase(meal.getName(), CELL_FONT));
+                    mealCell.setRowspan(meal.getEatenFood().size());
+                    table.addCell(mealCell);
 
-                for (EatenFood food : meal.getEatenFood()) {
-                    PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), CELL_FONT));
-                    table.addCell(foodNameCell);
+                    for (EatenFood food : meal.getEatenFood()) {
+                        PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), CELL_FONT));
+                        table.addCell(foodNameCell);
 
-                    PdfPCell quantityCell = new PdfPCell(new Phrase(food.getQuantity().toString() + "g", CELL_FONT));
-                    table.addCell(quantityCell);
+                        PdfPCell quantityCell = new PdfPCell(new Phrase(food.getQuantity().toString() + "g", CELL_FONT));
+                        table.addCell(quantityCell);
+                    }
                 }
             }
 
@@ -105,7 +107,7 @@ public class PDFService {
     }
 
     private static void addNotes(PdfPTable table, String value, String header) {
-        if (!(value == null || !value.trim().isEmpty())) {
+        if (value != null && !value.isBlank()) {
             PdfPCell notes = new PdfPCell(new Phrase(header, CELL_FONT));
             table.addCell(notes);
             PdfPCell notesContent = new PdfPCell(new Phrase(value, CELL_FONT));

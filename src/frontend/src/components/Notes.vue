@@ -1,5 +1,5 @@
 <template>
-  <Card class="border" style="min-height: 180px">
+  <Card class="border" style="min-height: 150px">
     <template #title>
       Notes
     </template>

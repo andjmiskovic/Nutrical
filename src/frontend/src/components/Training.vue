@@ -1,5 +1,5 @@
 <template>
-  <Card class="border">
+  <Card class="border" style="min-height: 150px">
     <template #header>
       <img alt="user header" src="../assets/images/gym.jpg">
       <SelectButton @click="saveTrainingPlan()" v-model="restDay" :options="options"

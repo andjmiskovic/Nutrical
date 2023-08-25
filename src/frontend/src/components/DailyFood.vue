@@ -27,7 +27,7 @@
     </template>
   </Card>
   <AddFood ref="addFoodDialog" :plan="plan" :day="day"></AddFood>
-  <AddMeal ref="editMealDialog" :plan="plan" :day="day" :meal-name="selectedTagName" :meal-id="selectedTagId"></AddMeal>
+  <AddMeal ref="editMealDialog" :plan="plan" :day="day"></AddMeal>
 </template>
 
 <script>
@@ -48,7 +48,6 @@ export default {
       },
       day: 1,
       data: [],
-      dailyPlanId: 0,
       menuVisible: false,
       selectedTagId: 0,
       selectedTagName: '',
@@ -60,7 +59,9 @@ export default {
               label: 'Rename',
               icon: 'pi pi-pencil',
               command: () => {
-                console.log("RENAME" + this.selectedTagId)
+                this.$refs.editMealDialog.visible = true;
+                this.$refs.editMealDialog.tagName = this.selectedTagName;
+                this.$refs.editMealDialog.tagId = this.selectedTagId;
               }
             },
             {
@@ -73,7 +74,7 @@ export default {
                   "day": this.day,
                 }
                 PlanService.removeTag(body).then(() => {
-                  this.$parent.$parent.reloadPlan();
+                  this.$parent.reloadPlan();
                 })
               }
             }

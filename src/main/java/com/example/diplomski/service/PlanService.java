@@ -70,6 +70,7 @@ public class PlanService {
                 .training(dailyPlan.getTraining())
                 .userEmail(dailyPlan.getUserEmail())
                 .daysInPlan(plan.getDailyPlans().size())
+                .clientName(plan.getClient().getName() + " " + plan.getClient().getSurname())
                 .build();
     }
 

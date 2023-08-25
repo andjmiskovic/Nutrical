@@ -30,7 +30,6 @@ const fetch = async (request, onSuccess, onError) => {
     }
 }
 
-
 export {
     instance,
     fetch,

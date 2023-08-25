@@ -113,7 +113,7 @@ public class DairyService {
         }
     }
 
-    public void removeTag(RemoveTagRequest removeTagRequest) throws InstanceNotFoundException {
+    public void removeTag(RemoveTagRequest removeTagRequest) {
         Plan plan = planRepository.findById(removeTagRequest.getPlanId()).get();
         DailyPlan dailyPlan = plan.getDailyPlans().get(removeTagRequest.getDay() - 1);
         if (tagRepository.findById(removeTagRequest.getTagId()).isPresent()) {

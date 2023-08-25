@@ -1,5 +1,5 @@
 <template>
-  <Dialog v-model:visible="visible" :modal="true" :style="{ width: '500px' }" :header="dialogHeader">
+  <Dialog v-model:visible="visible" :modal="true" :style="{ width: '500px' }" :header="!tagId ? 'Add meal' : 'Rename meal'">
     <form @submit.prevent="addMeal">
       <div class="p-fluid">
         <div class="p-field">
@@ -8,8 +8,8 @@
         </div>
       </div>
 
-      <Button v-if="tagId" type="submit" style="width: 100%" label="Create" :disabled="!isFormValid"/>
-      <Button v-if="!tagId" type="submit" style="width: 100%" label="Rename" :disabled="!isFormValid"/>
+      <Button v-if="!tagId" type="submit" style="width: 100%" label="Create" :disabled="!isFormValid"/>
+      <Button v-if="tagId" type="submit" style="width: 100%" label="Rename" :disabled="!isFormValid"/>
     </form>
   </Dialog>
 </template>
@@ -19,12 +19,14 @@ import PlanService from "@/services/PlanService";
 
 export default {
   name: "AddMeal",
-  props: ["plan", "day", "tagId", "tagName"],
+  props: ["plan", "day"],
   data() {
     return {
       visible: false,
       dialogHeader: "Add Meal",
-      newTagName: ""
+      newTagName: "",
+      tagId: "",
+      tagName: ""
     };
   },
   computed: {
@@ -34,6 +36,9 @@ export default {
   },
   mounted() {
     this.newTagName = this.tagName;
+    if (this.tagId) {
+      this.dialogHeader = "Rename meal";
+    }
   },
   methods: {
     showDialog() {
@@ -45,18 +50,19 @@ export default {
       }
       let body = {
         "tagName": this.newTagName,
+        "tagId": this.tagId,
         "planId": this.plan.id,
         "day": this.day
       }
       if (!this.tagId) {
         PlanService.addTag(body).then((() => {
           this.visible = false;
-          this.$parent.reloadPlan();
+          this.$parent.$parent.reloadPlan();
         }))
       } else {
         PlanService.renameTag(body).then((() => {
           this.visible = false;
-          this.$parent.reloadPlan();
+          this.$parent.$parent.reloadPlan();
         }))
       }
     },

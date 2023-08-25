@@ -14,5 +14,6 @@ public class DailyPlanResponse {
     private String notes;
     private String userEmail;
     private String training;
+    private String clientName;
     private int daysInPlan;
 }

@@ -107,6 +107,4 @@ public class MailingService {
 
         return message;
     }
-
-
 }

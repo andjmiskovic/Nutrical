@@ -1,4 +1,3 @@
-import Dashboard from './pages/Dashboard.vue'
 import HomePage from "@/pages/HomePage";
 import {createRouter, createWebHistory} from 'vue-router'
 import RegistrationPage from "@/pages/RegistrationPage";
@@ -20,10 +19,6 @@ const router = createRouter({
         {
             path: '/registration/verification',
             component: VerificationPage
-        },
-        {
-            path: '/dashboard',
-            component: Dashboard
         },
         {
             path: '/plan/:planId',

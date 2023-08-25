@@ -274,14 +274,14 @@
             Particularly good sources include oysters, nuts, seeds, shitake mushrooms, lobster, liver, leafy greens and
             dark chocolate. To avoid a deficiency, be sure to include a variety of these sources in your diet.
         </sources>
-        <unit>mcg</unit>
+        <unit>mg</unit>
         <kind>MINERALS</kind>
         <recommended>
-            <man>900</man>
-            <woman>900</woman>
-            <pregnant>1000</pregnant>
-            <breastfeeding>1300</breastfeeding>
-            <max>10000</max>
+            <man>0.9</man>
+            <woman>0.9</woman>
+            <pregnant>1.0</pregnant>
+            <breastfeeding>1.3</breastfeeding>
+            <max>10.0</max>
         </recommended>
     </nutrient>
     <nutrient>
@@ -463,7 +463,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.39</recommended_per_kg>
+        <recommended_per_kg>0.039</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Isoleucine</name>
@@ -475,7 +475,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.19</recommended_per_kg>
+        <recommended_per_kg>0.019</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Valine</name>
@@ -487,7 +487,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.24</recommended_per_kg>
+        <recommended_per_kg>0.024</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Lysine</name>
@@ -498,7 +498,7 @@
         <sources>Found in protein-rich foods like meat, poultry, fish, dairy products, legumes, and nuts.</sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.3</recommended_per_kg>
+        <recommended_per_kg>0.03</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Methionine</name>
@@ -509,7 +509,7 @@
         <sources>Found in foods like meat, fish, poultry, eggs, dairy products, legumes, and nuts.</sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.19</recommended_per_kg>
+        <recommended_per_kg>0.019</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Phenylalanine</name>
@@ -521,7 +521,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.25</recommended_per_kg>
+        <recommended_per_kg>0.025</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Tryptophan</name>
@@ -533,7 +533,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.05</recommended_per_kg>
+        <recommended_per_kg>0.005</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Threonine</name>
@@ -545,7 +545,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.15</recommended_per_kg>
+        <recommended_per_kg>0.015</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Histidine</name>
@@ -557,19 +557,7 @@
         </sources>
         <unit>g</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.14</recommended_per_kg>
-    </nutrient>
-    <nutrient>
-        <name>Arginine</name>
-        <symbol>arginine</symbol>
-        <function>Arginine plays a role in wound healing, hormone production, and immune function. It's also a precursor
-            to nitric oxide, which helps relax blood vessels and improve circulation.
-        </function>
-        <sources>Found in protein-rich foods like meat, poultry, fish, dairy products, legumes, nuts, and seeds.
-        </sources>
-        <unit>g</unit>
-        <kind>PROTEIN</kind>
-        <recommended_per_kg>0.02</recommended_per_kg>
+        <recommended_per_kg>0.014</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Cysteine</name>
@@ -580,7 +568,7 @@
         <sources>Found in foods such as poultry, eggs, dairy products, legumes, and certain grains.</sources>
         <unit>mg</unit>
         <kind>PROTEIN</kind>
-        <recommended_per_kg>0.14</recommended_per_kg>
+        <recommended_per_kg>0.014</recommended_per_kg>
     </nutrient>
     <nutrient>
         <name>Fiber</name>
@@ -626,10 +614,10 @@
         <kind>LIPIDS</kind>
         <sources>Found in fatty fish (e.g., salmon, mackerel), flaxseeds, chia seeds, walnuts, and some fortified foods.</sources>
         <recommended>
-            <man>1.6</man>
-            <woman>1.1</woman>
-            <pregnant>1.4</pregnant>
-            <breastfeeding>1.3</breastfeeding>
+            <man>16</man>
+            <woman>11</woman>
+            <pregnant>14</pregnant>
+            <breastfeeding>13</breastfeeding>
             <max>None</max>
         </recommended>
     </nutrient>

@@ -1,19 +1,18 @@
 <template>
-  <NavBar active-page="dashboard"></NavBar>
+  <NavBar></NavBar>
   <img
       class="dashboard-background"
       src="../assets/images/dashboard-background.jpg"
       alt=""
   />
-  <div class="grid" style="margin-left: 20px; margin-top: -80px;">
+  <div class="grid" style="margin-left: 20px; margin-top: -50px;">
     <div class="welcome col-9" style="float: left">
-      <p style="font-size: 30px">Client: {{ plan.name }} {{ plan.surname }} {{ plan.userEmail }}</p>
-      <p style="line-height: 5px">plan id: {{ planId }}</p>
+      <p style="font-size: 20px">Client: {{ plan.clientName }} ({{ plan.userEmail }})</p>
     </div>
     <div class="col-3">
-      <Button icon="pi pi-send" label="Send" style="margin-top: 20px; float: right; margin-right: 20px" @click="send">
+      <Button icon="pi pi-send" label="Send" style="float: right; margin-right: 20px" @click="send">
       </Button>
-      <Button icon="pi pi-download" label="Download" style="margin-top: 20px; float: right; margin-right: 20px" @click="generatePlan">
+      <Button icon="pi pi-download" label="Download" style="float: right; margin-right: 20px" @click="generatePlan">
       </Button>
     </div>
   </div>
@@ -45,6 +44,15 @@
       </div>
       <div class="col-fixed" style="width: 100px">
         <Button
+            v-if="plan.daysInPlan === day"
+            @click="nextDay"
+            style="float: right; margin-right: 20px"
+            v-tooltip.top="'Add day'"
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-primary"
+        />
+        <Button
+            v-else
             @click="nextDay"
             style="float: right; margin-right: 20px"
             v-tooltip.top="'Day after'"
@@ -55,20 +63,20 @@
     </div>
 
     <div class="grid" style="margin: 10px">
-      <div class="col">
+      <div class="col-4">
         <Button
             class="add-button p-button-text"
             label="ADD MEAL"
             @click="addMeal"
         />
       </div>
-      <div class="col">
+      <div class="col-4">
         <Button v-if="!trainingVisible" class="add-button p-button-text" @click="trainingVisible = true"
                 label="ADD EXERCISE"/>
         <Button v-if="trainingVisible" class="add-button p-button-text" @click="trainingVisible = false"
                 label="REMOVE EXERCISE"/>
       </div>
-      <div class="col">
+      <div class="col-4">
         <Button v-if="!notesVisible" class="add-button p-button-text" @click="notesVisible = true"
                 label="ADD NOTES"/>
         <Button v-if="notesVisible" class="add-button p-button-text" @click="notesVisible = false"
@@ -80,12 +88,12 @@
         <Training ref="training" :plan-id="plan.id" :day="day"></Training>
       </div>
       <div :class="trainingVisible ? 'col-6' : 'col-12'" v-if="notesVisible">
-        <Notes ref="notes" :plan-id="plan.id" :day="day"></Notes>
+        <Notes ref="note" :plan-id="plan.id" :day="day"></Notes>
       </div>
     </div>
     <div class="grid">
       <div class="col">
-        <DailyFood ref="dailyFoodRef" :daily-plan-id="plan.id"></DailyFood>
+        <DailyFood ref="dailyFoodRef"></DailyFood>
       </div>
     </div>
     <div class="grid">
@@ -155,21 +163,15 @@ export default {
         function: "",
         source: "",
       },
-      notesVisible: true,
-      trainingVisible: true,
+      notesVisible: false,
+      trainingVisible: false,
       plan: {
         userEmail: '',
+        clientName: '',
         meals: [],
-        notes: []
       },
       day: 1,
       planId: 0,
-      options: {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      },
       nutrientsDialogVisible: false,
     };
   },
@@ -185,11 +187,11 @@ export default {
         this.$refs.dailyFoodRef.plan = this.plan;
         this.$refs.dailyFoodRef.day = this.day;
         this.$refs.dailyFoodRef.updateData();
-        this.$refs.notes.notes = this.plan.notes;
-        this.$refs.training.trainingPlan = this.plan.training;
-        if (this.plan.training === '') {
-          this.$refs.training.restDay = "Rest day";
-        }
+        // this.$refs.note.notes = this.plan.notes;
+        // this.$refs.training.trainingPlan = this.plan.training;
+        // if (this.plan.training === '') {
+        //   this.$refs.training.restDay = "Rest day";
+        // }
         this.getNutrients();
       });
     },
