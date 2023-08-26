@@ -77,6 +77,11 @@ body {
     background-color: transparent;
 }
 
+.border {
+    margin: 10px;
+    height: min-content;
+}
+
 ::-webkit-scrollbar-thumb {
     background-color: #d6dee1;
     border-radius: 20px;
@@ -90,4 +95,8 @@ body {
 
 .p-progressbar {
     height: 0.8rem !important;
+}
+
+.p-card .p-card-content {
+    padding: 0 !important;
 }

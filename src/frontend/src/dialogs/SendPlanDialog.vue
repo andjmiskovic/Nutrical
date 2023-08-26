@@ -4,7 +4,7 @@
       <div class="p-fluid">
         <div class="p-field">
           <label for="name">Email text</label>
-          <InputText id="name" v-model="text"/>
+          <Textarea id="name" v-model="text" style="width: 100%; max-height: 130px; min-height: 70px" rows="50" cols="30"/>
         </div>
       </div>
 

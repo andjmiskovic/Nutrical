@@ -51,57 +51,88 @@ public class PDFService {
 
     private static Paragraph createClientInfo(Client client) {
         Paragraph clientInfo = new Paragraph();
-        clientInfo.add(new Chunk("Client Data\n\n"));
-        clientInfo.add(new Chunk("Name: " + client.getName() + " " + client.getSurname() + "\n"));
-        clientInfo.add(new Chunk("Email: " + client.getEmail() + "\n"));
-        clientInfo.add(new Chunk("Date of birth: " + client.getClientData().getDateOfBirth() + "\n"));
-        clientInfo.add(new Chunk("Age: " + calculateAge(client.getClientData().getDateOfBirth()) + "\n"));
-        clientInfo.add(new Chunk("Biological status: " + client.getClientData().getBiologicalStatus() + "\n"));
-        clientInfo.add(new Chunk("Activity status: " + client.getClientData().getActivityStatus() + "\n"));
-        clientInfo.add(new Chunk("BMI: " + calculateBMI(client.getClientData()) + "\n"));
-        clientInfo.add(new Chunk("Maintenance Calories: " + calculateCalories(client.getClientData()) + "\n"));
-        clientInfo.add(new Chunk("Daily calorie goal: " + client.getClientData().getCalorieGoal() + "\n"));
-        clientInfo.add(new Chunk("Macronutrient ratio: C(" + client.getClientData().getCarbsPercent() + "%) P(" + client.getClientData().getProteinPercent() + "%) F(" + client.getClientData().getFatPercent() + "%)\n"));
+
+        clientInfo.setPaddingTop(10f);
+        Font labelFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
+        Font valueFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.DARK_GRAY);
+
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+
+        addClientDetailRow(table, "Name:", client.getName() + " " + client.getSurname(), labelFont, valueFont);
+        addClientDetailRow(table, "Email:", client.getEmail(), labelFont, valueFont);
+        addClientDetailRow(table, "Date of birth:", client.getClientData().getDateOfBirth().toString(), labelFont, valueFont);
+        addClientDetailRow(table, "Age:", String.valueOf(calculateAge(client.getClientData().getDateOfBirth())), labelFont, valueFont);
+        addClientDetailRow(table, "Biological status:", client.getClientData().getBiologicalStatus().getName(), labelFont, valueFont);
+        addClientDetailRow(table, "Activity status:", client.getClientData().getActivityStatus().getDescription(), labelFont, valueFont);
+        addClientDetailRow(table, "BMI:", String.valueOf(calculateBMI(client.getClientData())), labelFont, valueFont);
+        addClientDetailRow(table, "Maintenance Calories:", String.valueOf(calculateCalories(client.getClientData())), labelFont, valueFont);
+        addClientDetailRow(table, "Daily calorie goal:", String.valueOf(client.getClientData().getCalorieGoal()), labelFont, valueFont);
+        addClientDetailRow(table, "Macronutrient ratio:",
+                "C(" + client.getClientData().getCarbsPercent() + "%) P(" + client.getClientData().getProteinPercent() + "%) F(" + client.getClientData().getFatPercent() + "%)",
+                labelFont, valueFont);
+
         if (!client.getClientData().getAdditionalInformation().trim().isEmpty()) {
-            clientInfo.add(new Chunk("Additional information: \n"));
-            clientInfo.add(new Chunk(client.getClientData().getAdditionalInformation()));
+            PdfPCell additionalInfoCell = new PdfPCell(new Phrase("Additional information:", labelFont));
+            additionalInfoCell.setBorder(Rectangle.NO_BORDER);
+            additionalInfoCell.setVerticalAlignment(Element.ALIGN_TOP);
+            table.addCell(additionalInfoCell);
+
+            PdfPCell additionalInfoValueCell = new PdfPCell(new Phrase(client.getClientData().getAdditionalInformation(), valueFont));
+            additionalInfoValueCell.setBorder(Rectangle.NO_BORDER);
+            additionalInfoValueCell.setVerticalAlignment(Element.ALIGN_TOP);
+            table.addCell(additionalInfoValueCell);
         }
+
+        clientInfo.add(table);
         return clientInfo;
+    }
+
+    private static void addClientDetailRow(PdfPTable table, String label, String value, Font labelFont, Font valueFont) {
+        PdfPCell labelCell = new PdfPCell(new Phrase(label, labelFont));
+        labelCell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(labelCell);
+
+        PdfPCell valueCell = new PdfPCell(new Phrase(value, valueFont));
+        valueCell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(valueCell);
     }
 
     private static PdfPTable createTable(Plan plan) {
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100);
-        table.setPaddingTop(5);
+        table.setPaddingTop(10);
 
         int i = 1;
         for (DailyPlan dailyPlan : plan.getDailyPlans()) {
-            // Add a single row for the day
-            PdfPCell dayCell = new PdfPCell(new Phrase("Day " + i, HEADER_FONT));
-            dayCell.setColspan(3);
-            dayCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            table.addCell(dayCell);
+            if (dailyPlan.getMeals().size() > 0) {
+                // Add a single row for the day
+                PdfPCell dayCell = new PdfPCell(new Phrase("Day " + i, HEADER_FONT));
+                dayCell.setColspan(3);
+                dayCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(dayCell);
 
-            // Add multiple rows for each meal of the day
-            for (Meal meal : dailyPlan.getMeals()) {
-                if (meal.getEatenFood().size() > 0) {
-                    PdfPCell mealCell = new PdfPCell(new Phrase(meal.getName(), CELL_FONT));
-                    mealCell.setRowspan(meal.getEatenFood().size());
-                    table.addCell(mealCell);
+                // Add multiple rows for each meal of the day
+                for (Meal meal : dailyPlan.getMeals()) {
+                    if (meal.getEatenFood().size() > 0) {
+                        PdfPCell mealCell = new PdfPCell(new Phrase(meal.getName(), CELL_FONT));
+                        mealCell.setRowspan(meal.getEatenFood().size());
+                        table.addCell(mealCell);
 
-                    for (EatenFood food : meal.getEatenFood()) {
-                        PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), CELL_FONT));
-                        table.addCell(foodNameCell);
+                        for (EatenFood food : meal.getEatenFood()) {
+                            PdfPCell foodNameCell = new PdfPCell(new Phrase(food.getFoodItem().getName(), CELL_FONT));
+                            table.addCell(foodNameCell);
 
-                        PdfPCell quantityCell = new PdfPCell(new Phrase(food.getQuantity().toString() + "g", CELL_FONT));
-                        table.addCell(quantityCell);
+                            PdfPCell quantityCell = new PdfPCell(new Phrase(food.getQuantity().toString() + "g", CELL_FONT));
+                            table.addCell(quantityCell);
+                        }
                     }
                 }
-            }
 
-            addNotes(table, dailyPlan.getTraining(), "Training");
-            addNotes(table, dailyPlan.getNotes(), "Notes");
-            i++;
+                addNotes(table, dailyPlan.getTraining(), "Training");
+                addNotes(table, dailyPlan.getNotes(), "Notes");
+                i++;
+            }
         }
         return table;
     }

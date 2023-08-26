@@ -1,18 +1,18 @@
 <template>
   <Dialog
-    header="Add food to Daily Diary"
-    v-model:visible="visible"
-    style="width: 70%"
-    :maximizable="true"
-    :reject="closeDialog"
-    :closeOnEscape="true"
+      header="Add food to Daily Diary"
+      v-model:visible="visible"
+      style="width: 70%"
+      :maximizable="true"
+      :reject="closeDialog"
+      :closeOnEscape="true"
   >
     <DataTable
-      class="p-datatable-sm"
-      selectionMode="single"
-      v-model:selection="selectedFood"
-      :value="food"
-      :scrollable="true"
+        class="p-datatable-sm"
+        selectionMode="single"
+        v-model:selection="selectedFood"
+        :value="food"
+        :scrollable="true"
     >
       <Column style="min-width: 50%" field="name" header="Name"></Column>
       <Column field="calories" header="Calories"></Column>
@@ -25,24 +25,24 @@
       <div class="grid" style="margin-top: 10px">
         <div class="col">
           <span class="p-input-icon-left" style="float: left">
-            <i class="pi pi-search" />
-            <InputText v-model="search" @keyup="searchFood" placeholder="Search food..." />
+            <i class="pi pi-search"/>
+            <InputText v-model="search" @keyup="searchFood" placeholder="Search food..."/>
           </span>
         </div>
         <div class="col">
-            <div class="p-inputgroup" style="max-width: 200px; float: right; margin-right: 5px">
-              <span class="p-inputgroup-addon">Serving</span>
-              <InputNumber
+          <div class="p-inputgroup" style="max-width: 200px; float: right; margin-right: 5px">
+            <span class="p-inputgroup-addon">Serving</span>
+            <InputNumber
                 mode="decimal"
                 suffix="g"
                 :min="0"
                 :max="99999"
                 v-model="serving"
-              />
-            </div>
+            />
+          </div>
         </div>
         <div class="col-fixed" style="width: 100px">
-          <Button label="Add" icon="pi pi-check" @click="addFood()" />
+          <Button label="Add" icon="pi pi-check" @click="addFood()"/>
         </div>
       </div>
     </template>
@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import { FilterMatchMode } from "primevue/api";
 import PlanService from "@/services/PlanService";
+import NutrientService from "@/services/NutrientService";
 
 export default {
   name: "AddFood",
@@ -63,10 +63,7 @@ export default {
       tagId: null,
       search: "",
       food: [],
-      selectedFood: null,
-      filters: {
-        name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-      },
+      selectedFood: null
     };
   },
   mounted() {
@@ -74,11 +71,9 @@ export default {
   },
   methods: {
     searchFood() {
-      fetch("/api/calculator/get-food?search=" + this.search + "&limit=100")
-      .then((response) => response.text())
-      .then((data) => {
-        console.log(this.food);
-        this.food = JSON.parse(data);
+      NutrientService.getFood(this.search, 200).then((data) => {
+        console.log(data.data)
+        this.food = data.data;
       });
     },
     closeDialog() {
@@ -101,6 +96,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

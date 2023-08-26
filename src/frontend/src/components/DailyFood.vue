@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import AddFood from "../components/AddFood.vue";
+import AddFood from "../dialogs/AddFood.vue";
 import AddMeal from "../dialogs/AddMeal.vue";
 import PlanService from "@/services/PlanService";
 
@@ -129,12 +129,6 @@ export default {
 
 .blue {
   color: var(--blue);
-}
-
-.meal {
-  color: var(--blue);
-  font-weight: 600;
-  width: 100%;
 }
 
 .p-rowgroup-footer td {
